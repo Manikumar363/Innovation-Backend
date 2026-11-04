@@ -24,3 +24,4 @@ router.route('/:id/status')
   .patch(updateQuoteRequestStatus);
 
 export default router;
+

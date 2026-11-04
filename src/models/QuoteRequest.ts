@@ -92,3 +92,4 @@ QuoteRequestSchema.index({ productName: 1 });
 
 export const QuoteRequest = mongoose.model<IQuoteRequest>('QuoteRequest', QuoteRequestSchema);
 export default QuoteRequest;
+

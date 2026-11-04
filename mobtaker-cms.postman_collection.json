@@ -1,0 +1,738 @@
+{
+  "info": {
+    "_postman_id": "9b1c5e62-817a-4c28-98e3-057bf309db8a",
+    "name": "Mobtaker Group - CMS APIs (Frontend Handover)",
+    "description": "# Mobtaker Group CMS GET APIs\n\nThis collection contains all public `GET` endpoints for the Mobtaker Group client-facing website and web applications.\n\n### Base URLs:\n- **Production (Live Render)**: `https://innovation-backend-xv2x.onrender.com`\n- **Local Development**: `http://localhost:5000`\n\n### Key Features:\n- **No Authentication Required**: All endpoints in this collection are public content APIs.\n- **Full Bilingual Support**: All textual fields return both English (`en`) and Arabic (`ar`) localizations.\n- **Clean Response Standard**: All responses return HTTP 200 with `{ \"success\": true, \"data\": { ... } }`.\n\n### Usage in Frontend (Next.js / React / Vue):\nSet your base URL variable in `.env`:\n```bash\nNEXT_PUBLIC_API_BASE_URL=https://innovation-backend-xv2x.onrender.com\n```\nAnd query any endpoint directly: `${NEXT_PUBLIC_API_BASE_URL}/api/cms/home`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://innovation-backend-xv2x.onrender.com",
+      "type": "string",
+      "description": "Active API server host (Switch between Live Render and http://localhost:5000)"
+    }
+  ],
+  "item": [
+    {
+      "name": "01. CMS - Home Page",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/home",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "home"
+          ]
+        },
+        "description": "### Overview\nFetches all landing page sections: Hero Banner with Founder card, Trusted Brand logos, About Sectors, Specialized Companies grid, Purpose/Vision/Mission cards, and Call-To-Action Banner.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/home",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "home"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"hero\": {\n      \"mainTitle\": {\n        \"en\": \"Driving Innovation for the Next Generation\",\n        \"ar\": \"قيادة الابتكار للجيل القادم\"\n      },\n      \"headingTag\": {\n        \"en\": \"Empowering Visionaries & Sustainable Growth\",\n        \"ar\": \"تمكين أصحاب الرؤى والنمو المستدام\"\n      },\n      \"description\": {\n        \"en\": \"We cultivate forward-thinking ecosystems, transformative investments, and cutting-edge digital solutions tailored to lead regional and global transformation.\",\n        \"ar\": \"نعمل على تنمية أنظمة بيئية متطلعة للأمام، واستثمارات تحويلية، وحلول رقمية رائدة مصممة لقيادة التحول الإقليمي والعالمي.\"\n      },\n      \"founder\": {\n        \"name\": {\n          \"en\": \"Dr. Tariq Al-Mansoor\",\n          \"ar\": \"د. طارق المنصور\"\n        },\n        \"description\": {\n          \"en\": \"Founder & Executive Chairman with over 20 years of leadership in venture acceleration, sovereign investment, and technological enterprise development.\",\n          \"ar\": \"مؤسس ورئيس تنفيذي يتمتع بخبرة تزيد عن 20 عامًا في قيادة تسريع المشاريع، والاستثمار السيادي، وتطوير المشاريع التكنولوجية.\"\n        },\n        \"image\": \"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80\"\n      }\n    },\n    \"trustedBrands\": [\n      {\n        \"name\": \"Aramco Ventures\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\",\n        \"websiteUrl\": \"https://example.com\"\n      },\n      {\n        \"name\": \"NEOM Tech\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\",\n        \"websiteUrl\": \"https://example.com\"\n      },\n      {\n        \"name\": \"SABIC Horizon\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\",\n        \"websiteUrl\": \"https://example.com\"\n      },\n      {\n        \"name\": \"Global Innovation Hub\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\",\n        \"websiteUrl\": \"https://example.com\"\n      }\n    ],\n    \"aboutSectorsSection\": {\n      \"image\": \"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80\",\n      \"title\": {\n        \"en\": \"A Diversified Group Built on Excellence\",\n        \"ar\": \"مجموعة متنوعة مبنية على التميز\"\n      },\n      \"description\": {\n        \"en\": \"Mobtaker Group is a multi-sector group based in Baghdad, Iraq, with a presence in Dubai, UAE. Registered with the Iraqi Ministry of Commerce under the Excellent classification, the group operates through three specialized entities across healthcare, construction, trading, and investment.\",\n        \"ar\": \"مجموعة مبتكر هي مجموعة متعددة القطاعات مقرها بغداد، العراق، ولها حضور في دبي، الإمارات العربية المتحدة. مسجلة لدى وزارة التجارة العراقية تحت تصنيف ممتاز، وتعمل المجموعة من خلال ثلاثة كيانات متخصصة عبر الرعاية الصحية، البناء، التجارة، والاستثمار.\"\n      },\n      \"location\": {\n        \"en\": \"Arasat Street, Karrada, Baghdad, Iraq\",\n        \"ar\": \"شارع العرصات، الكرادة، بغداد، العراق\"\n      },\n      \"sectors\": [\n        {\n          \"id\": \"sector-1\",\n          \"title\": {\n            \"en\": \"Healthcare\",\n            \"ar\": \"الرعاية الصحية\"\n          }\n        },\n        {\n          \"id\": \"sector-2\",\n          \"title\": {\n            \"en\": \"Construction\",\n            \"ar\": \"البناء والتشييد\"\n          }\n        },\n        {\n          \"id\": \"sector-3\",\n          \"title\": {\n            \"en\": \"Trading\",\n            \"ar\": \"التجارة\"\n          }\n        },\n        {\n          \"id\": \"sector-4\",\n          \"title\": {\n            \"en\": \"Investment\",\n            \"ar\": \"الاستثمار\"\n          }\n        }\n      ]\n    },\n    \"companiesSection\": {\n      \"tagline\": {\n        \"en\": \"OUR COMPANIES\",\n        \"ar\": \"شركاتنا المتخصصة\"\n      },\n      \"title\": {\n        \"en\": \"Three Specialized Divisions. One Group\",\n        \"ar\": \"ثلاثة أقسام متخصصة. مجموعة واحدة\"\n      },\n      \"description\": {\n        \"en\": \"Discover the specialized companies driving innovation and excellence across our group.\",\n        \"ar\": \"اكتشف الشركات المتخصصة التي تقود الابتكار والتميز عبر مجموعتنا.\"\n      },\n      \"companies\": [\n        {\n          \"id\": \"comp-1\",\n          \"name\": {\n            \"en\": \"Projects Innovator\",\n            \"ar\": \"مبتكر المشاريع\"\n          },\n          \"description\": {\n            \"en\": \"Delivering innovative construction and infrastructure solutions that shape modern spaces and build a better future.\",\n            \"ar\": \"تقديم حلول بناء وبنية تحتية مبتكرة تشكل المساحات الحديثة وتبني مستقبلاً أفضل.\"\n          },\n          \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80\",\n          \"websiteUrl\": \"/projects-innovator\"\n        },\n        {\n          \"id\": \"comp-2\",\n          \"name\": {\n            \"en\": \"Attractive\",\n            \"ar\": \"أتراكتيف\"\n          },\n          \"description\": {\n            \"en\": \"A diversified business group driving excellence across healthcare, construction, trading, and investment.\",\n            \"ar\": \"مجموعة أعمال متنوعة تدفع التميز عبر الرعاية الصحية والبناء والتجارة والاستثمار.\"\n          },\n          \"logoUrl\": \"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80\",\n          \"websiteUrl\": \"/attractive\"\n        },\n        {\n          \"id\": \"comp-3\",\n          \"name\": {\n            \"en\": \"Medios Innovator\",\n            \"ar\": \"مبتكر ميديوس\"\n          },\n          \"description\": {\n            \"en\": \"Advancing healthcare through trusted medical solutions, quality healthcare products, and a commitment to better patient outcomes.\",\n            \"ar\": \"الارتقاء بالرعاية الصحية من خلال حلول طبية موثوقة، ومنتجات رعاية صحية عالية الجودة، والتزام بنتائج أفضل للمرضى.\"\n          },\n          \"logoUrl\": \"https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=200&q=80\",\n          \"websiteUrl\": \"/medios-innovator\"\n        }\n      ]\n    },\n    \"purposeSection\": {\n      \"tagline\": {\n        \"en\": \"OUR PURPOSE\",\n        \"ar\": \"هدفنا ورؤيتنا\"\n      },\n      \"title\": {\n        \"en\": \"Driven by Vision. Defined by Purpose.\",\n        \"ar\": \"مدفوعون بالرؤية. محددون بالهدف.\"\n      },\n      \"description\": {\n        \"en\": \"We bring businesses and people together through strategic investment, responsible development, and long-term partnerships.\",\n        \"ar\": \"نجمع بين الشركات والأفراد من خلال الاستثمار الاستراتيجي والتنمية المسؤولة والشراكات طويلة الأجل.\"\n      },\n      \"image\": \"https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80\",\n      \"tags\": [\n        {\n          \"id\": \"tag-1\",\n          \"title\": {\n            \"en\": \"Our Vision\",\n            \"ar\": \"رؤيتنا\"\n          },\n          \"description\": {\n            \"en\": \"To create meaningful opportunities for businesses and individuals through innovation, growth, and trusted partnerships.\",\n            \"ar\": \"خلق فرص ذات مغزى للشركات والأفراد من خلال الابتكار والنمو والشراكات الموثوقة.\"\n          }\n        },\n        {\n          \"id\": \"tag-2\",\n          \"title\": {\n            \"en\": \"Our Mission\",\n            \"ar\": \"رسالتنا\"\n          },\n          \"description\": {\n            \"en\": \"To promote sustainable development by using resources responsibly and delivering lasting value to our partners and communities.\",\n            \"ar\": \"تعزيز التنمية المستدامة من خلال استخدام الموارد بمسؤولية وتقديم قيمة دائمة لشركائنا ومجتمعاتنا.\"\n          }\n        }\n      ]\n    },\n    \"bannerSection\": {\n      \"tagline\": {\n        \"en\": \"LET'S WORK TOGETHER\",\n        \"ar\": \"لنعمل معاً\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Looking for medical products, equipment, pharmaceutical solutions, or business services? Our team is ready to help you find what you need.\",\n        \"ar\": \"هل تبحث عن منتجات طبية، أو معدات، أو حلول صيدلانية، أو خدمات أعمال؟ فريقنا مستعد لمساعدتك في العثور على ما تحتاجه.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote\",\n        \"ar\": \"احصل على عرض سعر\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "02. CMS - About Us",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/about",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "about"
+          ]
+        },
+        "description": "### Overview\nFetches About Us content: Header, Heritage & Foundation year, Journey timeline (01, 02), Impact & Achievements in numbers (20+ years, 500+ clients, 140+ projects), Executive Leadership, Management divisions, Core Values, Purpose Pillars, and Collaboration Banner.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/about",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "about"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"About Us\",\n        \"ar\": \"من نحن\"\n      },\n      \"description\": {\n        \"en\": \"Discover our heritage, explore our journey of evolution, and learn about the vision, values, and leadership that drive our commitment to innovation and excellence.\",\n        \"ar\": \"اكتشف تراثنا، واستكشف مسيرة تطورنا، وتعرف على الرؤية والقيم والقيادة التي تقود التزامنا بالابتكار والتميز.\"\n      }\n    },\n    \"heritageSection\": {\n      \"tagline\": {\n        \"en\": \"OUR HERITAGE\",\n        \"ar\": \"تراثنا وعراقتنا\"\n      },\n      \"title\": {\n        \"en\": \"Built on Trust. Driven by Ambition.\",\n        \"ar\": \"مبني على الثقة. مدفوع بالطموح.\"\n      },\n      \"description\": {\n        \"en\": \"Mobtaker Group brings together specialized businesses under a shared commitment to excellence, trusted partnerships, and sustainable growth.\",\n        \"ar\": \"تجمع مجموعة مبتكر بين الشركات المتخصصة تحت التزام مشترك بالتميز والشراكات الموثوقة والنمو المستدام.\"\n      },\n      \"image\": \"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80\",\n      \"badgeYear\": \"2017\",\n      \"badgeText\": {\n        \"en\": \"Established\",\n        \"ar\": \"سنة التأسيس\"\n      }\n    },\n    \"journeySection\": {\n      \"tagline\": {\n        \"en\": \"OUR JOURNEY\",\n        \"ar\": \"مسيرتنا\"\n      },\n      \"title\": {\n        \"en\": \"Evolving Through Opportunity\",\n        \"ar\": \"التطور من خلال الفرص\"\n      },\n      \"description\": {\n        \"en\": \"Our journey reflects a commitment to adapting, expanding, and creating lasting value across industries.\",\n        \"ar\": \"تعكس مسيرتنا التزاماً بالتكيف والتوسع وخلق قيمة دائمة عبر مختلف القطاعات.\"\n      },\n      \"items\": [\n        {\n          \"id\": \"journey-1\",\n          \"number\": \"01\",\n          \"title\": {\n            \"en\": \"Building a Strong Foundation\",\n            \"ar\": \"بناء أساس قوي\"\n          },\n          \"description\": {\n            \"en\": \"Establishing trusted relationships and developing a foundation for sustainable business growth.\",\n            \"ar\": \"بناء علاقات موثوقة وتطوير أساس لنمو الأعمال المستدام.\"\n          }\n        },\n        {\n          \"id\": \"journey-2\",\n          \"number\": \"02\",\n          \"title\": {\n            \"en\": \"Expanding Our Horizons\",\n            \"ar\": \"توسيع آفاقنا\"\n          },\n          \"description\": {\n            \"en\": \"Growing across specialized sectors and exploring opportunities through strategic partnerships.\",\n            \"ar\": \"النمو عبر القطاعات المتخصصة واستكشاف الفرص من خلال الشراكات الاستراتيجية.\"\n          }\n        }\n      ]\n    },\n    \"impactSection\": {\n      \"tagline\": {\n        \"en\": \"OUR ACHIEVEMENTS\",\n        \"ar\": \"إنجازاتنا\"\n      },\n      \"title\": {\n        \"en\": \"Our Impact in Numbers\",\n        \"ar\": \"أثرنا بالأرقام\"\n      },\n      \"stats\": [\n        {\n          \"id\": \"stat-1\",\n          \"number\": \"20+\",\n          \"description\": {\n            \"en\": \"Years of Excellence\",\n            \"ar\": \"سنوات من التميز\"\n          }\n        },\n        {\n          \"id\": \"stat-2\",\n          \"number\": \"500+\",\n          \"description\": {\n            \"en\": \"Satisfied Customers\",\n            \"ar\": \"عميل راضٍ\"\n          }\n        },\n        {\n          \"id\": \"stat-3\",\n          \"number\": \"140+\",\n          \"description\": {\n            \"en\": \"Projects Delivered\",\n            \"ar\": \"مشروع منجز\"\n          }\n        }\n      ]\n    },\n    \"leadershipSection\": {\n      \"tagline\": {\n        \"en\": \"OUR LEADERSHIP\",\n        \"ar\": \"قيادتنا\"\n      },\n      \"title\": {\n        \"en\": \"The People Behind Our Progress\",\n        \"ar\": \"الأشخاص وراء تقدمنا\"\n      },\n      \"description\": {\n        \"en\": \"Meet the leadership and teams working together to deliver quality, innovation, and lasting value across our group.\",\n        \"ar\": \"تعرف على القيادة وفرق العمل التي تعمل معاً لتقديم الجودة والابتكار وقيمة دائمة عبر مجموعتنا.\"\n      },\n      \"leaders\": [\n        {\n          \"id\": \"leader-1\",\n          \"name\": {\n            \"en\": \"Dr. Ahmed Dhahir\",\n            \"ar\": \"د. أحمد ظاهر\"\n          },\n          \"role\": {\n            \"en\": \"Founder & CEO\",\n            \"ar\": \"المؤسس والرئيس التنفيذي\"\n          },\n          \"image\": \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80\"\n        }\n      ]\n    },\n    \"managementSection\": {\n      \"tagline\": {\n        \"en\": \"OUR LEADERSHIP & MANAGEMENT\",\n        \"ar\": \"فريق الإدارة والقيادة\"\n      },\n      \"title\": {\n        \"en\": \"Our Management Team\",\n        \"ar\": \"فريق الإدارة لدينا\"\n      },\n      \"description\": {\n        \"en\": \"Specialized executive leadership across our three group divisions.\",\n        \"ar\": \"قيادة تنفيذية متخصصة عبر أقسام مجموعتنا الثلاثة.\"\n      },\n      \"divisions\": [\n        {\n          \"id\": \"div-1\",\n          \"badge\": \"PI\",\n          \"companyName\": {\n            \"en\": \"Projects Innovator\",\n            \"ar\": \"مبتكر المشاريع\"\n          },\n          \"description\": {\n            \"en\": \"Delivering innovative construction and infrastructure solutions that shape modern spaces and build a better future.\",\n            \"ar\": \"تقديم حلول بناء وبنية تحتية مبتكرة تشكل المساحات الحديثة وتبني مستقبلاً أفضل.\"\n          },\n          \"linkText\": {\n            \"en\": \"Projects Innovator ↗\",\n            \"ar\": \"مبتكر المشاريع ↗\"\n          },\n          \"linkUrl\": \"/projects-innovator\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80\",\n          \"members\": [\n            {\n              \"id\": \"member-1-1\",\n              \"name\": {\n                \"en\": \"Management Member 1\",\n                \"ar\": \"عضو الإدارة 1\"\n              },\n              \"role\": {\n                \"en\": \"General Manager\",\n                \"ar\": \"المدير العام\"\n              },\n              \"image\": \"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80\"\n            },\n            {\n              \"id\": \"member-1-2\",\n              \"name\": {\n                \"en\": \"Management Member 2\",\n                \"ar\": \"عضو الإدارة 2\"\n              },\n              \"role\": {\n                \"en\": \"Operations Manager\",\n                \"ar\": \"مدير العمليات\"\n              },\n              \"image\": \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80\"\n            }\n          ]\n        },\n        {\n          \"id\": \"div-2\",\n          \"badge\": \"AT\",\n          \"companyName\": {\n            \"en\": \"Attractive\",\n            \"ar\": \"أتراكتيف\"\n          },\n          \"description\": {\n            \"en\": \"A diversified business group driving excellence across healthcare, construction, trading, and investment.\",\n            \"ar\": \"مجموعة أعمال متنوعة تقود التميز عبر الرعاية الصحية، البناء، التجارة، والاستثمار.\"\n          },\n          \"linkText\": {\n            \"en\": \"Attractive ↗\",\n            \"ar\": \"أتراكتيف ↗\"\n          },\n          \"linkUrl\": \"/attractive\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80\",\n          \"members\": [\n            {\n              \"id\": \"member-2-1\",\n              \"name\": {\n                \"en\": \"Management Member 1\",\n                \"ar\": \"عضو الإدارة 1\"\n              },\n              \"role\": {\n                \"en\": \"General Manager\",\n                \"ar\": \"المدير العام\"\n              },\n              \"image\": \"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80\"\n            },\n            {\n              \"id\": \"member-2-2\",\n              \"name\": {\n                \"en\": \"Management Member 2\",\n                \"ar\": \"عضو الإدارة 2\"\n              },\n              \"role\": {\n                \"en\": \"Operations Manager\",\n                \"ar\": \"مدير العمليات\"\n              },\n              \"image\": \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80\"\n            }\n          ]\n        },\n        {\n          \"id\": \"div-3\",\n          \"badge\": \"MI\",\n          \"companyName\": {\n            \"en\": \"Medics Innovator\",\n            \"ar\": \"ميديكس إنوفيتور\"\n          },\n          \"description\": {\n            \"en\": \"Advancing healthcare through trusted medical solutions, quality healthcare products, and a commitment to better patient outcomes.\",\n            \"ar\": \"الارتقاء بالرعاية الصحية من خلال حلول طبية موثوقة ومنتجات رعاية صحية عالية الجودة والتزام بنتائج أفضل للمرضى.\"\n          },\n          \"linkText\": {\n            \"en\": \"Medics Innovator ↗\",\n            \"ar\": \"ميديكس إنوفيتور ↗\"\n          },\n          \"linkUrl\": \"/medics-innovator\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=200&q=80\",\n          \"members\": [\n            {\n              \"id\": \"member-3-1\",\n              \"name\": {\n                \"en\": \"Management Member 1\",\n                \"ar\": \"عضو الإدارة 1\"\n              },\n              \"role\": {\n                \"en\": \"General Manager\",\n                \"ar\": \"المدير العام\"\n              },\n              \"image\": \"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80\"\n            },\n            {\n              \"id\": \"member-3-2\",\n              \"name\": {\n                \"en\": \"Management Member 2\",\n                \"ar\": \"عضو الإدارة 2\"\n              },\n              \"role\": {\n                \"en\": \"Operations Manager\",\n                \"ar\": \"مدير العمليات\"\n              },\n              \"image\": \"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80\"\n            }\n          ]\n        }\n      ]\n    },\n    \"coreValuesSection\": {\n      \"tagline\": {\n        \"en\": \"WHAT WE STAND FOR\",\n        \"ar\": \"ما نمثله ونلتزم به\"\n      },\n      \"title\": {\n        \"en\": \"Our Core Values\",\n        \"ar\": \"قيمنا الجوهرية\"\n      },\n      \"description\": {\n        \"en\": \"The principles that guide our decisions, shape our actions, and define the relationships we build with our clients, partners, and communities.\",\n        \"ar\": \"المبادئ التي توجه قراراتنا، وتشكل أفعالنا، وتحدد العلاقات التي نبنيها مع عملائنا وشركائنا ومجتمعاتنا.\"\n      },\n      \"values\": [\n        {\n          \"id\": \"val-1\",\n          \"number\": \"01\",\n          \"icon\": \"Handshake\",\n          \"title\": {\n            \"en\": \"Relationships\",\n            \"ar\": \"العلاقات والشراكات\"\n          },\n          \"description\": {\n            \"en\": \"We build lasting relationships through trust, transparency, and a genuine commitment to understanding and supporting our clients.\",\n            \"ar\": \"نبني علاقات دائمة من خلال الثقة والشفافية والالتزام الحقيقي بفهم ودعم عملائنا.\"\n          }\n        },\n        {\n          \"id\": \"val-2\",\n          \"number\": \"02\",\n          \"icon\": \"Headphones\",\n          \"title\": {\n            \"en\": \"Service\",\n            \"ar\": \"الخدمة المتميزة\"\n          },\n          \"description\": {\n            \"en\": \"We strive to deliver responsive, reliable, and high-quality service that addresses our clients' needs and exceeds expectations.\",\n            \"ar\": \"نسعى جاهدين لتقديم خدمة سريعة وموثوقة وعالية الجودة تلبي احتياجات عملائنا وتتجاوز التوقعات.\"\n          }\n        },\n        {\n          \"id\": \"val-3\",\n          \"number\": \"03\",\n          \"icon\": \"Users\",\n          \"title\": {\n            \"en\": \"Partnership & Counsel\",\n            \"ar\": \"الشراكة والمشورة\"\n          },\n          \"description\": {\n            \"en\": \"We work alongside our partners, offering thoughtful guidance, shared expertise, and collaborative solutions that create lasting value.\",\n            \"ar\": \"نعمل جنباً إلى جنب مع شركائنا، ونقدم توجيهاً مدروساً، وخبرات مشتركة، وحلولاً تعاونية تخلق قيمة دائمة.\"\n          }\n        },\n        {\n          \"id\": \"val-4\",\n          \"number\": \"04\",\n          \"icon\": \"Scale\",\n          \"title\": {\n            \"en\": \"Diversity\",\n            \"ar\": \"التنوع والشمولية\"\n          },\n          \"description\": {\n            \"en\": \"We value diverse perspectives, experiences, and ideas, recognizing that inclusion strengthens our teams and drives better outcomes.\",\n            \"ar\": \"نقدر وجهات النظر والخبرات والأفكار المتنوعة، مدركين أن الشمولية تقوي فرقنا وتحقق نتائج أفضل.\"\n          }\n        },\n        {\n          \"id\": \"val-5\",\n          \"number\": \"05\",\n          \"icon\": \"Lightbulb\",\n          \"title\": {\n            \"en\": \"Opportunity\",\n            \"ar\": \"الفرص والابتكار\"\n          },\n          \"description\": {\n            \"en\": \"We identify opportunities for progress and growth, helping businesses and people turn promising ideas into meaningful results.\",\n            \"ar\": \"نحدد فرص التقدم والنمو، ونساعد الشركات والأفراد على تحويل الأفكار الواعدة إلى نتائج ذات مغزى.\"\n          }\n        },\n        {\n          \"id\": \"val-6\",\n          \"number\": \"06\",\n          \"icon\": \"ShieldCheck\",\n          \"title\": {\n            \"en\": \"Authenticity\",\n            \"ar\": \"المصداقية والأصالة\"\n          },\n          \"description\": {\n            \"en\": \"We act with integrity, remain true to our commitments, and build trust through honest communication and responsible decisions.\",\n            \"ar\": \"نتصرف بنزاهة، ونبقى أوفياء لالتزاماتنا، ونبني الثقة من خلال التواصل الصادق والقرارات المسؤولة.\"\n          }\n        }\n      ]\n    },\n    \"historySection\": {\n      \"tagline\": {\n        \"en\": \"OUR BACKGROUND\",\n        \"ar\": \"خلفيتنا وتاريخنا\"\n      },\n      \"title\": {\n        \"en\": \"Our History & Ownership\",\n        \"ar\": \"تاريخنا وهيكلية الملكية\"\n      },\n      \"description\": {\n        \"en\": \"Discover the foundations of our business, the expertise behind our journey, and the framework that supports our continued growth.\",\n        \"ar\": \"اكتشف أسس أعمالنا، والخبرة الكامنة وراء مسيرتنا، والإطار الذي يدعم نمونا المستمر.\"\n      },\n      \"items\": [\n        {\n          \"id\": \"hist-1\",\n          \"number\": \"01\",\n          \"icon\": \"History\",\n          \"title\": {\n            \"en\": \"Brief History\",\n            \"ar\": \"نبذة تاريخية\"\n          },\n          \"description\": {\n            \"en\": \"Salama was established in 2020, with its headquarters in Baghdad, Iraq. The company specializes in administrative services and investment consultancy across insurance, healthcare, healthcare management, industry, construction, infrastructure, investment, and agriculture. Salama serves as a bridge between businesses and stakeholders, helping facilitate collaboration and achieve efficient, sustainable, and successful outcomes. In its early years, the company established partnerships with several major local and international businesses.\",\n            \"ar\": \"تأسست سلامة في عام 2020، ومقرها الرئيسي في بغداد، العراق. وتتخصص الشركة في الخدمات الإدارية والاستشارات الاستثمارية عبر التأمين والرعاية الصحية وإدارة الرعاية الصحية والصناعة والبناء والبنية التحتية والاستثمار والزراعة. وتعمل سلامة كجسر بين الشركات وأصحاب المصلحة، مما يساعد على تسهيل التعاون وتحقيق نتائج فعالة ومستدامة وناجحة.\"\n          }\n        },\n        {\n          \"id\": \"hist-2\",\n          \"number\": \"02\",\n          \"icon\": \"Building2\",\n          \"title\": {\n            \"en\": \"Shareholding Structure\",\n            \"ar\": \"هيكلية المساهمة والملكية\"\n          },\n          \"description\": {\n            \"en\": \"Salama's shareholding structure outlines the ownership framework behind the company and the interests represented in its business. For an accurate overview of shareholders, ownership percentages, and governance arrangements, refer to the company's official corporate documentation.\",\n            \"ar\": \"تحدد هيكلية المساهمة في سلامة إطار الملكية وراء الشركة والمصالح الممثلة في أعمالها. للحصول على نظرة دقيقة على المساهمين ونسب الملكية وترتيبات الحوكمة، يرجى الرجوع إلى الوثائق الرسمية للشركة.\"\n          }\n        }\n      ]\n    },\n    \"purposeSection\": {\n      \"tagline\": {\n        \"en\": \"OUR PURPOSE\",\n        \"ar\": \"هدفنا وغايتنا\"\n      },\n      \"title\": {\n        \"en\": \"Driving Progress Through Clear Objectives\",\n        \"ar\": \"دفع عجلة التقدم من خلال أهداف واضحة\"\n      },\n      \"description\": {\n        \"en\": \"We partner with like-minded organizations to promote sustainability and develop practical solutions. By collaborating with communities, government bodies, and businesses, we bring together expertise, resources, and influence to create positive change, strengthen stakeholder relationships, and uphold ethical business practices.\",\n        \"ar\": \"نحن نتشارك مع المنظمات ذات التفكير المماثل لتعزيز الاستدامة وتطوير حلول عملية. من خلال التعاون مع المجتمعات والهيئات الحكومية والشركات، نجمع بين الخبرة والموارد والتأثير لإحداث تغيير إيجابي وتعزيز علاقات أصحاب المصلحة ودعم ممارسات الأعمال الأخلاقية.\"\n      },\n      \"highlightTitle\": {\n        \"en\": \"Committed to Shared Progress\",\n        \"ar\": \"ملتزمون بالتقدم المشترك\"\n      },\n      \"highlightDescription\": {\n        \"en\": \"We believe meaningful results come from responsible management, community engagement, and trusted client partnerships.\",\n        \"ar\": \"نحن نؤمن بأن النتائج ذات المغزى تأتي من الإدارة المسؤولة، والمشاركة المجتمعية، والشراكات الموثوقة مع العملاء.\"\n      },\n      \"highlightIcon\": \"Heart\",\n      \"objectivesTagline\": {\n        \"en\": \"OUR PRIORITIES\",\n        \"ar\": \"أولوياتنا\"\n      },\n      \"objectivesTitle\": {\n        \"en\": \"Our Objectives\",\n        \"ar\": \"أهدافنا\"\n      },\n      \"objectives\": [\n        {\n          \"id\": \"obj-1\",\n          \"number\": \"01\",\n          \"icon\": \"Target\",\n          \"title\": {\n            \"en\": \"Effective Project Management\",\n            \"ar\": \"إدارة المشاريع الفعالة\"\n          }\n        },\n        {\n          \"id\": \"obj-2\",\n          \"number\": \"02\",\n          \"icon\": \"HandHeart\",\n          \"title\": {\n            \"en\": \"Contributing to Community Service\",\n            \"ar\": \"المساهمة في خدمة المجتمع\"\n          }\n        },\n        {\n          \"id\": \"obj-3\",\n          \"number\": \"03\",\n          \"icon\": \"ShieldCheck\",\n          \"title\": {\n            \"en\": \"Becoming a Trusted Partner for Our Clients\",\n            \"ar\": \"أن نصبح شريكاً موثوقاً لعملائنا\"\n          }\n        }\n      ]\n    },\n    \"bannerSection\": {\n      \"tagline\": {\n        \"en\": \"LET'S WORK TOGETHER\",\n        \"ar\": \"لنعمل معاً\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Looking for medical products, equipment, pharmaceutical solutions, or business services? Our team is ready to help you find what you need.\",\n        \"ar\": \"هل تبحث عن منتجات طبية أو معدات أو حلول صيدلانية أو خدمات أعمال؟ فريقنا جاهز لمساعدتك في العثور على ما تحتاجه.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote\",\n        \"ar\": \"احصل على عرض سعر\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "03. CMS - Company Profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/company",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "company"
+          ]
+        },
+        "description": "### Overview\nFetches Company Profile content: Header, Who We Are narrative & pillars, What Guides Us corporate principles, and downloadable PDF document details.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/company",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "company"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"Company Profile\",\n        \"ar\": \"ملف الشركة\"\n      },\n      \"description\": {\n        \"en\": \"Learn more about Mobtaker Group, our vision, and our commitment to innovation and sustainable growth.\",\n        \"ar\": \"تعرف أكثر على مجموعة مبتكر، ورؤيتنا، والتزامنا بالابتكار والنمو المستدام.\"\n      }\n    },\n    \"whoWeAreSection\": {\n      \"tagline\": {\n        \"en\": \"WHO WE ARE\",\n        \"ar\": \"من نحن\"\n      },\n      \"title\": {\n        \"en\": \"Building Opportunities Through Innovation and Collaboration\",\n        \"ar\": \"بناء الفرص من خلال الابتكار والتعاون\"\n      },\n      \"description1\": {\n        \"en\": \"Mobtaker Group is a diversified business organization focused on identifying opportunities, developing strategic relationships, and supporting initiatives that contribute to economic and business development.\",\n        \"ar\": \"مجموعة مبتكر هي مؤسسة أعمال متنوعة تركز على تحديد الفرص، وبناء علاقات استراتيجية، ودعم المبادرات التي تسهم في التنمية الاقتصادية والتجارية.\"\n      },\n      \"description2\": {\n        \"en\": \"We aim to connect ideas, expertise, and resources to help businesses explore new possibilities. Through collaboration and a forward-looking approach, we strive to build lasting relationships with clients, partners, and stakeholders.\",\n        \"ar\": \"نهدف إلى ربط الأفكار والخبرات والموارد لمساعدة الشركات في استكشاف إمكانيات جديدة. من خلال التعاون والنهج المستقبلي، نسعى جاهدين لبناء علاقات دائمة مع العملاء والشركاء والجهات المعنية.\"\n      },\n      \"cards\": [\n        {\n          \"id\": \"card-overview\",\n          \"icon\": \"Building2\",\n          \"title\": {\n            \"en\": \"Our Overview\",\n            \"ar\": \"نظرة عامة\"\n          },\n          \"description\": {\n            \"en\": \"We bring together business insight, collaboration, and practical solutions to explore opportunities across relevant sectors.\",\n            \"ar\": \"نجمع بين الرؤية التجارية والتعاون والحلول العملية لاستكشاف الفرص عبر القطاعات ذات الصلة.\"\n          }\n        },\n        {\n          \"id\": \"card-vision\",\n          \"icon\": \"Eye\",\n          \"title\": {\n            \"en\": \"Our Vision\",\n            \"ar\": \"رؤيتنا\"\n          },\n          \"description\": {\n            \"en\": \"To become a trusted business group recognized for innovation, responsible growth, and meaningful contributions to the markets we serve.\",\n            \"ar\": \"أن نصبح مجموعة أعمال موثوقة ومعترف بها في الابتكار والنمو المسؤول والمساهمات ذات المغزى في الأسواق التي نخدمها.\"\n          }\n        },\n        {\n          \"id\": \"card-mission\",\n          \"icon\": \"Target\",\n          \"title\": {\n            \"en\": \"Our Mission\",\n            \"ar\": \"رسالتنا\"\n          },\n          \"description\": {\n            \"en\": \"To develop valuable business opportunities, build strategic partnerships, and deliver practical solutions guided by integrity and long-term thinking.\",\n            \"ar\": \"تطوير فرص أعمال قيمة، وبناء شراكات استراتيجية، وتقديم حلول عملية مسترشدين بالنزاهة والتفكير طويل الأمد.\"\n          }\n        },\n        {\n          \"id\": \"card-core-values\",\n          \"icon\": \"ShieldCheck\",\n          \"title\": {\n            \"en\": \"Our Core Values\",\n            \"ar\": \"قيمنا الجوهرية\"\n          },\n          \"description\": {\n            \"en\": \"Our work is guided by collaboration, integrity, and a commitment to continuous improvement.\",\n            \"ar\": \"يسترشد عملنا بالتعاون والنزاهة والالتزام بالتحسين المستمر.\"\n          }\n        }\n      ]\n    },\n    \"whatGuidesUsSection\": {\n      \"tagline\": {\n        \"en\": \"WHAT GUIDES US\",\n        \"ar\": \"ما يوجهنا\"\n      },\n      \"title\": {\n        \"en\": \"The Principles Behind Our Work\",\n        \"ar\": \"المبادئ الكامنة وراء عملنا\"\n      },\n      \"description\": {\n        \"en\": \"We believe sustainable business relationships are built through trust, responsibility, and a shared commitment to progress.\",\n        \"ar\": \"نؤمن بأن علاقات الأعمال المستدامة تُبنى من خلال الثقة والمسؤولية والالتزام المشترك بالتقدم.\"\n      },\n      \"principles\": [\n        {\n          \"id\": \"p-1\",\n          \"en\": \"Integrity\",\n          \"ar\": \"النزاهة\"\n        },\n        {\n          \"id\": \"p-2\",\n          \"en\": \"Innovation\",\n          \"ar\": \"الابتكار\"\n        },\n        {\n          \"id\": \"p-3\",\n          \"en\": \"Collaboration\",\n          \"ar\": \"التعاون\"\n        },\n        {\n          \"id\": \"p-4\",\n          \"en\": \"Transparency\",\n          \"ar\": \"الشفافية\"\n        },\n        {\n          \"id\": \"p-5\",\n          \"en\": \"Responsibility\",\n          \"ar\": \"المسؤولية\"\n        },\n        {\n          \"id\": \"p-6\",\n          \"en\": \"Continuous Improvement\",\n          \"ar\": \"التحسين المستمر\"\n        }\n      ],\n      \"downloadBox\": {\n        \"title\": {\n          \"en\": \"Download Our Company Profile\",\n          \"ar\": \"تحميل ملف الشركة التعريفي\"\n        },\n        \"description\": {\n          \"en\": \"Explore our company overview, vision, mission, and business approach in our company profile document.\",\n          \"ar\": \"استكشف نظرة عامة على شركتنا ورؤيتها ورسالتها ونهجها التجاري في وثيقة ملف الشركة.\"\n        },\n        \"buttonText\": {\n          \"en\": \"Download Company Profile (PDF)\",\n          \"ar\": \"تحميل ملف الشركة (PDF)\"\n        },\n        \"pdfUrl\": \"\",\n        \"pdfName\": \"Mobtaker-Group-Profile.pdf\"\n      }\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "04. CMS - Services",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/services",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "services"
+          ]
+        },
+        "description": "### Overview\nFetches Healthcare & Laboratory Services: Header overview cards (Certified tech, Quality standards, Strategic partnerships) and Business Areas sector cards.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/services",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "services"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"Our Services\",\n        \"ar\": \"خدماتنا\"\n      },\n      \"description\": {\n        \"en\": \"Discover our medical equipment, laboratory supplies, and healthcare solutions designed to support healthcare professionals and facilities.\",\n        \"ar\": \"اكتشف معداتنا الطبية ومستلزمات المختبرات والحلول الصحية المصممة لدعم المتخصصين والمنشآت الصحية.\"\n      },\n      \"cards\": [\n        {\n          \"id\": \"card-service-1\",\n          \"icon\": \"Microscope\",\n          \"title\": {\n            \"en\": \"Comprehensive Medical & Laboratory Solutions\",\n            \"ar\": \"حلول طبية ومخبرية شاملة\"\n          },\n          \"description\": {\n            \"en\": \"We provide comprehensive solutions in medical and laboratory equipment and supplies to support healthcare professionals and facilities.\",\n            \"ar\": \"نقدم حلولاً شاملة في المعدات والمستلزمات الطبية والمخبرية لدعم المتخصصين والمنشآت الصحية.\"\n          }\n        },\n        {\n          \"id\": \"card-service-2\",\n          \"icon\": \"Code2\",\n          \"title\": {\n            \"en\": \"Globally Certified Advanced Technologies\",\n            \"ar\": \"تقنيات متقدمة معتمدة عالمياً\"\n          },\n          \"description\": {\n            \"en\": \"We deliver advanced, globally certified technologies that support modern healthcare services and improve quality of life.\",\n            \"ar\": \"نقدم تقنيات متطورة ومعتمدة دولياً تدعم خدمات الرعاية الصحية الحديثة وتحسن جودة الحياة.\"\n          }\n        },\n        {\n          \"id\": \"card-service-3\",\n          \"icon\": \"ShieldCheck\",\n          \"title\": {\n            \"en\": \"International Standards of Quality & Safety\",\n            \"ar\": \"معايير الجودة والسلامة الدولية\"\n          },\n          \"description\": {\n            \"en\": \"We focus on providing certified products that meet international standards for quality, reliability, and safety.\",\n            \"ar\": \"نركز على توفير منتجات معتمدة تلبي المعايير الدولية للجودة والموثوقية والسلامة.\"\n          }\n        },\n        {\n          \"id\": \"card-service-4\",\n          \"icon\": \"Handshake\",\n          \"title\": {\n            \"en\": \"Strategic Healthcare Partnerships\",\n            \"ar\": \"شراكات استراتيجية في الرعاية الصحية\"\n          },\n          \"description\": {\n            \"en\": \"Through partnerships with leading global and local manufacturers, we serve hospitals, clinics, laboratories, and research centers.\",\n            \"ar\": \"من خلال الشراكات مع كبرى الشركات المصنعة العالمية والمحلية، نخدم المستشفيات والعيادات والمختبرات ومراكز الأبحاث.\"\n          }\n        }\n      ]\n    },\n    \"businessAreasSection\": {\n      \"title\": {\n        \"en\": \"Our Business Areas\",\n        \"ar\": \"مجالات أعمالنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore the sectors and services that form the Projects Innovator group.\",\n        \"ar\": \"استكشف القطاعات والخدمات التي تشكل مجموعة مبتكر المشاريع.\"\n      },\n      \"cards\": [\n        {\n          \"id\": \"card-area-1\",\n          \"icon\": \"Microscope\",\n          \"title\": {\n            \"en\": \"Medical & Laboratory Equipment\",\n            \"ar\": \"المعدات الطبية والمخبرية\"\n          },\n          \"description\": {\n            \"en\": \"Comprehensive medical device solutions and laboratory testing equipment.\",\n            \"ar\": \"حلول شاملة للأجهزة الطبية ومعدات الفحص المخبري.\"\n          },\n          \"linkUrl\": \"/services/medical-equipment\"\n        },\n        {\n          \"id\": \"card-area-2\",\n          \"icon\": \"FlaskConical\",\n          \"title\": {\n            \"en\": \"Laboratory Supplies\",\n            \"ar\": \"المستلزمات المخبرية\"\n          },\n          \"description\": {\n            \"en\": \"Reliable laboratory supplies and essential equipment for research, testing, and diagnostic facilities.\",\n            \"ar\": \"مستلزمات مخبرية موثوقة ومعدات أساسية لمرافق الأبحاث والاختبار والتشخيص.\"\n          },\n          \"linkUrl\": \"/services/laboratory-supplies\"\n        },\n        {\n          \"id\": \"card-area-3\",\n          \"icon\": \"Stethoscope\",\n          \"title\": {\n            \"en\": \"Healthcare Solutions\",\n            \"ar\": \"حلول الرعاية الصحية\"\n          },\n          \"description\": {\n            \"en\": \"Quality healthcare products and solutions designed to support medical professionals and healthcare facilities.\",\n            \"ar\": \"منتجات وحلول رعاية صحية عالية الجودة مصممة لدعم المتخصصين في المجال الطبي والمرافق الصحية.\"\n          },\n          \"linkUrl\": \"/services/healthcare-solutions\"\n        },\n        {\n          \"id\": \"card-area-4\",\n          \"icon\": \"ShieldCheck\",\n          \"title\": {\n            \"en\": \"Quality & Safety Standards\",\n            \"ar\": \"معايير الجودة والسلامة\"\n          },\n          \"description\": {\n            \"en\": \"Products selected with a focus on quality, reliability, and compliance with applicable safety standards.\",\n            \"ar\": \"منتجات مختارة مع التركيز على الجودة والموثوقية والامتثال لمعايير السلامة المعمول بها.\"\n          },\n          \"linkUrl\": \"/services/standards\"\n        }\n      ]\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "05. CMS - Shop / Products",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/shop",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "shop"
+          ]
+        },
+        "description": "### Overview\nFetches Products Catalog: Header description and product cards with international certification badges (CE, FDA, ISO), product imagery, specifications, and \"Request a Quote\" actions.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/shop",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "shop"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"Our Products\",\n        \"ar\": \"منتجاتنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore our range of medical equipment and healthcare solutions. Contact our team to request a quote tailored to your requirements.\",\n        \"ar\": \"استكشف مجموعتنا من المعدات الطبية والحلول الصحية. تواصل مع فريقنا لطلب عرض أسعار مصمم خصيصاً لاحتياجاتك.\"\n      },\n      \"products\": [\n        {\n          \"id\": \"prod-1\",\n          \"image\": \"https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"MedTech\",\n            \"ar\": \"ميدتك\"\n          },\n          \"name\": {\n            \"en\": \"Patient Monitor\",\n            \"ar\": \"شاشة مراقبة المريض\"\n          },\n          \"description\": {\n            \"en\": \"A medical monitoring device designed to track vital signs and support patient observation in clinical environments.\",\n            \"ar\": \"جهاز مراقبة طبي مصمم لتتبع العلامات الحيوية ودعم ملاحظة المريض في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b1-1\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b1-2\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            },\n            {\n              \"id\": \"b1-3\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote\",\n            \"ar\": \"طلب عرض أسعار\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-2\",\n          \"image\": \"https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"SonoCare\",\n            \"ar\": \"سونوكير\"\n          },\n          \"name\": {\n            \"en\": \"Digital Ultrasound System\",\n            \"ar\": \"نظام الموجات فوق الصوتية الرقمي\"\n          },\n          \"description\": {\n            \"en\": \"An ultrasound imaging system designed to support diagnostic examinations in hospitals and healthcare facilities.\",\n            \"ar\": \"نظام تصوير بالموجات فوق الصوتية مصمم لدعم الفحوصات التشخيصية في المستشفيات والمنشآت الصحية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b2-1\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b2-2\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote\",\n            \"ar\": \"طلب عرض أسعار\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-3\",\n          \"image\": \"https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"CareFlow\",\n            \"ar\": \"كيرفلو\"\n          },\n          \"name\": {\n            \"en\": \"Infusion Pump\",\n            \"ar\": \"مضخة الحقن الوريدي\"\n          },\n          \"description\": {\n            \"en\": \"A medical device designed for the controlled delivery of fluids and medications in clinical settings.\",\n            \"ar\": \"جهاز طبي مصمم للحقن الدقيق والمتحكم فيه للسوائل والأدوية في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b3-1\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b3-2\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote\",\n            \"ar\": \"طلب عرض أسعار\"\n          },\n          \"buttonUrl\": \"/contact\"\n        }\n      ]\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "06. CMS - Investment Opportunities",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/investment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "investment"
+          ]
+        },
+        "description": "### Overview\nFetches Investment Opportunities: Header, Institutional Mission & domestic market positioning, Macroeconomic drivers (01, 02, 03), Sector allocations, Investment foundations, and CTA banner.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/investment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "investment"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"Investment Opportunities\",\n        \"ar\": \"فرص الاستثمار\"\n      },\n      \"description\": {\n        \"en\": \"Explore investment opportunities with Mobtaker Group and discover how we create value through innovation, strategic partnerships, and sustainable growth.\",\n        \"ar\": \"استكشف فرص الاستثمار مع مجموعة مبتكر واكتشف كيف نخلق القيمة من خلال الابتكار والشراكات الاستراتيجية والنمو المستدام.\"\n      }\n    },\n    \"missionSection\": {\n      \"tagline\": {\n        \"en\": \"INSTITUTIONAL MISSION\",\n        \"ar\": \"المهمة المؤسسية\"\n      },\n      \"title\": {\n        \"en\": \"Best Investment Solutions for Sustainable National Growth\",\n        \"ar\": \"أفضل الحلول الاستثمارية لتحقيق نمو وطني مستدام\"\n      },\n      \"description\": {\n        \"en\": \"Mobtaker Group focuses on strategic investment opportunities across commercial real estate, high-throughput industrial facilities, and technology-driven agricultural projects in Iraq's key economic hubs.\\n\\nWe connect foreign institutional investors with viable, investment-ready domestic opportunities. These carefully selected initiatives help rebuild national infrastructure while creating long-term value for corporate ventures, family offices, and local enterprises.\\n\\nThrough strategic partners, including Salama Financial Group and leading banking institutions, we aim to facilitate financing solutions, liquidity support, and investment structures designed to manage risk and support sustainable returns.\",\n        \"ar\": \"تركز مجموعة مبتكر على فرص الاستثمار الاستراتيجي عبر العقارات التجارية، والمرافق الصناعية عالية الإنتاجية، والمشاريع الزراعية القائمة على التكنولوجيا في المراكز الاقتصادية الرئيسية في العراق.\\n\\nنحن نربط المستثمرين المؤسسيين الأجانب بفرص محلية مجدية وجاهزة للاستثمار. تساعد هذه المبادرات المختارة بعناية في إعادة بناء البنية التحتية الوطنية مع خلق قيمة طويلة الأجل للمشاريع المؤسسية والمكاتب العائلية والشركات المحلية.\\n\\nمن خلال شركاء استراتيجيين، بما في ذلك مجموعة سلامة المالية والمؤسسات المصرفية الرائدة، نهدف إلى تسهيل حلول التمويل، ودعم السيولة، وهياكل الاستثمار المصممة لإدارة المخاطر ودعم العوائد المستدامة.\"\n      },\n      \"image\": \"https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80\"\n    },\n    \"driversSection\": {\n      \"tagline\": {\n        \"en\": \"MACROECONOMIC DRIVERS\",\n        \"ar\": \"المحركات الاقتصادية الكلية\"\n      },\n      \"title\": {\n        \"en\": \"Why Invest in Iraq Now?\",\n        \"ar\": \"لماذا الاستثمار في العراق الآن؟\"\n      },\n      \"description\": {\n        \"en\": \"Discover the key sectors and economic opportunities shaping Iraq's investment landscape.\",\n        \"ar\": \"اكتشف القطاعات الرئيسية والفرص الاقتصادية التي تشكل المشهد الاستثماري في العراق.\"\n      },\n      \"drivers\": [\n        {\n          \"id\": \"driver-1\",\n          \"number\": \"01\",\n          \"title\": {\n            \"en\": \"Economic Growth\",\n            \"ar\": \"النمو الاقتصادي\"\n          },\n          \"description\": {\n            \"en\": \"Growing demand across key industries creates opportunities for businesses and long-term investors.\",\n            \"ar\": \"الطلب المتزايد عبر الصناعات الرئيسية يخلق فرصاً للشركات والمستثمرين على المدى الطويل.\"\n          }\n        },\n        {\n          \"id\": \"driver-2\",\n          \"number\": \"02\",\n          \"title\": {\n            \"en\": \"Infrastructure Development\",\n            \"ar\": \"تطوير البنية التحتية\"\n          },\n          \"description\": {\n            \"en\": \"Reconstruction and modernization initiatives create demand for infrastructure, construction, and essential services.\",\n            \"ar\": \"مبادرات إعادة الإعمار والتحديث تخلق طلباً على البنية التحتية والبناء والخدمات الأساسية.\"\n          }\n        },\n        {\n          \"id\": \"driver-3\",\n          \"number\": \"03\",\n          \"title\": {\n            \"en\": \"Natural Resources\",\n            \"ar\": \"الموارد الطبيعية\"\n          },\n          \"description\": {\n            \"en\": \"Iraq's significant natural resource base supports opportunities across energy and related industries.\",\n            \"ar\": \"قاعدة الموارد الطبيعية الكبيرة في العراق تدعم الفرص عبر قطاعات الطاقة والصناعات المرتبطة بها.\"\n          }\n        },\n        {\n          \"id\": \"driver-4\",\n          \"number\": \"04\",\n          \"title\": {\n            \"en\": \"Agricultural Potential\",\n            \"ar\": \"الإمكانات الزراعية\"\n          },\n          \"description\": {\n            \"en\": \"Technology-driven farming, food production, and supply chain improvements offer opportunities for sustainable development.\",\n            \"ar\": \"الزراعة القائمة على التكنولوجيا، وإنتاج الغذاء، وتحسين سلاسل التوريد توفر فرصاً للتنمية المستدامة.\"\n          }\n        }\n      ]\n    },\n    \"sectorsSection\": {\n      \"tagline\": {\n        \"en\": \"OUR FOCUS SECTORS\",\n        \"ar\": \"قطاعات تركيزنا\"\n      },\n      \"title\": {\n        \"en\": \"Explore Our Investment Areas\",\n        \"ar\": \"استكشف مجالاتنا الاستثمارية\"\n      },\n      \"description\": {\n        \"en\": \"We focus on strategic sectors with the potential to support economic development, create business opportunities, and generate long-term value in Iraq.\",\n        \"ar\": \"نركز على القطاعات الاستراتيجية التي تمتلك القدرة على دعم التنمية الاقتصادية، وخلق فرص الأعمال، وتوليد قيمة طويلة الأجل في العراق.\"\n      },\n      \"sectors\": [\n        {\n          \"id\": \"sector-1\",\n          \"number\": \"01\",\n          \"title\": {\n            \"en\": \"Industry\",\n            \"ar\": \"الصناعة\"\n          },\n          \"description\": {\n            \"en\": \"Explore opportunities in industrial development, manufacturing, and production facilities that support economic growth.\",\n            \"ar\": \"استكشف الفرص في التنمية الصناعية، والتصنيع، ومرافق الإنتاج التي تدعم النمو الاقتصادي.\"\n          },\n          \"linkUrl\": \"/investment/industry\"\n        },\n        {\n          \"id\": \"sector-2\",\n          \"number\": \"02\",\n          \"title\": {\n            \"en\": \"Commercial Real Estate\",\n            \"ar\": \"العقارات التجارية\"\n          },\n          \"description\": {\n            \"en\": \"Discover opportunities in commercial properties and real estate developments in key economic locations.\",\n            \"ar\": \"اكتشف الفرص في العقارات التجارية والمشاريع العقارية في المواقع الاقتصادية الرئيسية.\"\n          },\n          \"linkUrl\": \"/investment/real-estate\"\n        },\n        {\n          \"id\": \"sector-3\",\n          \"number\": \"03\",\n          \"title\": {\n            \"en\": \"Agriculture & Food Production\",\n            \"ar\": \"الزراعة وإنتاج الغذاء\"\n          },\n          \"description\": {\n            \"en\": \"Support modern farming, food production, and agricultural technologies that strengthen local supply chains.\",\n            \"ar\": \"دعم الزراعة الحديثة، وإنتاج الأغذية، والتقنيات الزراعية التي تعزز سلاسل التوريد المحلية.\"\n          },\n          \"linkUrl\": \"/investment/agriculture\"\n        },\n        {\n          \"id\": \"sector-4\",\n          \"number\": \"04\",\n          \"title\": {\n            \"en\": \"Energy\",\n            \"ar\": \"الطاقة\"\n          },\n          \"description\": {\n            \"en\": \"Explore investment opportunities across energy infrastructure and related industrial services.\",\n            \"ar\": \"استكشف فرص الاستثمار في البنية التحتية للطاقة والخدمات الصناعية ذات الصلة.\"\n          },\n          \"linkUrl\": \"/investment/energy\"\n        },\n        {\n          \"id\": \"sector-5\",\n          \"number\": \"05\",\n          \"title\": {\n            \"en\": \"Technology & Innovation\",\n            \"ar\": \"التكنولوجيا والابتكار\"\n          },\n          \"description\": {\n            \"en\": \"Encourage technology-enabled solutions that improve business operations and support digital development.\",\n            \"ar\": \"تشجيع الحلول المدعومة بالتكنولوجيا التي تحسن العمليات التجارية وتدعم التطور الرقمي.\"\n          },\n          \"linkUrl\": \"/investment/technology\"\n        },\n        {\n          \"id\": \"sector-6\",\n          \"number\": \"06\",\n          \"title\": {\n            \"en\": \"Infrastructure\",\n            \"ar\": \"البنية التحتية\"\n          },\n          \"description\": {\n            \"en\": \"Identify opportunities in construction, essential services, and infrastructure development.\",\n            \"ar\": \"تحديد الفرص في مجالات البناء والخدمات الأساسية وتطوير البنية التحتية.\"\n          },\n          \"linkUrl\": \"/investment/infrastructure\"\n        }\n      ]\n    },\n    \"environmentSection\": {\n      \"tagline\": {\n        \"en\": \"THE INVESTMENT ENVIRONMENT\",\n        \"ar\": \"البيئة الاستثمارية\"\n      },\n      \"title\": {\n        \"en\": \"Factors Encouraging Investment\",\n        \"ar\": \"عوامل مشجعة على الاستثمار\"\n      },\n      \"description\": {\n        \"en\": \"Several economic and strategic factors can create opportunities for investors exploring the Iraqi market.\",\n        \"ar\": \"تساهم العديد من العوامل الاقتصادية والاستراتيجية في خلق فرص واعدة للمستثمرين الراغبين في دخول السوق العراقي.\"\n      },\n      \"factors\": [\n        {\n          \"id\": \"factor-1\",\n          \"icon\": \"Shield\",\n          \"title\": {\n            \"en\": \"Improving Business Environment\",\n            \"ar\": \"تحسين بيئة الأعمال\"\n          },\n          \"description\": {\n            \"en\": \"Ongoing development and institutional initiatives can help create a more supportive environment for business and investment.\",\n            \"ar\": \"تساهم المبادرات المؤسسية والتنموية المستمرة في خلق بيئة أكثر دعماً للأعمال والاستثمار.\"\n          }\n        },\n        {\n          \"id\": \"factor-2\",\n          \"icon\": \"Shield\",\n          \"title\": {\n            \"en\": \"Strategic Location\",\n            \"ar\": \"موقع استراتيجي\"\n          },\n          \"description\": {\n            \"en\": \"Iraq's location connects regional markets and offers potential opportunities for trade, logistics, and commercial development.\",\n            \"ar\": \"يربط موقع العراق بين الأسواق الإقليمية ويوفر فرصاً واعدة للتجارة والخدمات اللوجستية والتطوير التجاري.\"\n          }\n        },\n        {\n          \"id\": \"factor-3\",\n          \"icon\": \"Shield\",\n          \"title\": {\n            \"en\": \"Natural Resources\",\n            \"ar\": \"الموارد الطبيعية\"\n          },\n          \"description\": {\n            \"en\": \"The country's natural resource base supports opportunities in energy and industries connected to resource development.\",\n            \"ar\": \"تدعم قاعدة الموارد الطبيعية في البلاد الفرص المتاحة في مجال الطاقة والصناعات المرتبطة بتطوير الموارد.\"\n          }\n        },\n        {\n          \"id\": \"factor-4\",\n          \"icon\": \"Shield\",\n          \"title\": {\n            \"en\": \"Market Potential\",\n            \"ar\": \"إمكانات السوق\"\n          },\n          \"description\": {\n            \"en\": \"Demand for housing, infrastructure, consumer goods, and essential services can create opportunities across multiple sectors.\",\n            \"ar\": \"يمكن للطلب المتزايد على الإسكان والبنية التحتية والسلع الاستهلاكية والخدمات الأساسية خلق فرص عبر قطاعات متعددة.\"\n          }\n        },\n        {\n          \"id\": \"factor-5\",\n          \"icon\": \"Shield\",\n          \"title\": {\n            \"en\": \"Development Initiatives\",\n            \"ar\": \"مبادرات التنمية\"\n          },\n          \"description\": {\n            \"en\": \"Reconstruction and economic development programs may create demand for private-sector expertise, capital, and services.\",\n            \"ar\": \"قد تؤدي برامج إعادة الإعمار والتنمية الاقتصادية إلى خلق طلب متزايد على خبرات القطاع الخاص ورؤوس الأموال والخدمات.\"\n          }\n        },\n        {\n          \"id\": \"factor-6\",\n          \"icon\": \"Shield\",\n          \"title\": {\n            \"en\": \"Strategic Partnerships\",\n            \"ar\": \"شراكات استراتيجية\"\n          },\n          \"description\": {\n            \"en\": \"Collaboration between local businesses, international investors, and financial institutions can help develop investment opportunities.\",\n            \"ar\": \"التعاون بين الشركات المحلية والمستثمرين الدوليين والمؤسسات المالية يمكن أن يسهم في تطوير فرص استثمارية ناجحة.\"\n          }\n        }\n      ],\n      \"foundationBox\": {\n        \"title\": {\n          \"en\": \"Building a Foundation for Investment\",\n          \"ar\": \"بناء أساس متين للاستثمار\"\n        },\n        \"description\": {\n          \"en\": \"Mobtaker Group works to help investors explore opportunities in Iraq by connecting them with relevant local projects, facilitating strategic partnerships, and addressing potential challenges throughout the investment process. Our goal is to support informed investment decisions and contribute to sustainable economic development.\",\n          \"ar\": \"تعمل مجموعة مبتكر على مساعدة المستثمرين على استكشاف الفرص في العراق من خلال ربطهم بالمشاريع المحلية المناسبة، وتسهيل الشراكات الاستراتيجية، والتغلب على التحديات طوال عملية الاستثمار. هدفنا هو دعم اتخاذ قرارات استثمارية مدروسة والمساهمة في التنمية الاقتصادية المستدامة.\"\n        }\n      }\n    },\n    \"bannerSection\": {\n      \"tagline\": {\n        \"en\": \"LET'S WORK TOGETHER\",\n        \"ar\": \"لنعمل معاً\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Looking for medical products, equipment, pharmaceutical solutions, or business services? Our team is ready to help you find what you need.\",\n        \"ar\": \"هل تبحث عن منتجات طبية، معدات، حلول صيدلانية، أو خدمات أعمال؟ فريقنا جاهز لمساعدتك في العثور على ما تحتاجه.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote\",\n        \"ar\": \"احصل على عرض أسعار\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "07. CMS - Projects Portfolio",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/projects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "projects"
+          ]
+        },
+        "description": "### Overview\nFetches Projects Portfolio: Header and categorized projects with status indicator badges (Completed, Ongoing, Planned) and project details.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "projects"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"Our Projects\",\n        \"ar\": \"مشاريعنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore our projects, discover innovative ideas, and see how we turn our vision into impactful solutions that create lasting value.\",\n        \"ar\": \"استكشف مشاريعنا، واكتشف الأفكار المبتكرة، وشاهد كيف نحول رؤيتنا إلى حلول مؤثرة تخلق قيمة دائمة.\"\n      },\n      \"projects\": [\n        {\n          \"id\": \"proj-1\",\n          \"category\": {\n            \"en\": \"Urban Innovation\",\n            \"ar\": \"الابتكار الحضري\"\n          },\n          \"status\": {\n            \"en\": \"Completed\",\n            \"ar\": \"مكتمل\"\n          },\n          \"statusType\": \"completed\",\n          \"title\": {\n            \"en\": \"Smart City Development\",\n            \"ar\": \"تطوير المدن الذكية\"\n          },\n          \"description\": {\n            \"en\": \"Developing intelligent urban solutions that improve infrastructure, optimize public services, and create sustainable communities.\",\n            \"ar\": \"تطوير حلول حضرية ذكية تعمل على تحسين البنية التحتية، وتحسين الخدمات العامة، وبناء مجتمعات مستدامة.\"\n          },\n          \"linkUrl\": \"/projects/smart-city\"\n        },\n        {\n          \"id\": \"proj-2\",\n          \"category\": {\n            \"en\": \"Technology\",\n            \"ar\": \"التكنولوجيا والتحول الرقمي\"\n          },\n          \"status\": {\n            \"en\": \"Ongoing\",\n            \"ar\": \"قيد التنفيذ\"\n          },\n          \"statusType\": \"ongoing\",\n          \"title\": {\n            \"en\": \"Digital Transformation\",\n            \"ar\": \"التحول الرقمي المؤسسي\"\n          },\n          \"description\": {\n            \"en\": \"Helping organizations modernize their operations through digital platforms, streamlined workflows, and innovative technologies.\",\n            \"ar\": \"مساعدة المؤسسات على تحديث عملياتها من خلال المنصات الرقمية، وسير العمل المبسط، والتقنيات المبتكرة.\"\n          },\n          \"linkUrl\": \"/projects/digital-transformation\"\n        },\n        {\n          \"id\": \"proj-3\",\n          \"category\": {\n            \"en\": \"Sustainability\",\n            \"ar\": \"الاستدامة والبيئة\"\n          },\n          \"status\": {\n            \"en\": \"Ongoing\",\n            \"ar\": \"قيد التنفيذ\"\n          },\n          \"statusType\": \"ongoing\",\n          \"title\": {\n            \"en\": \"Sustainable Energy Initiative\",\n            \"ar\": \"مبادرة الطاقة المستدامة\"\n          },\n          \"description\": {\n            \"en\": \"Promoting sustainable energy solutions that support environmental responsibility and long-term resource efficiency.\",\n            \"ar\": \"تعزيز حلول الطاقة المستدامة التي تدعم المسؤولية البيئية وكفاءة الموارد على المدى الطويل.\"\n          },\n          \"linkUrl\": \"/projects/sustainable-energy\"\n        },\n        {\n          \"id\": \"proj-4\",\n          \"category\": {\n            \"en\": \"Social Impact\",\n            \"ar\": \"الأثر الاجتماعي\"\n          },\n          \"status\": {\n            \"en\": \"Completed\",\n            \"ar\": \"مكتمل\"\n          },\n          \"statusType\": \"completed\",\n          \"title\": {\n            \"en\": \"Community Development\",\n            \"ar\": \"تنمية المجتمع المحلي\"\n          },\n          \"description\": {\n            \"en\": \"Supporting community growth through inclusive initiatives, local engagement, and improved access to essential opportunities.\",\n            \"ar\": \"دعم نمو المجتمع من خلال المبادرات الشاملة، والمشاركة المحلية، وتحسين الوصول إلى الفرص الأساسية.\"\n          },\n          \"linkUrl\": \"/projects/community-development\"\n        },\n        {\n          \"id\": \"proj-5\",\n          \"category\": {\n            \"en\": \"Research & Development\",\n            \"ar\": \"البحث والتطوير\"\n          },\n          \"status\": {\n            \"en\": \"Ongoing\",\n            \"ar\": \"قيد التنفيذ\"\n          },\n          \"statusType\": \"ongoing\",\n          \"title\": {\n            \"en\": \"Innovation Research Hub\",\n            \"ar\": \"مركز أبحاث الابتكار\"\n          },\n          \"description\": {\n            \"en\": \"Encouraging research, collaboration, and the development of practical solutions to emerging industry challenges.\",\n            \"ar\": \"تشجيع البحث والتعاون وتطوير حلول عملية لتحديات الصناعة الناشئة.\"\n          },\n          \"linkUrl\": \"/projects/innovation-hub\"\n        },\n        {\n          \"id\": \"proj-6\",\n          \"category\": {\n            \"en\": \"Education\",\n            \"ar\": \"التعليم والمعرفة\"\n          },\n          \"status\": {\n            \"en\": \"Planned\",\n            \"ar\": \"مخطط له\"\n          },\n          \"statusType\": \"planned\",\n          \"title\": {\n            \"en\": \"Digital Learning Platform\",\n            \"ar\": \"منصة التعلم الرقمي\"\n          },\n          \"description\": {\n            \"en\": \"Expanding access to learning through digital experiences designed to support knowledge sharing and skill development.\",\n            \"ar\": \"توسيع نطاق الوصول إلى التعلم من خلال التجارب الرقمية المصممة لدعم مشاركة المعرفة وتنمية المهارات.\"\n          },\n          \"linkUrl\": \"/projects/digital-learning\"\n        }\n      ]\n    },\n    \"bannerSection\": {\n      \"tagline\": {\n        \"en\": \"LET'S WORK TOGETHER\",\n        \"ar\": \"لنعمل معاً\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Looking for medical products, equipment, pharmaceutical solutions, or business services? Our team is ready to help you find what you need.\",\n        \"ar\": \"هل تبحث عن منتجات طبية، معدات، حلول صيدلانية، أو خدمات أعمال؟ فريقنا جاهز لمساعدتك في العثور على ما تحتاجه.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote\",\n        \"ar\": \"احصل على عرض أسعار\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "08. CMS - Our Partners",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/partners",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "partners"
+          ]
+        },
+        "description": "### Overview\nFetches Strategic Partners: Header, Partner brand cards categorized by role (Technology Partner, Cloud Partner, Strategic Partner, Creative Partner, Innovation Partner) with URLs, and \"Let's Work Together\" Banner.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/partners",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "partners"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"Our Partners\",\n        \"ar\": \"شركاؤنا\"\n      },\n      \"description\": {\n        \"en\": \"Meet the trusted partners who share our vision, strengthen our capabilities, and help us drive innovation and create lasting impact together.\",\n        \"ar\": \"تعرف على الشركاء الموثوقين الذين يشاركوننا رؤيتنا، ويعززون قدراتنا، ويساعدوننا في دفع عجلة الابتكار وإحداث تأثير دائم معاً.\"\n      },\n      \"partners\": [\n        {\n          \"id\": \"partner-1\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80\",\n          \"category\": {\n            \"en\": \"Technology Partner\",\n            \"ar\": \"شريك تكنولوجي\"\n          },\n          \"name\": {\n            \"en\": \"Microsoft\",\n            \"ar\": \"مايكروسوفت\"\n          },\n          \"description\": {\n            \"en\": \"Empowering digital transformation through cloud computing, productivity tools, and innovative technology solutions.\",\n            \"ar\": \"تمكين التحول الرقمي من خلال الحوسبة السحابية، وأدوات الإنتاجية، وحلول التكنولوجيا المبتكرة.\"\n          },\n          \"websiteUrl\": \"https://microsoft.com\",\n          \"linkText\": {\n            \"en\": \"Visit website\",\n            \"ar\": \"زيارة الموقع\"\n          }\n        },\n        {\n          \"id\": \"partner-2\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=400&q=80\",\n          \"category\": {\n            \"en\": \"Technology Partner\",\n            \"ar\": \"شريك تكنولوجي\"\n          },\n          \"name\": {\n            \"en\": \"Google\",\n            \"ar\": \"جوجل\"\n          },\n          \"description\": {\n            \"en\": \"Driving innovation through advanced digital technologies, cloud infrastructure, and intelligent solutions.\",\n            \"ar\": \"قيادة الابتكار من خلال التقنيات الرقمية المتقدمة، والبنية التحتية السحابية، والحلول الذكية.\"\n          },\n          \"websiteUrl\": \"https://google.com\",\n          \"linkText\": {\n            \"en\": \"Visit website\",\n            \"ar\": \"زيارة الموقع\"\n          }\n        },\n        {\n          \"id\": \"partner-3\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&q=80\",\n          \"category\": {\n            \"en\": \"Cloud Partner\",\n            \"ar\": \"شريك سحابي\"\n          },\n          \"name\": {\n            \"en\": \"Amazon Web Services\",\n            \"ar\": \"أمازون لخدمات الويب\"\n          },\n          \"description\": {\n            \"en\": \"Supporting scalable and reliable digital experiences through cloud infrastructure and modern technology services.\",\n            \"ar\": \"دعم التجارب الرقمية الموثوقة والقابلة للتطوير من خلال البنية التحتية السحابية والخدمات التكنولوجية الحديثة.\"\n          },\n          \"websiteUrl\": \"https://aws.amazon.com\",\n          \"linkText\": {\n            \"en\": \"Visit website\",\n            \"ar\": \"زيارة الموقع\"\n          }\n        },\n        {\n          \"id\": \"partner-4\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=400&q=80\",\n          \"category\": {\n            \"en\": \"Strategic Partner\",\n            \"ar\": \"شريك استراتيجي\"\n          },\n          \"name\": {\n            \"en\": \"IBM\",\n            \"ar\": \"آي بي إم\"\n          },\n          \"description\": {\n            \"en\": \"Combining expertise in AI, data, and enterprise technology to help organizations solve complex challenges.\",\n            \"ar\": \"الجمع بين الخبرة في الذكاء الاصطناعي، والبيانات، وتكنولوجيا المؤسسات لمساعدة المنظمات في حل التحديات المعقدة.\"\n          },\n          \"websiteUrl\": \"https://ibm.com\",\n          \"linkText\": {\n            \"en\": \"Visit website\",\n            \"ar\": \"زيارة الموقع\"\n          }\n        },\n        {\n          \"id\": \"partner-5\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80\",\n          \"category\": {\n            \"en\": \"Creative Partner\",\n            \"ar\": \"شريك إبداعي\"\n          },\n          \"name\": {\n            \"en\": \"Adobe\",\n            \"ar\": \"أدوبي\"\n          },\n          \"description\": {\n            \"en\": \"Enabling creative collaboration and engaging digital experiences through design and digital experience solutions.\",\n            \"ar\": \"تمكين التعاون الإبداعي والتجارب الرقمية الجذابة من خلال حلول التصميم والخبرات الرقمية.\"\n          },\n          \"websiteUrl\": \"https://adobe.com\",\n          \"linkText\": {\n            \"en\": \"Visit website\",\n            \"ar\": \"زيارة الموقع\"\n          }\n        },\n        {\n          \"id\": \"partner-6\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=400&q=80\",\n          \"category\": {\n            \"en\": \"Innovation Partner\",\n            \"ar\": \"شريك الابتكار\"\n          },\n          \"name\": {\n            \"en\": \"NVIDIA\",\n            \"ar\": \"إنفيديا\"\n          },\n          \"description\": {\n            \"en\": \"Advancing innovation through accelerated computing, artificial intelligence, and high-performance computing platforms.\",\n            \"ar\": \"دفع عجلة الابتكار من خلال الحوسبة المتسارعة، والذكاء الاصطناعي، ومنصات الحوسبة عالية الأداء.\"\n          },\n          \"websiteUrl\": \"https://nvidia.com\",\n          \"linkText\": {\n            \"en\": \"Visit website\",\n            \"ar\": \"زيارة الموقع\"\n          }\n        }\n      ]\n    },\n    \"bannerSection\": {\n      \"tagline\": {\n        \"en\": \"LET'S WORK TOGETHER\",\n        \"ar\": \"لنعمل معاً\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Looking for medical products, equipment, pharmaceutical solutions, or business services? Our team is ready to help you find what you need.\",\n        \"ar\": \"هل تبحث عن منتجات طبية، معدات، حلول صيدلانية، أو خدمات أعمال؟ فريقنا جاهز لمساعدتك في العثور على ما تحتاجه.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote\",\n        \"ar\": \"احصل على عرض أسعار\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "09. CMS - Contact Us & Office Info",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/contact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "contact"
+          ]
+        },
+        "description": "### Overview\nFetches Contact Details: Header with \"Send an Enquiry\" prompt, Corporate Office address lines, email, phone number, and interactive Google Maps embed / directions links.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/contact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "contact"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"headerSection\": {\n      \"title\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"description\": {\n        \"en\": \"Get in touch with our team to discuss your ideas, explore collaboration opportunities, or learn more about our solutions.\",\n        \"ar\": \"تواصل مع فريقنا لمناقشة أفكارك واستكشاف فرص التعاون أو معرفة المزيد عن حلولنا.\"\n      },\n      \"enquiryTitle\": {\n        \"en\": \"Send an Enquiry\",\n        \"ar\": \"أرسل استفسارك\"\n      },\n      \"enquiryDescription\": {\n        \"en\": \"Have a question or need more information about our services? Fill out the form below, and our team will get back to you.\",\n        \"ar\": \"هل لديك سؤال أو تحتاج إلى مزيد من المعلومات حول خدماتنا؟ املأ النموذج أدناه وسيقوم فريقنا بالرد عليك.\"\n      }\n    },\n    \"corporateOfficeSection\": {\n      \"tagline\": {\n        \"en\": \"GET IN TOUCH\",\n        \"ar\": \"تواصل معنا\"\n      },\n      \"title\": {\n        \"en\": \"Corporate Office\",\n        \"ar\": \"المكتب الرئيسي\"\n      },\n      \"description\": {\n        \"en\": \"Visit our headquarters or contact our team for enquiries and collaboration opportunities.\",\n        \"ar\": \"تفضل بزيارة مقرنا الرئيسي أو تواصل مع فريقنا للاستفسارات وفرص التعاون.\"\n      },\n      \"addressLabel\": {\n        \"en\": \"Office Address\",\n        \"ar\": \"عنوان المكتب\"\n      },\n      \"addressLine1\": {\n        \"en\": \"Mobtaker Group Headquarters\",\n        \"ar\": \"المقر الرئيسي لمجموعة مبتكر\"\n      },\n      \"addressLine2\": {\n        \"en\": \"Al-Mansour District\",\n        \"ar\": \"حي المنصور\"\n      },\n      \"addressCityCountry\": {\n        \"en\": \"Baghdad, Iraq\",\n        \"ar\": \"بغداد، العراق\"\n      },\n      \"emailLabel\": {\n        \"en\": \"Email Address\",\n        \"ar\": \"البريد الإلكتروني\"\n      },\n      \"emailValue\": \"info@mobtakergroup.com\",\n      \"phoneLabel\": {\n        \"en\": \"Phone Number\",\n        \"ar\": \"رقم الهاتف\"\n      },\n      \"phoneValue\": \"+964 (0) 123 456 789\",\n      \"mapLocationUrl\": \"https://maps.google.com/?q=Al-Mansour,Baghdad,Iraq\",\n      \"mapEmbedUrl\": \"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106637.74798679462!2d44.31688691512807!3d33.31524103134958!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15577f67a0a74193%3A0x9a7d3298c92a95c4!2sBaghdad%2C%20Iraq!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s\",\n      \"mapButtonText\": {\n        \"en\": \"Open in Maps\",\n        \"ar\": \"فتح في خرائط جوجل\"\n      }\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "10. CMS - Projects Innovator (Parent Entity)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/projects-innovator",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "projects-innovator"
+          ]
+        },
+        "description": "### Overview\nFetches Projects Innovator subsidiary page: Holding Hero Banner, Trusted Brands row, About Projects Innovator profile, Business Areas grid, and Collaboration CTA Banner.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/projects-innovator",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "projects-innovator"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"heroBannerSection\": {\n      \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80\",\n      \"logoText\": {\n        \"en\": \"PROJECTS INNOVATOR\",\n        \"ar\": \"شركة مبتكر المشاريع\"\n      },\n      \"title\": {\n        \"en\": \"Building Tomorrow\",\n        \"ar\": \"بناء الغد\"\n      },\n      \"titleHighlight\": {\n        \"en\": \"Through Innovation\",\n        \"ar\": \"من خلال الابتكار\"\n      },\n      \"description\": {\n        \"en\": \"Delivering innovative construction and infrastructure solutions that shape modern spaces and build a better future.\",\n        \"ar\": \"تقديم حلول مبتكرة في البناء والبنية التحتية لتشكيل المساحات الحديثة وبناء مستقبل أفضل.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Explore Our Services\",\n        \"ar\": \"استكشف خدماتنا\"\n      },\n      \"primaryButtonUrl\": \"/services\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\",\n      \"backgroundImageUrl\": \"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80\"\n    },\n    \"brandsSection\": {\n      \"title\": {\n        \"en\": \"TRUSTED BRANDS & INDUSTRY LEADERS\",\n        \"ar\": \"العلامات التجارية الموثوقة وقادة الصناعة\"\n      },\n      \"brands\": [\n        {\n          \"id\": \"brand-1\",\n          \"name\": \"Oracle\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-2\",\n          \"name\": \"ATRIKTIF\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-3\",\n          \"name\": \"Winners\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1516876437184-593fda40c7ce?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-4\",\n          \"name\": \"AKS Group\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=200&q=80\"\n        }\n      ]\n    },\n    \"aboutSection\": {\n      \"tagline\": {\n        \"en\": \"ABOUT PROJECTS INNOVATOR\",\n        \"ar\": \"عن مبتكر المشاريع\"\n      },\n      \"title\": {\n        \"en\": \"More Than a Company, A Platform for Sustainable Growth.\",\n        \"ar\": \"أكثر من مجرد شركة، منصة للنمو المستدام.\"\n      },\n      \"description\": {\n        \"en\": \"Projects Innovator is the parent and holding entity of Mobtaker Group, operating across multiple sectors including healthcare, construction, trading, and investment. We create value through strategic partnerships, innovation, and a commitment to excellence.\",\n        \"ar\": \"تعتبر مبتكر المشاريع الكيان القابض والأم لمجموعة مبتكر، وتعمل عبر قطاعات متعددة تشمل الرعاية الصحية، والبناء، والتجارة، والاستثمار. نخلق القيمة من خلال الشراكات الاستراتيجية، والابتكار، والالتزام بالتميز.\"\n      },\n      \"imageUrl\": \"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80\"\n    },\n    \"businessAreasSection\": {\n      \"title\": {\n        \"en\": \"Our Business Areas\",\n        \"ar\": \"مجالات أعمالنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore the sectors and services that form the Projects Innovator group.\",\n        \"ar\": \"استكشف القطاعات والخدمات التي تشكل مجموعة مبتكر المشاريع.\"\n      },\n      \"areas\": [\n        {\n          \"id\": \"area-1\",\n          \"icon\": \"microscope\",\n          \"title\": {\n            \"en\": \"Medical & Laboratory Equipment\",\n            \"ar\": \"الأجهزة الطبية والمخبرية\"\n          },\n          \"description\": {\n            \"en\": \"Comprehensive medical device solutions and laboratory testing equipment.\",\n            \"ar\": \"حلول شاملة للأجهزة الطبية ومعدات الاختبارات المختبرية.\"\n          },\n          \"linkUrl\": \"/services\"\n        },\n        {\n          \"id\": \"area-2\",\n          \"icon\": \"flask\",\n          \"title\": {\n            \"en\": \"Laboratory Supplies\",\n            \"ar\": \"المستلزمات المختبرية\"\n          },\n          \"description\": {\n            \"en\": \"Reliable laboratory supplies and essential equipment for research, testing, and diagnostic facilities.\",\n            \"ar\": \"مستلزمات مخبرية موثوقة ومعدات أساسية لمنشآت البحث والاختبار والتشخيص.\"\n          },\n          \"linkUrl\": \"/services\"\n        },\n        {\n          \"id\": \"area-3\",\n          \"icon\": \"heart\",\n          \"title\": {\n            \"en\": \"Healthcare Solutions\",\n            \"ar\": \"حلول الرعاية الصحية\"\n          },\n          \"description\": {\n            \"en\": \"Quality healthcare products and solutions designed to support medical professionals and healthcare facilities.\",\n            \"ar\": \"منتجات وحلول رعاية صحية عالية الجودة لدعم الكوادر والمنشآت الطبية.\"\n          },\n          \"linkUrl\": \"/services\"\n        }\n      ]\n    },\n    \"workTogetherSection\": {\n      \"tagline\": {\n        \"en\": \"LET'S WORK TOGETHER\",\n        \"ar\": \"دعنا نعمل معاً\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Looking for medical products, equipment, pharmaceutical solutions, or business services? Our team is ready to help you find what you need.\",\n        \"ar\": \"هل تبحث عن منتجات طبية، معدات، حلول دوائية، أو خدمات تجارية؟ فريقنا جاهز لمساعدتك في العثور على ما تحتاجه.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote\",\n        \"ar\": \"احصل على عرض أسعار\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "11. CMS - Attractive (Subsidiary)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/attractive",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "attractive"
+          ]
+        },
+        "description": "### Overview\nFetches Attractive subsidiary page: Hero Banner, Trusted Brands row, About Attractive profile, Featured Products grid with certification badges, and Collaboration CTA Banner.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/attractive",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "attractive"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"heroBannerSection\": {\n      \"logoUrl\": \"\",\n      \"logoText\": {\n        \"en\": \"ATTRACTIVE\",\n        \"ar\": \"أتراكتيف\"\n      },\n      \"title\": {\n        \"en\": \"Building Tomorrow\",\n        \"ar\": \"بناء الغد\"\n      },\n      \"titleHighlight\": {\n        \"en\": \"Through Innovation\",\n        \"ar\": \"من خلال الابتكار\"\n      },\n      \"description\": {\n        \"en\": \"Delivering innovative solutions, high-grade medical systems, and modern infrastructure that shape a better future.\",\n        \"ar\": \"تقديم حلول مبتكرة وأنظمة طبية متطورة وبنية تحتية حديثة تشكل مستقبلاً أفضل.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Explore Our Services →\",\n        \"ar\": \"استكشف خدماتنا ←\"\n      },\n      \"primaryButtonUrl\": \"/services\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\",\n      \"backgroundImageUrl\": \"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80\"\n    },\n    \"brandsSection\": {\n      \"title\": {\n        \"en\": \"TRUSTED BRANDS & INDUSTRY LEADERS\",\n        \"ar\": \"العلامات التجارية الموثوقة ورواد الصناعة\"\n      },\n      \"brands\": [\n        {\n          \"id\": \"brand-1\",\n          \"name\": \"Oracle\",\n          \"logoUrl\": \"https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg\"\n        },\n        {\n          \"id\": \"brand-2\",\n          \"name\": \"Atriktif\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-3\",\n          \"name\": \"Winners\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-4\",\n          \"name\": \"AKS Group\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80\"\n        }\n      ]\n    },\n    \"aboutSection\": {\n      \"tagline\": {\n        \"en\": \"ABOUT ATTRACTIVE\",\n        \"ar\": \"عن أتراكتيف\"\n      },\n      \"title\": {\n        \"en\": \"More Than a Company, A Platform for Sustainable Growth.\",\n        \"ar\": \"أكثر من مجرد شركة، منصة للنمو المستدام.\"\n      },\n      \"description\": {\n        \"en\": \"Attractive drives excellence across healthcare, advanced equipment, and modern commerce. We forge enduring partnerships and implement state-of-the-art technological solutions that elevate everyday life and drive organizational growth.\",\n        \"ar\": \"تقود أتراكتيف التميز عبر الرعاية الصحية والمعدات المتقدمة والتجارة الحديثة. نحن نبني شراكات دائمة ونطبق حلولاً تكنولوجية متطورة ترتقي بالحياة اليومية وتدفع النمو المؤسسي.\"\n      },\n      \"imageUrl\": \"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80\"\n    },\n    \"productsSection\": {\n      \"title\": {\n        \"en\": \"Our Products\",\n        \"ar\": \"منتجاتنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore our range of high-quality medical equipment and solutions designed to meet your needs.\",\n        \"ar\": \"استكشف مجموعتنا من المعدات والحلول الطبية عالية الجودة والمصممة لتلبية احتياجاتك.\"\n      },\n      \"products\": [\n        {\n          \"id\": \"prod-1\",\n          \"image\": \"https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"MedTech\",\n            \"ar\": \"ميدتيك\"\n          },\n          \"name\": {\n            \"en\": \"Patient Monitor\",\n            \"ar\": \"شاشة مراقبة المريض\"\n          },\n          \"description\": {\n            \"en\": \"A medical monitoring device designed to track vital signs and support patient observation in clinical environments.\",\n            \"ar\": \"جهاز مراقبة طبي مصمم لتتبع العلامات الحيوية ودعم مراقبة المرضى في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b1\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b2\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            },\n            {\n              \"id\": \"b3\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-2\",\n          \"image\": \"https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"SonoCare\",\n            \"ar\": \"سونوكير\"\n          },\n          \"name\": {\n            \"en\": \"Digital Ultrasound System\",\n            \"ar\": \"نظام الموجات فوق الصوتية الرقمي\"\n          },\n          \"description\": {\n            \"en\": \"An ultrasound imaging system designed to support diagnostic examinations in hospitals and healthcare facilities.\",\n            \"ar\": \"نظام تصوير بالموجات فوق الصوتية مصمم لدعم الفحوصات التشخيصية في المستشفيات والمرافق الصحية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b4\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b5\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-3\",\n          \"image\": \"https://images.unsplash.com/photo-1583912267670-6575ad3726f9?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"CareFlow\",\n            \"ar\": \"كيرفلو\"\n          },\n          \"name\": {\n            \"en\": \"Infusion Pump\",\n            \"ar\": \"مضخة التسريب الوريدي\"\n          },\n          \"description\": {\n            \"en\": \"A medical device designed for the controlled delivery of fluids and medications in clinical settings.\",\n            \"ar\": \"جهاز طبي مصمم للتحكم الدقيق في توصيل السوائل والأدوية في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b6\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b7\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        }\n      ],\n      \"viewAllButtonText\": {\n        \"en\": \"View All Products\",\n        \"ar\": \"عرض جميع المنتجات\"\n      },\n      \"viewAllButtonUrl\": \"/shop\"\n    },\n    \"workTogetherSection\": {\n      \"tagline\": {\n        \"en\": \"— LET'S WORK TOGETHER —\",\n        \"ar\": \"— لنعمل معاً —\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Partner with Attractive to innovate and deliver cutting-edge solutions across modern enterprise and healthcare sectors.\",\n        \"ar\": \"شارك أتراكتيف للابتكار وتقديم حلول متطورة عبر قطاعات الأعمال الحديثة والرعاية الصحية.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote ↗\",\n        \"ar\": \"احصل على عرض أسعار ↗\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "12. CMS - Medics Innovator (Subsidiary)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/medics-innovator",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "medics-innovator"
+          ]
+        },
+        "description": "### Overview\nFetches Medics Innovator subsidiary page: Clinical Hero Banner, Trusted Brands row, About Medics Innovator profile, Clinical Equipment Products showcase with certification badges, and Collaboration CTA Banner.\n\n### Authentication\n- **Public endpoint**: No bearer token or authentication header required.\n\n### Response Format\n- Standard response envelope: `{ \"success\": true, \"data\": { ... } }`\n- Bilingual content: Each text field provides both English (`en`) and Arabic (`ar`) translations."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/medics-innovator",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "medics-innovator"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"heroBannerSection\": {\n      \"logoUrl\": \"\",\n      \"logoText\": {\n        \"en\": \"MEDICS INNOVATOR\",\n        \"ar\": \"ميديكس إنوفيتور\"\n      },\n      \"title\": {\n        \"en\": \"Advancing Healthcare\",\n        \"ar\": \"الارتقاء بالرعاية الصحية\"\n      },\n      \"titleHighlight\": {\n        \"en\": \"Through Innovation\",\n        \"ar\": \"من خلال الابتكار\"\n      },\n      \"description\": {\n        \"en\": \"Supplying globally certified medical equipment, diagnostics, and clinical technologies to support modern healthcare facilities and improve lives.\",\n        \"ar\": \"توريد أجهزة طبية معتمدة عالمياً وحلول تشخيصية وتقنيات سريرية لدعم المرافق الصحية الحديثة وتحسين جودة الحياة.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Explore Our Products →\",\n        \"ar\": \"استكشف منتجاتنا ←\"\n      },\n      \"primaryButtonUrl\": \"/shop\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\",\n      \"backgroundImageUrl\": \"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=80\"\n    },\n    \"brandsSection\": {\n      \"title\": {\n        \"en\": \"TRUSTED BRANDS & INDUSTRY LEADERS\",\n        \"ar\": \"العلامات التجارية الموثوقة ورواد الصناعة\"\n      },\n      \"brands\": [\n        {\n          \"id\": \"brand-1\",\n          \"name\": \"Oracle Health\",\n          \"logoUrl\": \"https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg\"\n        },\n        {\n          \"id\": \"brand-2\",\n          \"name\": \"SonoCare Systems\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-3\",\n          \"name\": \"MedTech Global\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-4\",\n          \"name\": \"CareFlow Medical\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80\"\n        }\n      ]\n    },\n    \"aboutSection\": {\n      \"tagline\": {\n        \"en\": \"ABOUT MEDICS INNOVATOR\",\n        \"ar\": \"عن ميديكس إنوفيتور\"\n      },\n      \"title\": {\n        \"en\": \"More Than a Medical Provider, A Partner in Clinical Excellence.\",\n        \"ar\": \"أكثر من مجرد مزود طبي، شريك في التميز السريري.\"\n      },\n      \"description\": {\n        \"en\": \"Medics Innovator specializes in delivering certified medical equipment, clinical instrumentation, and hospital infrastructure solutions. We work directly with leading global manufacturers to ensure healthcare providers achieve maximum precision and patient safety.\",\n        \"ar\": \"تتخصص ميديكس إنوفيتور في تقديم المعدات الطبية المعتمدة والأجهزة السريرية وحلول البنية التحتية للمستشفيات. نعمل مباشرة مع كبرى الشركات المصنعة عالمياً لضمان تحقيق مقدمي الرعاية لأعلى مستويات الدقة وسلامة المرضى.\"\n      },\n      \"imageUrl\": \"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80\"\n    },\n    \"productsSection\": {\n      \"title\": {\n        \"en\": \"Our Products\",\n        \"ar\": \"منتجاتنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore our range of high-quality medical equipment and solutions designed to meet your needs.\",\n        \"ar\": \"استكشف مجموعتنا من المعدات والحلول الطبية عالية الجودة والمصممة لتلبية احتياجاتك.\"\n      },\n      \"products\": [\n        {\n          \"id\": \"prod-1\",\n          \"image\": \"https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"MedTech\",\n            \"ar\": \"ميدتيك\"\n          },\n          \"name\": {\n            \"en\": \"Patient Monitor\",\n            \"ar\": \"شاشة مراقبة المريض\"\n          },\n          \"description\": {\n            \"en\": \"A medical monitoring device designed to track vital signs and support patient observation in clinical environments.\",\n            \"ar\": \"جهاز مراقبة طبي مصمم لتتبع العلامات الحيوية ودعم مراقبة المرضى في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b1\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b2\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            },\n            {\n              \"id\": \"b3\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-2\",\n          \"image\": \"https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"SonoCare\",\n            \"ar\": \"سونوكير\"\n          },\n          \"name\": {\n            \"en\": \"Digital Ultrasound System\",\n            \"ar\": \"نظام الموجات فوق الصوتية الرقمي\"\n          },\n          \"description\": {\n            \"en\": \"An ultrasound imaging system designed to support diagnostic examinations in hospitals and healthcare facilities.\",\n            \"ar\": \"نظام تصوير بالموجات فوق الصوتية مصمم لدعم الفحوصات التشخيصية في المستشفيات والمرافق الصحية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b4\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b5\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-3\",\n          \"image\": \"https://images.unsplash.com/photo-1583912267670-6575ad3726f9?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"CareFlow\",\n            \"ar\": \"كيرفلو\"\n          },\n          \"name\": {\n            \"en\": \"Infusion Pump\",\n            \"ar\": \"مضخة التسريب الوريدي\"\n          },\n          \"description\": {\n            \"en\": \"A medical device designed for the controlled delivery of fluids and medications in clinical settings.\",\n            \"ar\": \"جهاز طبي مصمم للتحكم الدقيق في توصيل السوائل والأدوية في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b6\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b7\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        }\n      ],\n      \"viewAllButtonText\": {\n        \"en\": \"View All Products\",\n        \"ar\": \"عرض جميع المنتجات\"\n      },\n      \"viewAllButtonUrl\": \"/shop\"\n    },\n    \"workTogetherSection\": {\n      \"tagline\": {\n        \"en\": \"— LET'S WORK TOGETHER —\",\n        \"ar\": \"— لنعمل معاً —\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Partner with Medics Innovator to equip your medical facility with world-class clinical technologies and trusted supplies.\",\n        \"ar\": \"تشارك مع ميديكس إنوفيتور لتجهيز منشأتك الطبية بأحدث التقنيات السريرية العالمية والإمدادات الموثوقة.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote ↗\",\n        \"ar\": \"احصل على عرض أسعار ↗\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    }
+  ]
+}
