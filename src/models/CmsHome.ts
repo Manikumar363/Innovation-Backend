@@ -46,6 +46,7 @@ export interface ICompanyItem {
   description: IBilingualText;
   logoUrl: string;
   websiteUrl?: string;
+  color?: string;
 }
 
 export interface ICompaniesSection {
@@ -144,6 +145,7 @@ const CmsHomeSchema = new Schema<ICmsHome>(
           description: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
           logoUrl: { type: String, default: '' },
           websiteUrl: { type: String, default: '' },
+          color: { type: String, default: 'blue' },
         },
       ],
     },

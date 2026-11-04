@@ -121,6 +121,7 @@ export const defaultCmsHomeData = {
         },
         logoUrl: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80',
         websiteUrl: '/projects-innovator',
+        color: 'red',
       },
       {
         id: 'comp-2',
@@ -134,6 +135,7 @@ export const defaultCmsHomeData = {
         },
         logoUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80',
         websiteUrl: '/attractive',
+        color: 'blue',
       },
       {
         id: 'comp-3',
@@ -147,6 +149,7 @@ export const defaultCmsHomeData = {
         },
         logoUrl: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=200&q=80',
         websiteUrl: '/medios-innovator',
+        color: 'blue',
       },
     ],
   },
