@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { CmsHome } from '../models/CmsHome';
+import { CmsCtaBanner } from '../models/CmsCtaBanner';
 
 export const defaultCmsHomeData = {
   hero: {
@@ -228,6 +229,20 @@ export const getCmsHome = async (_req: Request, res: Response, next: NextFunctio
       cmsData = await CmsHome.create(defaultCmsHomeData);
     }
 
+    // Overlay with centralized CTA Banner if exists
+    const ctaBanner = await CmsCtaBanner.findOne().lean();
+    if (ctaBanner) {
+      (cmsData as any).bannerSection = {
+        tagline: ctaBanner.tagline,
+        title: ctaBanner.title,
+        description: ctaBanner.description,
+        primaryButtonText: ctaBanner.primaryButtonText,
+        primaryButtonUrl: ctaBanner.primaryButtonUrl,
+        secondaryButtonText: ctaBanner.secondaryButtonText,
+        secondaryButtonUrl: ctaBanner.secondaryButtonUrl,
+      };
+    }
+
     res.status(200).json({
       success: true,
       data: cmsData,
@@ -246,6 +261,15 @@ export const updateCmsHome = async (req: Request, res: Response, next: NextFunct
       { $set: payload },
       { new: true, upsert: true, runValidators: true }
     );
+
+    // If bannerSection was updated, synchronize it to centralized CmsCtaBanner
+    if (payload.bannerSection) {
+      await CmsCtaBanner.findOneAndUpdate(
+        {},
+        { $set: payload.bannerSection },
+        { upsert: true, runValidators: true }
+      ).catch(() => {});
+    }
 
     res.status(200).json({
       success: true,

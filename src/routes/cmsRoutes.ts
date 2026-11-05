@@ -20,8 +20,20 @@ import {
   getCmsMedicsInnovator,
   updateCmsMedicsInnovator,
 } from '../controllers/cmsMedicsInnovatorController';
+import {
+  getCmsCtaBanner,
+  updateCmsCtaBanner,
+} from '../controllers/cmsCtaBannerController';
 
 const router = Router();
+
+// Centralized Call-To-Action (CTA) Banner Routes
+router.get('/cta-banner', getCmsCtaBanner);
+router.put('/cta-banner', updateCmsCtaBanner);
+router.post('/cta-banner', updateCmsCtaBanner);
+router.get('/cta', getCmsCtaBanner);
+router.put('/cta', updateCmsCtaBanner);
+router.post('/cta', updateCmsCtaBanner);
 
 // CMS Home Routes
 router.get('/home', getCmsHome);
