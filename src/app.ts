@@ -24,6 +24,7 @@ app.get('/', (_req: Request, res: Response) => {
     message: 'Welcome to Express & MongoDB API - Innovation Backend',
     documentation: '/api/health',
     cmsEndpoint: '/api/cms/home',
+    brandsEndpoint: '/api/cms/brands',
     uploadEndpoint: '/api/upload/public',
     quotesEndpoint: '/api/quotes',
     enquiriesEndpoint: '/api/enquiries',
@@ -33,6 +34,8 @@ app.get('/', (_req: Request, res: Response) => {
 // API Routes
 app.use('/api', healthRouter);
 app.use('/api/cms', cmsRouter);
+app.use('/api/brands', cmsRouter); // Direct alias for /api/brands
+app.use('/api/brand-logos', cmsRouter); // Direct alias for /api/brand-logos
 app.use('/api/upload', uploadRouter);
 app.use('/api/quotes', quoteRouter);
 app.use('/api/quote-requests', quoteRouter); // Alias

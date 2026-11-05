@@ -5,12 +5,6 @@ export interface IBilingualText {
   ar: string;
 }
 
-export interface IBrandLogoItem {
-  id: string;
-  name: string;
-  logoUrl: string;
-}
-
 export interface IProductBadgeItem {
   id?: string;
   en: string;
@@ -41,11 +35,6 @@ export interface IHeroBannerSection {
   backgroundImageUrl: string;
 }
 
-export interface IBrandsSection {
-  title: IBilingualText;
-  brands: IBrandLogoItem[];
-}
-
 export interface IAboutSection {
   tagline: IBilingualText;
   title: IBilingualText;
@@ -73,7 +62,6 @@ export interface IWorkTogetherSection {
 
 export interface ICmsAttractive extends Document {
   heroBannerSection: IHeroBannerSection;
-  brandsSection: IBrandsSection;
   aboutSection: IAboutSection;
   productsSection: IProductsSection;
   workTogetherSection: IWorkTogetherSection;
@@ -85,15 +73,6 @@ const BilingualSchema = new Schema(
   {
     en: { type: String, default: '' },
     ar: { type: String, default: '' },
-  },
-  { _id: false }
-);
-
-const BrandLogoSchema = new Schema(
-  {
-    id: { type: String, required: true },
-    name: { type: String, default: '' },
-    logoUrl: { type: String, default: '' },
   },
   { _id: false }
 );
@@ -176,45 +155,6 @@ const CmsAttractiveSchema = new Schema(
         type: String,
         default:
           'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80',
-      },
-    },
-
-    brandsSection: {
-      title: {
-        type: BilingualSchema,
-        default: () => ({
-          en: 'TRUSTED BRANDS & INDUSTRY LEADERS',
-          ar: 'العلامات التجارية الموثوقة ورواد الصناعة',
-        }),
-      },
-      brands: {
-        type: [BrandLogoSchema],
-        default: () => [
-          {
-            id: 'brand-1',
-            name: 'Oracle',
-            logoUrl:
-              'https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg',
-          },
-          {
-            id: 'brand-2',
-            name: 'Atriktif',
-            logoUrl:
-              'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80',
-          },
-          {
-            id: 'brand-3',
-            name: 'Winners',
-            logoUrl:
-              'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80',
-          },
-          {
-            id: 'brand-4',
-            name: 'AKS Group',
-            logoUrl:
-              'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80',
-          },
-        ],
       },
     },
 

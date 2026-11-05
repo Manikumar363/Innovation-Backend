@@ -65,3 +65,4 @@ EnquirySchema.index({ subject: 1 });
 
 export const Enquiry = mongoose.model<IEnquiry>('Enquiry', EnquirySchema);
 export default Enquiry;
+

@@ -32,34 +32,6 @@ export const defaultCmsProjectsInnovatorData = {
     secondaryButtonUrl: '/contact',
     backgroundImageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80',
   },
-  brandsSection: {
-    title: {
-      en: 'TRUSTED BRANDS & INDUSTRY LEADERS',
-      ar: 'العلامات التجارية الموثوقة وقادة الصناعة',
-    },
-    brands: [
-      {
-        id: 'brand-1',
-        name: 'Oracle',
-        logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80',
-      },
-      {
-        id: 'brand-2',
-        name: 'ATRIKTIF',
-        logoUrl: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80',
-      },
-      {
-        id: 'brand-3',
-        name: 'Winners',
-        logoUrl: 'https://images.unsplash.com/photo-1516876437184-593fda40c7ce?auto=format&fit=crop&w=200&q=80',
-      },
-      {
-        id: 'brand-4',
-        name: 'AKS Group',
-        logoUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=200&q=80',
-      },
-    ],
-  },
   aboutSection: {
     tagline: {
       en: 'ABOUT PROJECTS INNOVATOR',
@@ -195,9 +167,6 @@ export const updateCmsProjectsInnovator = async (req: Request, res: Response) =>
     } else {
       if (updateData.heroBannerSection) {
         cmsData.heroBannerSection = updateData.heroBannerSection;
-      }
-      if (updateData.brandsSection) {
-        cmsData.brandsSection = updateData.brandsSection;
       }
       if (updateData.aboutSection) {
         cmsData.aboutSection = updateData.aboutSection;

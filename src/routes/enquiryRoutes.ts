@@ -24,3 +24,4 @@ router.route('/:id/status')
   .patch(updateEnquiryStatus);
 
 export default router;
+

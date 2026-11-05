@@ -33,38 +33,6 @@ export const defaultCmsAttractiveData = {
     backgroundImageUrl:
       'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80',
   },
-  brandsSection: {
-    title: {
-      en: 'TRUSTED BRANDS & INDUSTRY LEADERS',
-      ar: 'العلامات التجارية الموثوقة ورواد الصناعة',
-    },
-    brands: [
-      {
-        id: 'brand-1',
-        name: 'Oracle',
-        logoUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg',
-      },
-      {
-        id: 'brand-2',
-        name: 'Atriktif',
-        logoUrl:
-          'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80',
-      },
-      {
-        id: 'brand-3',
-        name: 'Winners',
-        logoUrl:
-          'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80',
-      },
-      {
-        id: 'brand-4',
-        name: 'AKS Group',
-        logoUrl:
-          'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80',
-      },
-    ],
-  },
   aboutSection: {
     tagline: {
       en: 'ABOUT ATTRACTIVE',
@@ -211,12 +179,6 @@ export const updateCmsAttractive = async (req: Request, res: Response) => {
         cmsData.heroBannerSection = {
           ...cmsData.heroBannerSection,
           ...updateData.heroBannerSection,
-        };
-      }
-      if (updateData.brandsSection) {
-        cmsData.brandsSection = {
-          ...cmsData.brandsSection,
-          ...updateData.brandsSection,
         };
       }
       if (updateData.aboutSection) {

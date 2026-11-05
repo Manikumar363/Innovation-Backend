@@ -5,12 +5,6 @@ export interface IBilingualText {
   ar: string;
 }
 
-export interface IBrandLogoItem {
-  id: string;
-  name: string;
-  logoUrl: string;
-}
-
 export interface IBusinessAreaItem {
   id: string;
   icon: string;
@@ -30,11 +24,6 @@ export interface IHeroBannerSection {
   secondaryButtonText: IBilingualText;
   secondaryButtonUrl: string;
   backgroundImageUrl: string;
-}
-
-export interface IBrandsSection {
-  title: IBilingualText;
-  brands: IBrandLogoItem[];
 }
 
 export interface IAboutSection {
@@ -62,7 +51,6 @@ export interface IWorkTogetherSection {
 
 export interface ICmsProjectsInnovator extends Document {
   heroBannerSection: IHeroBannerSection;
-  brandsSection: IBrandsSection;
   aboutSection: IAboutSection;
   businessAreasSection: IBusinessAreasSection;
   workTogetherSection: IWorkTogetherSection;
@@ -74,15 +62,6 @@ const BilingualSchema = new Schema(
   {
     en: { type: String, default: '' },
     ar: { type: String, default: '' },
-  },
-  { _id: false }
-);
-
-const BrandLogoSchema = new Schema(
-  {
-    id: { type: String, required: true },
-    name: { type: String, default: '' },
-    logoUrl: { type: String, default: '' },
   },
   { _id: false }
 );
@@ -144,16 +123,6 @@ const CmsProjectsInnovatorSchema = new Schema(
         type: String,
         default: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80',
       },
-    },
-    brandsSection: {
-      title: {
-        type: BilingualSchema,
-        default: () => ({
-          en: 'TRUSTED BRANDS & INDUSTRY LEADERS',
-          ar: 'العلامات التجارية الموثوقة وقادة الصناعة',
-        }),
-      },
-      brands: { type: [BrandLogoSchema], default: [] },
     },
     aboutSection: {
       tagline: {

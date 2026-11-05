@@ -18,12 +18,6 @@ export interface IHeroSection {
   founder: IFounder;
 }
 
-export interface ITrustedBrand {
-  name: string;
-  logoUrl: string;
-  websiteUrl?: string;
-}
-
 export interface ISectorItem {
   id?: string;
   title: IBilingualText;
@@ -84,7 +78,6 @@ export interface IBannerSection {
 
 export interface ICmsHome extends Document {
   hero: IHeroSection;
-  trustedBrands: ITrustedBrand[];
   aboutSectorsSection: IAboutSectorsSection;
   companiesSection: ICompaniesSection;
   purposeSection: IPurposeSection;
@@ -113,13 +106,6 @@ const CmsHomeSchema = new Schema<ICmsHome>(
         image: { type: String, default: '' },
       },
     },
-    trustedBrands: [
-      {
-        name: { type: String, default: '' },
-        logoUrl: { type: String, default: '' },
-        websiteUrl: { type: String, default: '' },
-      },
-    ],
     aboutSectorsSection: {
       image: { type: String, default: '' },
       title: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },

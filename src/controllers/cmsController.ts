@@ -28,28 +28,6 @@ export const defaultCmsHomeData = {
       image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     },
   },
-  trustedBrands: [
-    {
-      name: 'Aramco Ventures',
-      logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80',
-      websiteUrl: 'https://example.com',
-    },
-    {
-      name: 'NEOM Tech',
-      logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80',
-      websiteUrl: 'https://example.com',
-    },
-    {
-      name: 'SABIC Horizon',
-      logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80',
-      websiteUrl: 'https://example.com',
-    },
-    {
-      name: 'Global Innovation Hub',
-      logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80',
-      websiteUrl: 'https://example.com',
-    },
-  ],
   aboutSectorsSection: {
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
     title: {

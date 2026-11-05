@@ -24,8 +24,28 @@ import {
   getCmsCtaBanner,
   updateCmsCtaBanner,
 } from '../controllers/cmsCtaBannerController';
+import {
+  getCmsBrands,
+  updateCmsBrands,
+  addBrandItem,
+  deleteBrandItem,
+} from '../controllers/cmsBrandController';
 
 const router = Router();
+
+// Centralized Brand Logos Routes (can be used everywhere)
+router.get('/brands', getCmsBrands);
+router.put('/brands', updateCmsBrands);
+router.post('/brands', updateCmsBrands);
+router.post('/brands/item', addBrandItem);
+router.delete('/brands/item/:id', deleteBrandItem);
+// Aliases for centralized brands
+router.get('/brand-logos', getCmsBrands);
+router.put('/brand-logos', updateCmsBrands);
+router.post('/brand-logos', updateCmsBrands);
+router.get('/trusted-brands', getCmsBrands);
+router.put('/trusted-brands', updateCmsBrands);
+router.post('/trusted-brands', updateCmsBrands);
 
 // Centralized Call-To-Action (CTA) Banner Routes
 router.get('/cta-banner', getCmsCtaBanner);
