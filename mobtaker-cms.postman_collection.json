@@ -879,6 +879,62 @@
         "description": "### Update CTA Banner (POST or PUT)\nSupports both `POST` and `PUT` on `/api/cms/cta-banner` and `/api/banner`."
       },
       "response": []
+    },
+    {
+      "name": "17. CMS - Our Companies & Divisions (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/our-companies",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "our-companies"
+          ]
+        },
+        "description": "### Centralized Our Companies & Divisions (GET)\nFetches the independent Our Companies section with the 3 interlinked projects:\n1. Projects Innovator (`/projects-innovator`)\n2. Attractive (`/attractive`)\n3. Medics Innovator (`/medics-innovator`)\n\n### Direct Endpoints Available:\n- `GET /api/cms/our-companies`\n- `GET /api/our-companies`\n- `GET /api/companies-divisions`"
+      },
+      "response": []
+    },
+    {
+      "name": "18. CMS - Our Companies & Divisions (POST / PUT Update)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tagline\": {\n    \"en\": \"SPECIALIZED COMPANIES & DIVISIONS\",\n    \"ar\": \"الشركات والأقسام المتخصصة\"\n  },\n  \"title\": {\n    \"en\": \"Our Companies\",\n    \"ar\": \"شركاتنا\"\n  },\n  \"description\": {\n    \"en\": \"A diversified ecosystem of specialized entities driving excellence across infrastructure, medical technology, and trading.\",\n    \"ar\": \"منظومة متنوعة من الكيانات المتخصصة التي تقود التميز في البنية التحتية والتكنولوجيا الطبية والتجارة.\"\n  },\n  \"companies\": [\n    {\n      \"id\": \"company-1\",\n      \"name\": {\n        \"en\": \"Projects Innovator\",\n        \"ar\": \"مبتكر المشاريع\"\n      },\n      \"description\": {\n        \"en\": \"Delivering innovative construction and infrastructure solutions that shape modern spaces and build a better future.\",\n        \"ar\": \"تقديم حلول البناء والبنية التحتية المبتكرة التي تشكل المساحات الحديثة وتبني مستقبلاً أفضل.\"\n      },\n      \"logoUrl\": \"https://images.unsplash.com/photo-1541888946425-d0fbb186156f?auto=format&fit=crop&w=300&q=80\",\n      \"websiteUrl\": \"/projects-innovator\",\n      \"color\": \"red\",\n      \"order\": 1,\n      \"isActive\": true\n    },\n    {\n      \"id\": \"company-2\",\n      \"name\": {\n        \"en\": \"Attractive\",\n        \"ar\": \"أتراكتيف\"\n      },\n      \"description\": {\n        \"en\": \"A diversified business group driving excellence across healthcare, construction, trading, and investment.\",\n        \"ar\": \"مجموعة أعمال متنوعة تقود التميز في قطاعات الرعاية الصحية والبناء والتجارة والاستثمار.\"\n      },\n      \"logoUrl\": \"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80\",\n      \"websiteUrl\": \"/attractive\",\n      \"color\": \"blue\",\n      \"order\": 2,\n      \"isActive\": true\n    },\n    {\n      \"id\": \"company-3\",\n      \"name\": {\n        \"en\": \"Medics Innovator\",\n        \"ar\": \"ميديكس إنوفيتور\"\n      },\n      \"description\": {\n        \"en\": \"Advancing healthcare through trusted medical solutions, quality healthcare products, and a commitment to better patient outcomes.\",\n        \"ar\": \"الارتقاء بالرعاية الصحية من خلال الحلول الطبية الموثوقة والمنتجات الصحية عالية الجودة والالتزام بتحسين نتائج المرضى.\"\n      },\n      \"logoUrl\": \"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=300&q=80\",\n      \"websiteUrl\": \"/medics-innovator\",\n      \"color\": \"blue\",\n      \"order\": 3,\n      \"isActive\": true\n    }\n  ],\n  \"isActive\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/our-companies",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "our-companies"
+          ]
+        },
+        "description": "### Update Our Companies & Divisions (POST or PUT)\nSupports both `POST` and `PUT` on `/api/cms/our-companies` and `/api/our-companies`."
+      },
+      "response": []
     }
   ]
 }

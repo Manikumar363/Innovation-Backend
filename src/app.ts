@@ -16,6 +16,12 @@ import {
   getCmsCtaBanner,
   updateCmsCtaBanner,
 } from './controllers/cmsCtaBannerController';
+import {
+  getOurCompanies,
+  updateOurCompanies,
+  addOurCompanyItem,
+  deleteOurCompanyItem,
+} from './controllers/cmsOurCompaniesController';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
 
 const app: Application = express();
@@ -35,6 +41,7 @@ app.get('/', (_req: Request, res: Response) => {
     documentation: '/api/health',
     cmsEndpoint: '/api/cms/home',
     brandsEndpoint: '/api/cms/brands (or /api/brands)',
+    ourCompaniesEndpoint: '/api/cms/our-companies (or /api/our-companies)',
     ctaBannerEndpoint: '/api/cms/cta-banner (or /api/banner)',
     uploadEndpoint: '/api/upload/public',
     quotesEndpoint: '/api/quotes',
@@ -52,6 +59,13 @@ app.put(['/api/brands', '/api/brand-logos'], updateCmsBrands);
 app.post(['/api/brands', '/api/brand-logos'], updateCmsBrands);
 app.post(['/api/brands/item', '/api/brand-logos/item'], addBrandItem);
 app.delete(['/api/brands/item/:id', '/api/brand-logos/item/:id'], deleteBrandItem);
+
+// Direct Our Companies routes (/api/our-companies and /api/companies-divisions)
+app.get(['/api/our-companies', '/api/companies-divisions'], getOurCompanies);
+app.put(['/api/our-companies', '/api/companies-divisions'], updateOurCompanies);
+app.post(['/api/our-companies', '/api/companies-divisions'], updateOurCompanies);
+app.post(['/api/our-companies/item', '/api/companies-divisions/item'], addOurCompanyItem);
+app.delete(['/api/our-companies/item/:id', '/api/companies-divisions/item/:id'], deleteOurCompanyItem);
 
 // Direct CTA Banner routes (/api/cta-banner and /api/banner)
 app.get(['/api/cta-banner', '/api/banner', '/api/cta'], getCmsCtaBanner);

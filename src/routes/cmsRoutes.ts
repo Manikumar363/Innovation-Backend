@@ -30,8 +30,31 @@ import {
   addBrandItem,
   deleteBrandItem,
 } from '../controllers/cmsBrandController';
+import {
+  getOurCompanies,
+  updateOurCompanies,
+  addOurCompanyItem,
+  deleteOurCompanyItem,
+} from '../controllers/cmsOurCompaniesController';
 
 const router = Router();
+
+// Specialized Companies & Divisions (Our Companies) Routes
+router.get('/our-companies', getOurCompanies);
+router.put('/our-companies', updateOurCompanies);
+router.post('/our-companies', updateOurCompanies);
+router.post('/our-companies/item', addOurCompanyItem);
+router.delete('/our-companies/item/:id', deleteOurCompanyItem);
+// Aliases for Our Companies
+router.get('/specialized-companies', getOurCompanies);
+router.put('/specialized-companies', updateOurCompanies);
+router.post('/specialized-companies', updateOurCompanies);
+router.get('/companies-divisions', getOurCompanies);
+router.put('/companies-divisions', updateOurCompanies);
+router.post('/companies-divisions', updateOurCompanies);
+router.get('/division-companies', getOurCompanies);
+router.put('/division-companies', updateOurCompanies);
+router.post('/division-companies', updateOurCompanies);
 
 // Centralized Brand Logos Routes (can be used everywhere)
 router.get('/brands', getCmsBrands);
