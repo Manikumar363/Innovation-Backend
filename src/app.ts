@@ -5,6 +5,7 @@ import healthRouter from './routes/health';
 import cmsRouter from './routes/cmsRoutes';
 import uploadRouter from './routes/uploadRoutes';
 import quoteRouter from './routes/quoteRoutes';
+import enquiryRouter from './routes/enquiryRoutes';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
 
 const app: Application = express();
@@ -25,6 +26,7 @@ app.get('/', (_req: Request, res: Response) => {
     cmsEndpoint: '/api/cms/home',
     uploadEndpoint: '/api/upload/public',
     quotesEndpoint: '/api/quotes',
+    enquiriesEndpoint: '/api/enquiries',
   });
 });
 
@@ -34,6 +36,8 @@ app.use('/api/cms', cmsRouter);
 app.use('/api/upload', uploadRouter);
 app.use('/api/quotes', quoteRouter);
 app.use('/api/quote-requests', quoteRouter); // Alias
+app.use('/api/enquiries', enquiryRouter);
+app.use('/api/enquiry', enquiryRouter); // Alias
 
 // Error Handlers
 app.use(notFoundHandler);

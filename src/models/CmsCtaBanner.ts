@@ -75,3 +75,4 @@ const CmsCtaBannerSchema = new Schema(
 
 export const CmsCtaBanner = mongoose.model<ICmsCtaBanner>('CmsCtaBanner', CmsCtaBannerSchema);
 export default CmsCtaBanner;
+
