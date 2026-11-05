@@ -730,9 +730,155 @@
               "value": "application/json"
             }
           ],
-          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"heroBannerSection\": {\n      \"logoUrl\": \"\",\n      \"logoText\": {\n        \"en\": \"MEDICS INNOVATOR\",\n        \"ar\": \"ميديكس إنوفيتور\"\n      },\n      \"title\": {\n        \"en\": \"Advancing Healthcare\",\n        \"ar\": \"الارتقاء بالرعاية الصحية\"\n      },\n      \"titleHighlight\": {\n        \"en\": \"Through Innovation\",\n        \"ar\": \"من خلال الابتكار\"\n      },\n      \"description\": {\n        \"en\": \"Supplying globally certified medical equipment, diagnostics, and clinical technologies to support modern healthcare facilities and improve lives.\",\n        \"ar\": \"توريد أجهزة طبية معتمدة عالمياً وحلول تشخيصية وتقنيات سريرية لدعم المرافق الصحية الحديثة وتحسين جودة الحياة.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Explore Our Products →\",\n        \"ar\": \"استكشف منتجاتنا ←\"\n      },\n      \"primaryButtonUrl\": \"/shop\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\",\n      \"backgroundImageUrl\": \"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=80\"\n    },\n    \"brandsSection\": {\n      \"title\": {\n        \"en\": \"TRUSTED BRANDS & INDUSTRY LEADERS\",\n        \"ar\": \"العلامات التجارية الموثوقة ورواد الصناعة\"\n      },\n      \"brands\": [\n        {\n          \"id\": \"brand-1\",\n          \"name\": \"Oracle Health\",\n          \"logoUrl\": \"https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg\"\n        },\n        {\n          \"id\": \"brand-2\",\n          \"name\": \"SonoCare Systems\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-3\",\n          \"name\": \"MedTech Global\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&q=80\"\n        },\n        {\n          \"id\": \"brand-4\",\n          \"name\": \"CareFlow Medical\",\n          \"logoUrl\": \"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=200&q=80\"\n        }\n      ]\n    },\n    \"aboutSection\": {\n      \"tagline\": {\n        \"en\": \"ABOUT MEDICS INNOVATOR\",\n        \"ar\": \"عن ميديكس إنوفيتور\"\n      },\n      \"title\": {\n        \"en\": \"More Than a Medical Provider, A Partner in Clinical Excellence.\",\n        \"ar\": \"أكثر من مجرد مزود طبي، شريك في التميز السريري.\"\n      },\n      \"description\": {\n        \"en\": \"Medics Innovator specializes in delivering certified medical equipment, clinical instrumentation, and hospital infrastructure solutions. We work directly with leading global manufacturers to ensure healthcare providers achieve maximum precision and patient safety.\",\n        \"ar\": \"تتخصص ميديكس إنوفيتور في تقديم المعدات الطبية المعتمدة والأجهزة السريرية وحلول البنية التحتية للمستشفيات. نعمل مباشرة مع كبرى الشركات المصنعة عالمياً لضمان تحقيق مقدمي الرعاية لأعلى مستويات الدقة وسلامة المرضى.\"\n      },\n      \"imageUrl\": \"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80\"\n    },\n    \"productsSection\": {\n      \"title\": {\n        \"en\": \"Our Products\",\n        \"ar\": \"منتجاتنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore our range of high-quality medical equipment and solutions designed to meet your needs.\",\n        \"ar\": \"استكشف مجموعتنا من المعدات والحلول الطبية عالية الجودة والمصممة لتلبية احتياجاتك.\"\n      },\n      \"products\": [\n        {\n          \"id\": \"prod-1\",\n          \"image\": \"https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"MedTech\",\n            \"ar\": \"ميدتيك\"\n          },\n          \"name\": {\n            \"en\": \"Patient Monitor\",\n            \"ar\": \"شاشة مراقبة المريض\"\n          },\n          \"description\": {\n            \"en\": \"A medical monitoring device designed to track vital signs and support patient observation in clinical environments.\",\n            \"ar\": \"جهاز مراقبة طبي مصمم لتتبع العلامات الحيوية ودعم مراقبة المرضى في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b1\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b2\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            },\n            {\n              \"id\": \"b3\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-2\",\n          \"image\": \"https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"SonoCare\",\n            \"ar\": \"سونوكير\"\n          },\n          \"name\": {\n            \"en\": \"Digital Ultrasound System\",\n            \"ar\": \"نظام الموجات فوق الصوتية الرقمي\"\n          },\n          \"description\": {\n            \"en\": \"An ultrasound imaging system designed to support diagnostic examinations in hospitals and healthcare facilities.\",\n            \"ar\": \"نظام تصوير بالموجات فوق الصوتية مصمم لدعم الفحوصات التشخيصية في المستشفيات والمرافق الصحية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b4\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b5\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        },\n        {\n          \"id\": \"prod-3\",\n          \"image\": \"https://images.unsplash.com/photo-1583912267670-6575ad3726f9?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"CareFlow\",\n            \"ar\": \"كيرفلو\"\n          },\n          \"name\": {\n            \"en\": \"Infusion Pump\",\n            \"ar\": \"مضخة التسريب الوريدي\"\n          },\n          \"description\": {\n            \"en\": \"A medical device designed for the controlled delivery of fluids and medications in clinical settings.\",\n            \"ar\": \"جهاز طبي مصمم للتحكم الدقيق في توصيل السوائل والأدوية في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b6\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b7\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        }\n      ],\n      \"viewAllButtonText\": {\n        \"en\": \"View All Products\",\n        \"ar\": \"عرض جميع المنتجات\"\n      },\n      \"viewAllButtonUrl\": \"/shop\"\n    },\n    \"workTogetherSection\": {\n      \"tagline\": {\n        \"en\": \"— LET'S WORK TOGETHER —\",\n        \"ar\": \"— لنعمل معاً —\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Partner with Medics Innovator to equip your medical facility with world-class clinical technologies and trusted supplies.\",\n        \"ar\": \"تشارك مع ميديكس إنوفيتور لتجهيز منشأتك الطبية بأحدث التقنيات السريرية العالمية والإمدادات الموثوقة.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote ↗\",\n        \"ar\": \"احصل على عرض أسعار ↗\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"65f1a2b3c4d5e6f7a8b9c0d1\",\n    \"heroBannerSection\": {\n      \"logoUrl\": \"\",\n      \"logoText\": {\n        \"en\": \"MEDICS INNOVATOR\",\n        \"ar\": \"ميديكس إنوفيتور\"\n      },\n      \"title\": {\n        \"en\": \"Advancing Healthcare\",\n        \"ar\": \"الارتقاء بالرعاية الصحية\"\n      },\n      \"titleHighlight\": {\n        \"en\": \"Through Innovation\",\n        \"ar\": \"من خلال الابتكار\"\n      },\n      \"description\": {\n        \"en\": \"Supplying globally certified medical equipment, diagnostics, and clinical technologies to support modern healthcare facilities and improve lives.\",\n        \"ar\": \"توريد أجهزة طبية معتمدة عالمياً وحلول تشخيصية وتقنيات سريرية لدعم المرافق الصحية الحديثة وتحسين جودة الحياة.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Explore Our Products →\",\n        \"ar\": \"استكشف منتجاتنا ←\"\n      },\n      \"primaryButtonUrl\": \"/shop\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\",\n      \"backgroundImageUrl\": \"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=80\"\n    },\n    \"aboutSection\": {\n      \"tagline\": {\n        \"en\": \"ABOUT MEDICS INNOVATOR\",\n        \"ar\": \"عن ميديكس إنوفيتور\"\n      },\n      \"title\": {\n        \"en\": \"More Than a Medical Provider, A Partner in Clinical Excellence.\",\n        \"ar\": \"أكثر من مجرد مزود طبي، شريك في التميز السريري.\"\n      },\n      \"description\": {\n        \"en\": \"Medics Innovator specializes in delivering certified medical equipment, clinical instrumentation, and hospital infrastructure solutions. We work directly with leading global manufacturers to ensure healthcare providers achieve maximum precision and patient safety.\",\n        \"ar\": \"تتخصص ميديكس إنوفيتور في تقديم المعدات الطبية المعتمدة والأجهزة السريرية وحلول البنية التحتية للمستشفيات. نعمل مباشرة مع كبرى الشركات المصنعة عالمياً لضمان تحقيق مقدمي الرعاية لأعلى مستويات الدقة وسلامة المرضى.\"\n      },\n      \"imageUrl\": \"https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80\"\n    },\n    \"productsSection\": {\n      \"title\": {\n        \"en\": \"Our Products\",\n        \"ar\": \"منتجاتنا\"\n      },\n      \"description\": {\n        \"en\": \"Explore our range of high-quality medical equipment and solutions designed to meet your needs.\",\n        \"ar\": \"استكشف مجموعتنا من المعدات والحلول الطبية عالية الجودة والمصممة لتلبية احتياجاتك.\"\n      },\n      \"products\": [\n        {\n          \"id\": \"prod-1\",\n          \"image\": \"https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80\",\n          \"brand\": {\n            \"en\": \"MedTech\",\n            \"ar\": \"ميدتيك\"\n          },\n          \"name\": {\n            \"en\": \"Patient Monitor\",\n            \"ar\": \"شاشة مراقبة المريض\"\n          },\n          \"description\": {\n            \"en\": \"A medical monitoring device designed to track vital signs and support patient observation in clinical environments.\",\n            \"ar\": \"جهاز مراقبة طبي مصمم لتتبع العلامات الحيوية ودعم مراقبة المرضى في البيئات السريرية.\"\n          },\n          \"badges\": [\n            {\n              \"id\": \"b1\",\n              \"en\": \"CE Certified\",\n              \"ar\": \"معتمد من CE\"\n            },\n            {\n              \"id\": \"b2\",\n              \"en\": \"FDA Registered\",\n              \"ar\": \"مسجل لدى FDA\"\n            },\n            {\n              \"id\": \"b3\",\n              \"en\": \"ISO Certified\",\n              \"ar\": \"معتمد من ISO\"\n            }\n          ],\n          \"buttonText\": {\n            \"en\": \"Request a Quote ↗\",\n            \"ar\": \"طلب عرض أسعار ↗\"\n          },\n          \"buttonUrl\": \"/contact\"\n        }\n      ],\n      \"viewAllButtonText\": {\n        \"en\": \"View All Products\",\n        \"ar\": \"عرض جميع المنتجات\"\n      },\n      \"viewAllButtonUrl\": \"/shop\"\n    },\n    \"workTogetherSection\": {\n      \"tagline\": {\n        \"en\": \"— LET'S WORK TOGETHER —\",\n        \"ar\": \"— لنعمل معاً —\"\n      },\n      \"title\": {\n        \"en\": \"Let's Build Something That Moves Business Forward.\",\n        \"ar\": \"دعنا نبني شيئاً يدفع الأعمال إلى الأمام.\"\n      },\n      \"description\": {\n        \"en\": \"Partner with Medics Innovator to equip your medical facility with world-class clinical technologies and trusted supplies.\",\n        \"ar\": \"تشارك مع ميديكس إنوفيتور لتجهيز منشأتك الطبية بأحدث التقنيات السريرية العالمية والإمدادات الموثوقة.\"\n      },\n      \"primaryButtonText\": {\n        \"en\": \"Get a Quote ↗\",\n        \"ar\": \"احصل على عرض أسعار ↗\"\n      },\n      \"primaryButtonUrl\": \"/contact\",\n      \"secondaryButtonText\": {\n        \"en\": \"Contact Us\",\n        \"ar\": \"اتصل بنا\"\n      },\n      \"secondaryButtonUrl\": \"/contact\"\n    },\n    \"createdAt\": \"2026-10-30T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-04T10:00:00.000Z\"\n  }\n}"
         }
       ]
+    },
+    {
+      "name": "13. CMS - Brand Logos & Partners (GET Centralized)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/brands",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "brands"
+          ]
+        },
+        "description": "### Centralized Brand Logos (GET)\nFetches the global centralized brand and partner logos collection used across all pages (Home, Projects Innovator, Attractive, Medics Innovator).\n\n### Direct Endpoints Available:\n- `GET /api/cms/brands` (standard CMS route)\n- `GET /api/brands` (direct short alias)\n- `GET /api/brand-logos` (alias)\n\n### Authentication\n- Public endpoint (no token required)."
+      },
+      "response": [
+        {
+          "name": "200 OK - Successful Response",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/cms/brands",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "cms",
+                "brands"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"672922ef10a514d23d8c11aa\",\n    \"tagline\": {\n      \"en\": \"TRUSTED BRANDS & PARTNERS\",\n      \"ar\": \"العلامات التجارية الموثوقة والشركاء\"\n    },\n    \"title\": {\n      \"en\": \"Trusted Brands & Partners\",\n      \"ar\": \"العلامات التجارية والشركاء الموثوقون\"\n    },\n    \"description\": {\n      \"en\": \"Partner and investor logos displayed in the trusted brands slider\",\n      \"ar\": \"شعارات الشركاء والمستثمرين المعروضة في شريط العلامات التجارية الموثوقة\"\n    },\n    \"brands\": [\n      {\n        \"id\": \"brand-1\",\n        \"name\": \"Aramco Ventures\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80\",\n        \"websiteUrl\": \"https://aramcoventures.com\",\n        \"order\": 1\n      },\n      {\n        \"id\": \"brand-2\",\n        \"name\": \"NEOM Tech\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=300&q=80\",\n        \"websiteUrl\": \"https://neom.com\",\n        \"order\": 2\n      },\n      {\n        \"id\": \"brand-3\",\n        \"name\": \"SABIC Horizon\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1516876437184-593fda40c7ce?auto=format&fit=crop&w=300&q=80\",\n        \"websiteUrl\": \"https://sabic.com\",\n        \"order\": 3\n      },\n      {\n        \"id\": \"brand-4\",\n        \"name\": \"Global Innovation Hub\",\n        \"logoUrl\": \"https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=300&q=80\",\n        \"websiteUrl\": \"https://example.com\",\n        \"order\": 4\n      }\n    ],\n    \"isActive\": true,\n    \"createdAt\": \"2026-11-05T10:00:00.000Z\",\n    \"updatedAt\": \"2026-11-05T10:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "14. CMS - Brand Logos & Partners (POST / PUT Update)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tagline\": {\n    \"en\": \"TRUSTED BRANDS & PARTNERS\",\n    \"ar\": \"العلامات التجارية الموثوقة والشركاء\"\n  },\n  \"title\": {\n    \"en\": \"Trusted Brands & Partners\",\n    \"ar\": \"العلامات التجارية والشركاء الموثوقون\"\n  },\n  \"description\": {\n    \"en\": \"Partner and investor logos displayed in the trusted brands slider\",\n    \"ar\": \"شعارات الشركاء والمستثمرين المعروضة في شريط العلامات التجارية الموثوقة\"\n  },\n  \"brands\": [\n    {\n      \"id\": \"brand-1\",\n      \"name\": \"Aramco Ventures\",\n      \"logoUrl\": \"https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80\",\n      \"websiteUrl\": \"https://aramcoventures.com\",\n      \"order\": 1\n    },\n    {\n      \"id\": \"brand-2\",\n      \"name\": \"NEOM Tech\",\n      \"logoUrl\": \"https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=300&q=80\",\n      \"websiteUrl\": \"https://neom.com\",\n      \"order\": 2\n    }\n  ],\n  \"isActive\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/brands",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "brands"
+          ]
+        },
+        "description": "### Update Centralized Brand Logos (POST or PUT)\nUpdates the entire brand logos section and list.\nSupports both `POST` and `PUT` on `/api/cms/brands` and `/api/brands`."
+      },
+      "response": []
+    },
+    {
+      "name": "15. CMS - Call-To-Action (CTA) Banner (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/cta-banner",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "cta-banner"
+          ]
+        },
+        "description": "### Centralized CTA Banner (GET)\nFetches the global CTA Banner displayed across pages.\nDirect routes: `GET /api/cms/cta-banner` or `GET /api/banner`."
+      },
+      "response": []
+    },
+    {
+      "name": "16. CMS - Call-To-Action (CTA) Banner (POST / PUT Update)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"heading\": {\n    \"en\": \"Ready to Build the Future Together?\",\n    \"ar\": \"هل أنت مستعد لبناء المستقبل معاً؟\"\n  },\n  \"description\": {\n    \"en\": \"Partner with Mobtaker Group to unlock new opportunities in healthcare, investment, and infrastructure across Saudi Arabia.\",\n    \"ar\": \"شراكة مع مجموعة مبتكر لفتح آفاق جديدة في الرعاية الصحية والاستثمار والبنية التحتية في المملكة العربية السعودية.\"\n  },\n  \"primaryButton\": {\n    \"label\": {\n      \"en\": \"Contact Our Team\",\n      \"ar\": \"تواصل مع فريقنا\"\n    },\n    \"url\": \"/contact\"\n  },\n  \"secondaryButton\": {\n    \"label\": {\n      \"en\": \"Explore Sectors\",\n      \"ar\": \"استكشف القطاعات\"\n    },\n    \"url\": \"/projects\"\n  },\n  \"stats\": [\n    {\n      \"label\": {\n        \"en\": \"Projects Delivered\",\n        \"ar\": \"مشاريع منجزة\"\n      },\n      \"value\": \"150+\"\n    },\n    {\n      \"label\": {\n        \"en\": \"Investment Capital\",\n        \"ar\": \"رأس مال استثماري\"\n      },\n      \"value\": \"$500M+\"\n    }\n  ],\n  \"isActive\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/cms/cta-banner",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "cms",
+            "cta-banner"
+          ]
+        },
+        "description": "### Update CTA Banner (POST or PUT)\nSupports both `POST` and `PUT` on `/api/cms/cta-banner` and `/api/banner`."
+      },
+      "response": []
     }
   ]
 }

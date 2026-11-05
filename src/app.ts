@@ -6,6 +6,16 @@ import cmsRouter from './routes/cmsRoutes';
 import uploadRouter from './routes/uploadRoutes';
 import quoteRouter from './routes/quoteRoutes';
 import enquiryRouter from './routes/enquiryRoutes';
+import {
+  getCmsBrands,
+  updateCmsBrands,
+  addBrandItem,
+  deleteBrandItem,
+} from './controllers/cmsBrandController';
+import {
+  getCmsCtaBanner,
+  updateCmsCtaBanner,
+} from './controllers/cmsCtaBannerController';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
 
 const app: Application = express();
@@ -24,7 +34,8 @@ app.get('/', (_req: Request, res: Response) => {
     message: 'Welcome to Express & MongoDB API - Innovation Backend',
     documentation: '/api/health',
     cmsEndpoint: '/api/cms/home',
-    brandsEndpoint: '/api/cms/brands',
+    brandsEndpoint: '/api/cms/brands (or /api/brands)',
+    ctaBannerEndpoint: '/api/cms/cta-banner (or /api/banner)',
     uploadEndpoint: '/api/upload/public',
     quotesEndpoint: '/api/quotes',
     enquiriesEndpoint: '/api/enquiries',
@@ -34,8 +45,19 @@ app.get('/', (_req: Request, res: Response) => {
 // API Routes
 app.use('/api', healthRouter);
 app.use('/api/cms', cmsRouter);
-app.use('/api/brands', cmsRouter); // Direct alias for /api/brands
-app.use('/api/brand-logos', cmsRouter); // Direct alias for /api/brand-logos
+
+// Direct Brand Logos routes (/api/brands and /api/brand-logos)
+app.get(['/api/brands', '/api/brand-logos'], getCmsBrands);
+app.put(['/api/brands', '/api/brand-logos'], updateCmsBrands);
+app.post(['/api/brands', '/api/brand-logos'], updateCmsBrands);
+app.post(['/api/brands/item', '/api/brand-logos/item'], addBrandItem);
+app.delete(['/api/brands/item/:id', '/api/brand-logos/item/:id'], deleteBrandItem);
+
+// Direct CTA Banner routes (/api/cta-banner and /api/banner)
+app.get(['/api/cta-banner', '/api/banner', '/api/cta'], getCmsCtaBanner);
+app.put(['/api/cta-banner', '/api/banner', '/api/cta'], updateCmsCtaBanner);
+app.post(['/api/cta-banner', '/api/banner', '/api/cta'], updateCmsCtaBanner);
+
 app.use('/api/upload', uploadRouter);
 app.use('/api/quotes', quoteRouter);
 app.use('/api/quote-requests', quoteRouter); // Alias

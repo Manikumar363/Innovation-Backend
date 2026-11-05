@@ -82,3 +82,4 @@ const CmsBrandSchema = new Schema(
 
 export const CmsBrand = mongoose.model<ICmsBrandSection>('CmsBrand', CmsBrandSchema);
 export default CmsBrand;
+
