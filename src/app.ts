@@ -22,6 +22,14 @@ import {
   addOurCompanyItem,
   deleteOurCompanyItem,
 } from './controllers/cmsOurCompaniesController';
+import {
+  getAllServices,
+  getServiceBySlug,
+  createServicePage,
+  updateServicePage,
+  deleteServicePage,
+  resetDefaultServices,
+} from './controllers/servicePageController';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
 
 const app: Application = express();
@@ -43,6 +51,8 @@ app.get('/', (_req: Request, res: Response) => {
     brandsEndpoint: '/api/cms/brands (or /api/brands)',
     ourCompaniesEndpoint: '/api/cms/our-companies (or /api/our-companies)',
     ctaBannerEndpoint: '/api/cms/cta-banner (or /api/banner)',
+    servicesEndpoint: '/services (or /api/services, /api/cms/services/pages)',
+    serviceBySlugEndpoint: '/services/:slug (or /api/services/:slug)',
     uploadEndpoint: '/api/upload/public',
     quotesEndpoint: '/api/quotes',
     enquiriesEndpoint: '/api/enquiries',
@@ -71,6 +81,14 @@ app.delete(['/api/our-companies/item/:id', '/api/companies-divisions/item/:id'],
 app.get(['/api/cta-banner', '/api/banner', '/api/cta'], getCmsCtaBanner);
 app.put(['/api/cta-banner', '/api/banner', '/api/cta'], updateCmsCtaBanner);
 app.post(['/api/cta-banner', '/api/banner', '/api/cta'], updateCmsCtaBanner);
+
+// Direct Service Pages routes (as requested by user: GET /services, GET /services/:slug)
+app.get(['/services', '/api/services'], getAllServices);
+app.get(['/services/:slug', '/api/services/:slug'], getServiceBySlug);
+app.post(['/services', '/api/services'], createServicePage);
+app.put(['/services/:id', '/api/services/:id'], updateServicePage);
+app.delete(['/services/:id', '/api/services/:id'], deleteServicePage);
+app.post(['/services/reset-defaults', '/api/services/reset-defaults'], resetDefaultServices);
 
 app.use('/api/upload', uploadRouter);
 app.use('/api/quotes', quoteRouter);

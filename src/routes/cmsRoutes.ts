@@ -3,6 +3,14 @@ import { getCmsHome, updateCmsHome } from '../controllers/cmsController';
 import { getCmsAbout, updateCmsAbout } from '../controllers/cmsAboutController';
 import { getCmsCompany, updateCmsCompany } from '../controllers/cmsCompanyController';
 import { getCmsServices, updateCmsServices } from '../controllers/cmsServicesController';
+import {
+  getAllServices,
+  getServiceBySlug,
+  createServicePage,
+  updateServicePage,
+  deleteServicePage,
+  resetDefaultServices,
+} from '../controllers/servicePageController';
 import { getCmsShop, updateCmsShop } from '../controllers/cmsShopController';
 import { getCmsProjects, updateCmsProjects } from '../controllers/cmsProjectsController';
 import { getCmsPartners, updateCmsPartners } from '../controllers/cmsPartnersController';
@@ -97,6 +105,14 @@ router.post('/company', updateCmsCompany);
 router.get('/services', getCmsServices);
 router.put('/services', updateCmsServices);
 router.post('/services', updateCmsServices);
+
+// Service Pages (Reusable Common Layout for Medical Equipment, Lab Supplies, Healthcare Solutions, Standards)
+router.get('/services/pages', getAllServices);
+router.get('/services/page/:slug', getServiceBySlug);
+router.post('/services/page', createServicePage);
+router.put('/services/page/:id', updateServicePage);
+router.delete('/services/page/:id', deleteServicePage);
+router.post('/services/reset-defaults', resetDefaultServices);
 
 // CMS Shop Routes
 router.get('/shop', getCmsShop);

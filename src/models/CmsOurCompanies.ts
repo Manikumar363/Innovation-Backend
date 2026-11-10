@@ -90,3 +90,4 @@ export const CmsOurCompanies = mongoose.model<ICmsOurCompanies>(
   'CmsOurCompanies',
   CmsOurCompaniesSchema
 );
+

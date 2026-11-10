@@ -935,6 +935,55 @@
         "description": "### Update Our Companies & Divisions (POST or PUT)\nSupports both `POST` and `PUT` on `/api/cms/our-companies` and `/api/our-companies`."
       },
       "response": []
+    },
+    {
+      "name": "19. Services - Fetch All Services (GET /services)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/services",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services"
+          ]
+        },
+        "description": "### Overview\nFetches all 4 service pages:\n1. Medical & Laboratory Equipment (`medical-laboratory-equipment`)\n2. Laboratory Supplies (`laboratory-supplies`)\n3. Healthcare Solutions (`healthcare-solutions`)\n4. Quality & Safety Standards (`quality-safety-standards`)\n\nAlso available on `/api/services` and `/api/cms/services/pages`.\n\n### Response Format\n- Standard response: `{ \"success\": true, \"count\": 4, \"data\": [ ... ] }`"
+      },
+      "response": []
+    },
+    {
+      "name": "20. Services - Fetch Service by Slug (GET /services/:slug)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/services/medical-laboratory-equipment",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services",
+            "medical-laboratory-equipment"
+          ]
+        },
+        "description": "### Overview\nFetches individual service page details by slug (e.g. `medical-laboratory-equipment`, `laboratory-supplies`, `healthcare-solutions`, `quality-safety-standards`).\n\nAlso available on `/api/services/:slug` and `/api/cms/services/page/:slug`.\n\nIncludes the complete UI structure from reference image:\n- Page Title & Subtitle\n- Split Overview & Key Features (4 feature cards)\n- Why Choose Our Solutions (4 horizontal cards)\n- Bottom CTA Banner"
+      },
+      "response": []
     }
   ]
 }
