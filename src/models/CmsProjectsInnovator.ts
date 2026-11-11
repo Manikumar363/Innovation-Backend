@@ -5,14 +5,6 @@ export interface IBilingualText {
   ar: string;
 }
 
-export interface IBusinessAreaItem {
-  id: string;
-  icon: string;
-  title: IBilingualText;
-  description: IBilingualText;
-  linkUrl: string;
-}
-
 export interface IHeroBannerSection {
   logoUrl: string;
   logoText: IBilingualText;
@@ -33,12 +25,6 @@ export interface IAboutSection {
   imageUrl: string;
 }
 
-export interface IBusinessAreasSection {
-  title: IBilingualText;
-  description: IBilingualText;
-  areas: IBusinessAreaItem[];
-}
-
 export interface IWorkTogetherSection {
   tagline: IBilingualText;
   title: IBilingualText;
@@ -53,7 +39,6 @@ export interface ICmsProjectsInnovator extends Document {
   colorTheme: string;
   heroBannerSection: IHeroBannerSection;
   aboutSection: IAboutSection;
-  businessAreasSection: IBusinessAreasSection;
   workTogetherSection: IWorkTogetherSection;
   createdAt: Date;
   updatedAt: Date;
@@ -63,17 +48,6 @@ const BilingualSchema = new Schema(
   {
     en: { type: String, default: '' },
     ar: { type: String, default: '' },
-  },
-  { _id: false }
-);
-
-const BusinessAreaSchema = new Schema(
-  {
-    id: { type: String, required: true },
-    icon: { type: String, default: 'microscope' },
-    title: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
-    description: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
-    linkUrl: { type: String, default: '' },
   },
   { _id: false }
 );
@@ -152,23 +126,6 @@ const CmsProjectsInnovatorSchema = new Schema(
         type: String,
         default: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
       },
-    },
-    businessAreasSection: {
-      title: {
-        type: BilingualSchema,
-        default: () => ({
-          en: 'Our Business Areas',
-          ar: 'مجالات أعمالنا',
-        }),
-      },
-      description: {
-        type: BilingualSchema,
-        default: () => ({
-          en: 'Explore the sectors and services that form the Projects Innovator group.',
-          ar: 'استكشف القطاعات والخدمات التي تشكل مجموعة مبتكر المشاريع.',
-        }),
-      },
-      areas: { type: [BusinessAreaSchema], default: [] },
     },
     workTogetherSection: {
       tagline: {

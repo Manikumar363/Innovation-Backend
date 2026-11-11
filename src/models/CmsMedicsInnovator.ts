@@ -5,23 +5,6 @@ export interface IBilingualText {
   ar: string;
 }
 
-export interface IProductBadgeItem {
-  id?: string;
-  en: string;
-  ar: string;
-}
-
-export interface IProductItem {
-  id: string;
-  image: string;
-  brand: IBilingualText;
-  name: IBilingualText;
-  description: IBilingualText;
-  badges: IProductBadgeItem[];
-  buttonText: IBilingualText;
-  buttonUrl: string;
-}
-
 export interface IHeroBannerSection {
   logoUrl: string;
   logoText: IBilingualText;
@@ -42,14 +25,6 @@ export interface IAboutSection {
   imageUrl: string;
 }
 
-export interface IProductsSection {
-  title: IBilingualText;
-  description: IBilingualText;
-  products: IProductItem[];
-  viewAllButtonText: IBilingualText;
-  viewAllButtonUrl: string;
-}
-
 export interface IWorkTogetherSection {
   tagline: IBilingualText;
   title: IBilingualText;
@@ -64,7 +39,6 @@ export interface ICmsMedicsInnovator extends Document {
   colorTheme: string;
   heroBannerSection: IHeroBannerSection;
   aboutSection: IAboutSection;
-  productsSection: IProductsSection;
   workTogetherSection: IWorkTogetherSection;
   createdAt: Date;
   updatedAt: Date;
@@ -74,32 +48,6 @@ const BilingualSchema = new Schema(
   {
     en: { type: String, default: '' },
     ar: { type: String, default: '' },
-  },
-  { _id: false }
-);
-
-const ProductBadgeSchema = new Schema(
-  {
-    id: { type: String },
-    en: { type: String, default: '' },
-    ar: { type: String, default: '' },
-  },
-  { _id: false }
-);
-
-const ProductItemSchema = new Schema(
-  {
-    id: { type: String, required: true },
-    image: { type: String, default: '' },
-    brand: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
-    name: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
-    description: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
-    badges: { type: [ProductBadgeSchema], default: [] },
-    buttonText: {
-      type: BilingualSchema,
-      default: () => ({ en: 'Request a Quote ↗', ar: 'طلب عرض أسعار ↗' }),
-    },
-    buttonUrl: { type: String, default: '/contact' },
   },
   { _id: false }
 );
@@ -187,88 +135,6 @@ const CmsMedicsInnovatorSchema = new Schema(
         default:
           'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80',
       },
-    },
-
-    productsSection: {
-      title: {
-        type: BilingualSchema,
-        default: () => ({
-          en: 'Our Products',
-          ar: 'منتجاتنا',
-        }),
-      },
-      description: {
-        type: BilingualSchema,
-        default: () => ({
-          en: 'Explore our range of high-quality medical equipment and solutions designed to meet your needs.',
-          ar: 'استكشف مجموعتنا من المعدات والحلول الطبية عالية الجودة والمصممة لتلبية احتياجاتك.',
-        }),
-      },
-      products: {
-        type: [ProductItemSchema],
-        default: () => [
-          {
-            id: 'prod-1',
-            image:
-              'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80',
-            brand: { en: 'MedTech', ar: 'ميدتيك' },
-            name: { en: 'Patient Monitor', ar: 'شاشة مراقبة المريض' },
-            description: {
-              en: 'A medical monitoring device designed to track vital signs and support patient observation in clinical environments.',
-              ar: 'جهاز مراقبة طبي مصمم لتتبع العلامات الحيوية ودعم مراقبة المرضى في البيئات السريرية.',
-            },
-            badges: [
-              { id: 'b1', en: 'CE Certified', ar: 'معتمد من CE' },
-              { id: 'b2', en: 'FDA Registered', ar: 'مسجل لدى FDA' },
-              { id: 'b3', en: 'ISO Certified', ar: 'معتمد من ISO' },
-            ],
-            buttonText: { en: 'Request a Quote ↗', ar: 'طلب عرض أسعار ↗' },
-            buttonUrl: '/contact',
-          },
-          {
-            id: 'prod-2',
-            image:
-              'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80',
-            brand: { en: 'SonoCare', ar: 'سونوكير' },
-            name: { en: 'Digital Ultrasound System', ar: 'نظام الموجات فوق الصوتية الرقمي' },
-            description: {
-              en: 'An ultrasound imaging system designed to support diagnostic examinations in hospitals and healthcare facilities.',
-              ar: 'نظام تصوير بالموجات فوق الصوتية مصمم لدعم الفحوصات التشخيصية في المستشفيات والمرافق الصحية.',
-            },
-            badges: [
-              { id: 'b4', en: 'CE Certified', ar: 'معتمد من CE' },
-              { id: 'b5', en: 'ISO Certified', ar: 'معتمد من ISO' },
-            ],
-            buttonText: { en: 'Request a Quote ↗', ar: 'طلب عرض أسعار ↗' },
-            buttonUrl: '/contact',
-          },
-          {
-            id: 'prod-3',
-            image:
-              'https://images.unsplash.com/photo-1583912267670-6575ad3726f9?auto=format&fit=crop&w=600&q=80',
-            brand: { en: 'CareFlow', ar: 'كيرفلو' },
-            name: { en: 'Infusion Pump', ar: 'مضخة التسريب الوريدي' },
-            description: {
-              en: 'A medical device designed for the controlled delivery of fluids and medications in clinical settings.',
-              ar: 'جهاز طبي مصمم للتحكم الدقيق في توصيل السوائل والأدوية في البيئات السريرية.',
-            },
-            badges: [
-              { id: 'b6', en: 'CE Certified', ar: 'معتمد من CE' },
-              { id: 'b7', en: 'FDA Registered', ar: 'مسجل لدى FDA' },
-            ],
-            buttonText: { en: 'Request a Quote ↗', ar: 'طلب عرض أسعار ↗' },
-            buttonUrl: '/contact',
-          },
-        ],
-      },
-      viewAllButtonText: {
-        type: BilingualSchema,
-        default: () => ({
-          en: 'View All Products',
-          ar: 'عرض جميع المنتجات',
-        }),
-      },
-      viewAllButtonUrl: { type: String, default: '/shop' },
     },
 
     workTogetherSection: {

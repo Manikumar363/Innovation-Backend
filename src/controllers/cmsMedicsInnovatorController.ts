@@ -50,75 +50,6 @@ export const defaultCmsMedicsInnovatorData = {
     imageUrl:
       'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80',
   },
-  productsSection: {
-    title: {
-      en: 'Our Products',
-      ar: 'منتجاتنا',
-    },
-    description: {
-      en: 'Explore our range of high-quality medical equipment and solutions designed to meet your needs.',
-      ar: 'استكشف مجموعتنا من المعدات والحلول الطبية عالية الجودة والمصممة لتلبية احتياجاتك.',
-    },
-    products: [
-      {
-        id: 'prod-1',
-        image:
-          'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80',
-        brand: { en: 'MedTech', ar: 'ميدتيك' },
-        name: { en: 'Patient Monitor', ar: 'شاشة مراقبة المريض' },
-        description: {
-          en: 'A medical monitoring device designed to track vital signs and support patient observation in clinical environments.',
-          ar: 'جهاز مراقبة طبي مصمم لتتبع العلامات الحيوية ودعم مراقبة المرضى في البيئات السريرية.',
-        },
-        badges: [
-          { id: 'b1', en: 'CE Certified', ar: 'معتمد من CE' },
-          { id: 'b2', en: 'FDA Registered', ar: 'مسجل لدى FDA' },
-          { id: 'b3', en: 'ISO Certified', ar: 'معتمد من ISO' },
-        ],
-        buttonText: { en: 'Request a Quote ↗', ar: 'طلب عرض أسعار ↗' },
-        buttonUrl: '/contact',
-      },
-      {
-        id: 'prod-2',
-        image:
-          'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80',
-        brand: { en: 'SonoCare', ar: 'سونوكير' },
-        name: { en: 'Digital Ultrasound System', ar: 'نظام الموجات فوق الصوتية الرقمي' },
-        description: {
-          en: 'An ultrasound imaging system designed to support diagnostic examinations in hospitals and healthcare facilities.',
-          ar: 'نظام تصوير بالموجات فوق الصوتية مصمم لدعم الفحوصات التشخيصية في المستشفيات والمرافق الصحية.',
-        },
-        badges: [
-          { id: 'b4', en: 'CE Certified', ar: 'معتمد من CE' },
-          { id: 'b5', en: 'ISO Certified', ar: 'معتمد من ISO' },
-        ],
-        buttonText: { en: 'Request a Quote ↗', ar: 'طلب عرض أسعار ↗' },
-        buttonUrl: '/contact',
-      },
-      {
-        id: 'prod-3',
-        image:
-          'https://images.unsplash.com/photo-1583912267670-6575ad3726f9?auto=format&fit=crop&w=600&q=80',
-        brand: { en: 'CareFlow', ar: 'كيرفلو' },
-        name: { en: 'Infusion Pump', ar: 'مضخة التسريب الوريدي' },
-        description: {
-          en: 'A medical device designed for the controlled delivery of fluids and medications in clinical settings.',
-          ar: 'جهاز طبي مصمم للتحكم الدقيق في توصيل السوائل والأدوية في البيئات السريرية.',
-        },
-        badges: [
-          { id: 'b6', en: 'CE Certified', ar: 'معتمد من CE' },
-          { id: 'b7', en: 'FDA Registered', ar: 'مسجل لدى FDA' },
-        ],
-        buttonText: { en: 'Request a Quote ↗', ar: 'طلب عرض أسعار ↗' },
-        buttonUrl: '/contact',
-      },
-    ],
-    viewAllButtonText: {
-      en: 'View All Products',
-      ar: 'عرض جميع المنتجات',
-    },
-    viewAllButtonUrl: '/shop',
-  },
   workTogetherSection: {
     tagline: {
       en: "— LET'S WORK TOGETHER —",
@@ -154,9 +85,21 @@ export const getCmsMedicsInnovator = async (req: Request, res: Response) => {
       cmsData.colorTheme = defaultCmsMedicsInnovatorData.colorTheme;
       await cmsData.save();
     }
+
+    if (cmsData.get('productsSection') !== undefined) {
+      await CmsMedicsInnovator.updateOne(
+        { _id: cmsData._id },
+        { $unset: { productsSection: '' } }
+      );
+      cmsData = (await CmsMedicsInnovator.findById(cmsData._id)) || cmsData;
+    }
+
+    const responseData = cmsData.toObject();
+    delete (responseData as any).productsSection;
+
     res.json({
       success: true,
-      data: cmsData,
+      data: responseData,
     });
   } catch (error) {
     console.error('Error fetching CMS Medics Innovator data:', error);
@@ -170,7 +113,7 @@ export const getCmsMedicsInnovator = async (req: Request, res: Response) => {
 
 export const updateCmsMedicsInnovator = async (req: Request, res: Response) => {
   try {
-    const updateData = req.body;
+    const { productsSection: _ignored, ...updateData } = req.body || {};
     const incomingColorTheme = updateData.colorTheme ?? updateData.color;
     let cmsData = await CmsMedicsInnovator.findOne();
 
@@ -196,12 +139,6 @@ export const updateCmsMedicsInnovator = async (req: Request, res: Response) => {
           ...updateData.aboutSection,
         };
       }
-      if (updateData.productsSection) {
-        cmsData.productsSection = {
-          ...cmsData.productsSection,
-          ...updateData.productsSection,
-        };
-      }
       if (updateData.workTogetherSection) {
         cmsData.workTogetherSection = {
           ...cmsData.workTogetherSection,
@@ -209,12 +146,21 @@ export const updateCmsMedicsInnovator = async (req: Request, res: Response) => {
         };
       }
       await cmsData.save();
+      if (cmsData.get('productsSection') !== undefined) {
+        await CmsMedicsInnovator.updateOne(
+          { _id: cmsData._id },
+          { $unset: { productsSection: '' } }
+        );
+      }
     }
+
+    const responseData = cmsData.toObject();
+    delete (responseData as any).productsSection;
 
     res.json({
       success: true,
       message: 'CMS Medics Innovator data updated successfully',
-      data: cmsData,
+      data: responseData,
     });
   } catch (error) {
     console.error('Error updating CMS Medics Innovator data:', error);

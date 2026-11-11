@@ -48,57 +48,6 @@ export const defaultCmsProjectsInnovatorData = {
     },
     imageUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
   },
-  businessAreasSection: {
-    title: {
-      en: 'Our Business Areas',
-      ar: 'مجالات أعمالنا',
-    },
-    description: {
-      en: 'Explore the sectors and services that form the Projects Innovator group.',
-      ar: 'استكشف القطاعات والخدمات التي تشكل مجموعة مبتكر المشاريع.',
-    },
-    areas: [
-      {
-        id: 'area-1',
-        icon: 'microscope',
-        title: {
-          en: 'Medical & Laboratory Equipment',
-          ar: 'الأجهزة الطبية والمخبرية',
-        },
-        description: {
-          en: 'Comprehensive medical device solutions and laboratory testing equipment.',
-          ar: 'حلول شاملة للأجهزة الطبية ومعدات الاختبارات المختبرية.',
-        },
-        linkUrl: '/services',
-      },
-      {
-        id: 'area-2',
-        icon: 'flask',
-        title: {
-          en: 'Laboratory Supplies',
-          ar: 'المستلزمات المختبرية',
-        },
-        description: {
-          en: 'Reliable laboratory supplies and essential equipment for research, testing, and diagnostic facilities.',
-          ar: 'مستلزمات مخبرية موثوقة ومعدات أساسية لمنشآت البحث والاختبار والتشخيص.',
-        },
-        linkUrl: '/services',
-      },
-      {
-        id: 'area-3',
-        icon: 'heart',
-        title: {
-          en: 'Healthcare Solutions',
-          ar: 'حلول الرعاية الصحية',
-        },
-        description: {
-          en: 'Quality healthcare products and solutions designed to support medical professionals and healthcare facilities.',
-          ar: 'منتجات وحلول رعاية صحية عالية الجودة لدعم الكوادر والمنشآت الطبية.',
-        },
-        linkUrl: '/services',
-      },
-    ],
-  },
   workTogetherSection: {
     tagline: {
       en: "LET'S WORK TOGETHER",
@@ -140,9 +89,20 @@ export const getCmsProjectsInnovator = async (req: Request, res: Response) => {
       await cmsData.save();
     }
 
+    if (cmsData.get('businessAreasSection') !== undefined) {
+      await CmsProjectsInnovator.updateOne(
+        { _id: cmsData._id },
+        { $unset: { businessAreasSection: '' } }
+      );
+      cmsData = (await CmsProjectsInnovator.findById(cmsData._id)) || cmsData;
+    }
+
+    const responseData = cmsData.toObject();
+    delete (responseData as any).businessAreasSection;
+
     return res.status(200).json({
       success: true,
-      data: cmsData,
+      data: responseData,
     });
   } catch (error: any) {
     console.error('Error fetching CMS Projects Innovator data:', error);
@@ -159,7 +119,7 @@ export const getCmsProjectsInnovator = async (req: Request, res: Response) => {
  */
 export const updateCmsProjectsInnovator = async (req: Request, res: Response) => {
   try {
-    const updateData = req.body;
+    const { businessAreasSection: _ignored, ...updateData } = req.body || {};
     const incomingColorTheme = updateData.colorTheme ?? updateData.color;
 
     let cmsData = await CmsProjectsInnovator.findOne();
@@ -180,20 +140,26 @@ export const updateCmsProjectsInnovator = async (req: Request, res: Response) =>
       if (updateData.aboutSection) {
         cmsData.aboutSection = updateData.aboutSection;
       }
-      if (updateData.businessAreasSection) {
-        cmsData.businessAreasSection = updateData.businessAreasSection;
-      }
       if (updateData.workTogetherSection) {
         cmsData.workTogetherSection = updateData.workTogetherSection;
       }
 
       await cmsData.save();
+      if (cmsData.get('businessAreasSection') !== undefined) {
+        await CmsProjectsInnovator.updateOne(
+          { _id: cmsData._id },
+          { $unset: { businessAreasSection: '' } }
+        );
+      }
     }
+
+    const responseData = cmsData.toObject();
+    delete (responseData as any).businessAreasSection;
 
     return res.status(200).json({
       success: true,
       message: 'CMS Projects Innovator data updated successfully',
-      data: cmsData,
+      data: responseData,
     });
   } catch (error: any) {
     console.error('Error updating CMS Projects Innovator data:', error);
