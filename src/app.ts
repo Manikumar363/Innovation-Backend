@@ -23,6 +23,13 @@ import {
   deleteOurCompanyItem,
 } from './controllers/cmsOurCompaniesController';
 import {
+  getCmsFounder,
+  updateCmsFounder,
+  addFounderCompany,
+  deleteFounderCompany,
+  resetFounderToDefaults,
+} from './controllers/cmsFounderController';
+import {
   getAllServices,
   getServiceBySlug,
   createServicePage,
@@ -48,6 +55,7 @@ app.get('/', (_req: Request, res: Response) => {
     message: 'Welcome to Express & MongoDB API - Innovation Backend',
     documentation: '/api/health',
     cmsEndpoint: '/api/cms/home',
+    founderEndpoint: '/api/cms/founder (or /api/founder, /founder)',
     brandsEndpoint: '/api/cms/brands (or /api/brands)',
     ourCompaniesEndpoint: '/api/cms/our-companies (or /api/our-companies)',
     ctaBannerEndpoint: '/api/cms/cta-banner (or /api/banner)',
@@ -69,6 +77,14 @@ app.put(['/api/brands', '/api/brand-logos'], updateCmsBrands);
 app.post(['/api/brands', '/api/brand-logos'], updateCmsBrands);
 app.post(['/api/brands/item', '/api/brand-logos/item'], addBrandItem);
 app.delete(['/api/brands/item/:id', '/api/brand-logos/item/:id'], deleteBrandItem);
+
+// Direct Founder Section routes (/api/founder, /founder, /api/founder-message)
+app.get(['/api/founder', '/founder', '/api/founder-message', '/founder-message'], getCmsFounder);
+app.put(['/api/founder', '/founder', '/api/founder-message', '/founder-message'], updateCmsFounder);
+app.post(['/api/founder', '/founder', '/api/founder-message', '/founder-message'], updateCmsFounder);
+app.post(['/api/founder/company', '/founder/company'], addFounderCompany);
+app.delete(['/api/founder/company/:id', '/founder/company/:id'], deleteFounderCompany);
+app.post(['/api/founder/reset-defaults', '/founder/reset-defaults'], resetFounderToDefaults);
 
 // Direct Our Companies routes (/api/our-companies and /api/companies-divisions)
 app.get(['/api/our-companies', '/api/companies-divisions'], getOurCompanies);

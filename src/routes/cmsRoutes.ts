@@ -44,8 +44,27 @@ import {
   addOurCompanyItem,
   deleteOurCompanyItem,
 } from '../controllers/cmsOurCompaniesController';
+import {
+  getCmsFounder,
+  updateCmsFounder,
+  addFounderCompany,
+  deleteFounderCompany,
+  resetFounderToDefaults,
+} from '../controllers/cmsFounderController';
 
 const router = Router();
+
+// Founder Section Routes
+router.get('/founder', getCmsFounder);
+router.put('/founder', updateCmsFounder);
+router.post('/founder', updateCmsFounder);
+router.post('/founder/company', addFounderCompany);
+router.delete('/founder/company/:id', deleteFounderCompany);
+router.post('/founder/reset-defaults', resetFounderToDefaults);
+// Aliases for Founder Section
+router.get(['/founder-message', '/founder-section'], getCmsFounder);
+router.put(['/founder-message', '/founder-section'], updateCmsFounder);
+router.post(['/founder-message', '/founder-section'], updateCmsFounder);
 
 // Specialized Companies & Divisions (Our Companies) Routes
 router.get('/our-companies', getOurCompanies);
