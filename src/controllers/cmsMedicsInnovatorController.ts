@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import CmsMedicsInnovator, { ICmsMedicsInnovator } from '../models/CmsMedicsInnovator';
 
 export const defaultCmsMedicsInnovatorData = {
+  colorTheme: 'red',
   heroBannerSection: {
     logoUrl: '',
     logoText: {
@@ -149,6 +150,9 @@ export const getCmsMedicsInnovator = async (req: Request, res: Response) => {
     let cmsData = await CmsMedicsInnovator.findOne();
     if (!cmsData) {
       cmsData = await CmsMedicsInnovator.create(defaultCmsMedicsInnovatorData);
+    } else if (!cmsData.colorTheme) {
+      cmsData.colorTheme = defaultCmsMedicsInnovatorData.colorTheme;
+      await cmsData.save();
     }
     res.json({
       success: true,
@@ -167,14 +171,19 @@ export const getCmsMedicsInnovator = async (req: Request, res: Response) => {
 export const updateCmsMedicsInnovator = async (req: Request, res: Response) => {
   try {
     const updateData = req.body;
+    const incomingColorTheme = updateData.colorTheme ?? updateData.color;
     let cmsData = await CmsMedicsInnovator.findOne();
 
     if (!cmsData) {
       cmsData = await CmsMedicsInnovator.create({
         ...defaultCmsMedicsInnovatorData,
         ...updateData,
+        colorTheme: incomingColorTheme || defaultCmsMedicsInnovatorData.colorTheme,
       });
     } else {
+      if (incomingColorTheme) {
+        cmsData.colorTheme = incomingColorTheme;
+      }
       if (updateData.heroBannerSection) {
         cmsData.heroBannerSection = {
           ...cmsData.heroBannerSection,

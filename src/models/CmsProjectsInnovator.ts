@@ -50,6 +50,7 @@ export interface IWorkTogetherSection {
 }
 
 export interface ICmsProjectsInnovator extends Document {
+  colorTheme: string;
   heroBannerSection: IHeroBannerSection;
   aboutSection: IAboutSection;
   businessAreasSection: IBusinessAreasSection;
@@ -79,6 +80,7 @@ const BusinessAreaSchema = new Schema(
 
 const CmsProjectsInnovatorSchema = new Schema(
   {
+    colorTheme: { type: String, default: 'red' },
     heroBannerSection: {
       logoUrl: { type: String, default: '' },
       logoText: {

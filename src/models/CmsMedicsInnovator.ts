@@ -61,6 +61,7 @@ export interface IWorkTogetherSection {
 }
 
 export interface ICmsMedicsInnovator extends Document {
+  colorTheme: string;
   heroBannerSection: IHeroBannerSection;
   aboutSection: IAboutSection;
   productsSection: IProductsSection;
@@ -105,6 +106,7 @@ const ProductItemSchema = new Schema(
 
 const CmsMedicsInnovatorSchema = new Schema(
   {
+    colorTheme: { type: String, default: 'red' },
     heroBannerSection: {
       logoUrl: { type: String, default: '' },
       logoText: {

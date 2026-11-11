@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import CmsProjectsInnovator from '../models/CmsProjectsInnovator';
 
 export const defaultCmsProjectsInnovatorData = {
+  colorTheme: 'red',
   heroBannerSection: {
     logoUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80',
     logoText: {
@@ -134,6 +135,9 @@ export const getCmsProjectsInnovator = async (req: Request, res: Response) => {
     if (!cmsData) {
       cmsData = await CmsProjectsInnovator.create(defaultCmsProjectsInnovatorData);
       console.log('Seeded default CMS Projects Innovator data into MongoDB');
+    } else if (!cmsData.colorTheme) {
+      cmsData.colorTheme = defaultCmsProjectsInnovatorData.colorTheme;
+      await cmsData.save();
     }
 
     return res.status(200).json({
@@ -156,6 +160,7 @@ export const getCmsProjectsInnovator = async (req: Request, res: Response) => {
 export const updateCmsProjectsInnovator = async (req: Request, res: Response) => {
   try {
     const updateData = req.body;
+    const incomingColorTheme = updateData.colorTheme ?? updateData.color;
 
     let cmsData = await CmsProjectsInnovator.findOne();
 
@@ -163,8 +168,12 @@ export const updateCmsProjectsInnovator = async (req: Request, res: Response) =>
       cmsData = await CmsProjectsInnovator.create({
         ...defaultCmsProjectsInnovatorData,
         ...updateData,
+        colorTheme: incomingColorTheme || defaultCmsProjectsInnovatorData.colorTheme,
       });
     } else {
+      if (incomingColorTheme) {
+        cmsData.colorTheme = incomingColorTheme;
+      }
       if (updateData.heroBannerSection) {
         cmsData.heroBannerSection = updateData.heroBannerSection;
       }

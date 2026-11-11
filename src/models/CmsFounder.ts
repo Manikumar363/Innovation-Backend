@@ -198,3 +198,4 @@ const CmsFounderSchema = new Schema<ICmsFounder>(
 );
 
 export const CmsFounder = mongoose.model<ICmsFounder>('CmsFounder', CmsFounderSchema);
+
