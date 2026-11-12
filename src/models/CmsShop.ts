@@ -11,12 +11,22 @@ export interface IShopProductBadge {
   ar: string;
 }
 
+export interface IShopProductSpecification {
+  id?: string;
+  label: IBilingualText;
+  value: IBilingualText;
+}
+
 export interface IShopProduct {
   id?: string;
+  slug?: string;
   image: string;
+  images: string[];
   brand: IBilingualText;
   name: IBilingualText;
   description: IBilingualText;
+  productDescription: IBilingualText;
+  specifications: IShopProductSpecification[];
   badges: IShopProductBadge[];
   buttonText: IBilingualText;
   buttonUrl: string;
@@ -51,13 +61,26 @@ const ShopProductBadgeSchema = new Schema(
   { _id: false }
 );
 
+const ShopProductSpecificationSchema = new Schema(
+  {
+    id: { type: String },
+    label: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+    value: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+  },
+  { _id: false }
+);
+
 const ShopProductSchema = new Schema(
   {
     id: { type: String },
+    slug: { type: String, default: '' },
     image: { type: String, default: '' },
+    images: { type: [String], default: [] },
     brand: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
     name: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
     description: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+    productDescription: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+    specifications: { type: [ShopProductSpecificationSchema], default: [] },
     badges: { type: [ShopProductBadgeSchema], default: [] },
     buttonText: {
       type: BilingualSchema,

@@ -11,7 +11,7 @@ import {
   deleteServicePage,
   resetDefaultServices,
 } from '../controllers/servicePageController';
-import { getCmsShop, updateCmsShop } from '../controllers/cmsShopController';
+import { getCmsShop, updateCmsShop, getShopProductBySlug } from '../controllers/cmsShopController';
 import { getCmsProjects, updateCmsProjects } from '../controllers/cmsProjectsController';
 import { getCmsPartners, updateCmsPartners } from '../controllers/cmsPartnersController';
 import { getCmsContact, updateCmsContact } from '../controllers/cmsContactController';
@@ -137,6 +137,7 @@ router.post('/services/reset-defaults', resetDefaultServices);
 router.get('/shop', getCmsShop);
 router.put('/shop', updateCmsShop);
 router.post('/shop', updateCmsShop);
+router.get(['/shop/products/:idOrSlug', '/shop/product/:idOrSlug'], getShopProductBySlug);
 
 // CMS Investment Routes
 router.get('/investment', getCmsInvestment);
