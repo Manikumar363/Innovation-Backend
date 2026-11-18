@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import multer from 'multer';
 import { getCmsHome, updateCmsHome } from '../controllers/cmsController';
 import { getCmsAbout, updateCmsAbout } from '../controllers/cmsAboutController';
 import { getCmsCompany, updateCmsCompany } from '../controllers/cmsCompanyController';
@@ -11,7 +12,13 @@ import {
   deleteServicePage,
   resetDefaultServices,
 } from '../controllers/servicePageController';
-import { getCmsShop, updateCmsShop, getShopProductBySlug } from '../controllers/cmsShopController';
+import {
+  getCmsShop,
+  updateCmsShop,
+  getShopProductBySlug,
+  downloadShopProductsTemplate,
+  bulkImportShopProducts,
+} from '../controllers/cmsShopController';
 import { getCmsProjects, updateCmsProjects } from '../controllers/cmsProjectsController';
 import { getCmsPartners, updateCmsPartners } from '../controllers/cmsPartnersController';
 import { getCmsContact, updateCmsContact } from '../controllers/cmsContactController';
@@ -134,9 +141,16 @@ router.delete('/services/page/:id', deleteServicePage);
 router.post('/services/reset-defaults', resetDefaultServices);
 
 // CMS Shop Routes
+const excelUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 15 * 1024 * 1024 },
+});
+
 router.get('/shop', getCmsShop);
 router.put('/shop', updateCmsShop);
 router.post('/shop', updateCmsShop);
+router.get('/shop/excel-template', downloadShopProductsTemplate);
+router.post('/shop/bulk-import', excelUpload.single('file'), bulkImportShopProducts);
 router.get(['/shop/products/:idOrSlug', '/shop/product/:idOrSlug'], getShopProductBySlug);
 
 // CMS Investment Routes
