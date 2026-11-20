@@ -6,12 +6,13 @@ import {
   updateQuoteRequestStatus,
   deleteQuoteRequest,
 } from '../controllers/quoteController';
+import { optionalAuth } from '../middleware/authMiddleware';
 
 const router = Router();
 
-// Public route for end users to submit quote requests, and admin to list
+// Public route for end users to submit quote requests (with optional auth to link user ID), and admin to list
 router.route('/')
-  .post(createQuoteRequest)
+  .post(optionalAuth, createQuoteRequest)
   .get(getAllQuoteRequests);
 
 // Single quote operations

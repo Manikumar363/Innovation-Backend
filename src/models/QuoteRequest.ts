@@ -3,6 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export type QuoteStatus = 'pending' | 'in_review' | 'contacted' | 'completed' | 'cancelled';
 
 export interface IQuoteRequest extends Document {
+  userId?: mongoose.Types.ObjectId | string;
   productName: string;
   productId?: string;
   fullName: string;
@@ -20,6 +21,12 @@ export interface IQuoteRequest extends Document {
 
 const QuoteRequestSchema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      default: null,
+      index: true,
+    },
     productName: {
       type: String,
       required: true,

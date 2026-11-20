@@ -6,6 +6,7 @@ import cmsRouter from './routes/cmsRoutes';
 import uploadRouter from './routes/uploadRoutes';
 import quoteRouter from './routes/quoteRoutes';
 import enquiryRouter from './routes/enquiryRoutes';
+import userAuthRouter from './routes/userAuthRoutes';
 import {
   getCmsBrands,
   updateCmsBrands,
@@ -64,6 +65,12 @@ app.get('/', (_req: Request, res: Response) => {
     uploadEndpoint: '/api/upload/public',
     quotesEndpoint: '/api/quotes',
     enquiriesEndpoint: '/api/enquiries',
+    authSignupEndpoint: '/api/auth/signup',
+    authSigninEndpoint: '/api/auth/signin',
+    authForgotPasswordEndpoint: '/api/auth/forgot-password',
+    authResetPasswordEndpoint: '/api/auth/reset-password',
+    authProfileEndpoint: '/api/auth/profile (Bearer token required)',
+    authUserQuotesEndpoint: '/api/auth/my-quotes (Bearer token required)',
   });
 });
 
@@ -111,6 +118,8 @@ app.use('/api/quotes', quoteRouter);
 app.use('/api/quote-requests', quoteRouter); // Alias
 app.use('/api/enquiries', enquiryRouter);
 app.use('/api/enquiry', enquiryRouter); // Alias
+app.use('/api/auth', userAuthRouter);
+app.use('/api/user', userAuthRouter); // Alias
 
 // Error Handlers
 app.use(notFoundHandler);

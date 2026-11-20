@@ -53,7 +53,10 @@ export const createQuoteRequest = async (req: Request, res: Response): Promise<v
       return;
     }
 
+    const userId = (req as any).user?._id || req.body.userId || null;
+
     const newQuote = await QuoteRequest.create({
+      userId: userId || undefined,
       productName: productName?.trim() || 'General Inquiry',
       productId: productId?.trim() || '',
       fullName: fullName.trim(),
