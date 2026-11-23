@@ -468,27 +468,106 @@ export const parseShopExcelBuffer = (buffer: Buffer): Partial<IShopProduct>[] =>
   const products: Partial<IShopProduct>[] = [];
 
   rows.forEach((row, idx) => {
-    const nameEn = getCell(row, 'Product Name (English) *', 'name_en', 'nameEn', 'Product Name', 'Name');
-    const nameAr = getCell(row, 'Product Name (Arabic) *', 'name_ar', 'nameAr', 'اسم المنتج');
+    const nameEn = getCell(
+      row,
+      'Product name (EN) *',
+      'Product name (EN)',
+      'Product Name (English) *',
+      'Product Name',
+      'name_en',
+      'nameEn',
+      'Name'
+    );
+    const nameAr = getCell(
+      row,
+      'Product name (AR)',
+      'Product Name (Arabic) *',
+      'Product Name (Arabic)',
+      'name_ar',
+      'nameAr',
+      'اسم المنتج'
+    );
     if (!nameEn && !nameAr) return;
 
-    const brandEn = getCell(row, 'Brand / Category (English)', 'brand_en', 'brandEn', 'Brand');
-    const brandAr = getCell(row, 'Brand / Category (Arabic)', 'brand_ar', 'brandAr', 'العلامة التجارية');
-    const customSlug = getCell(row, 'Product Slug (Optional)', 'slug', 'Product Slug');
-    const shortDescEn = getCell(row, 'Short Summary (English)', 'short_description_en', 'description_en', 'Summary');
-    const shortDescAr = getCell(row, 'Short Summary (Arabic)', 'short_description_ar', 'description_ar', 'الوصف');
-    const htmlEnRaw = getCell(row, 'Detailed Description HTML (English)', 'product_description_html_en', 'productDescription_en');
-    const htmlArRaw = getCell(row, 'Detailed Description HTML (Arabic)', 'product_description_html_ar', 'productDescription_ar');
+    const brandEn = getCell(
+      row,
+      'Brand / Manufacturer *',
+      'Brand / Manufacturer',
+      'Brand / Category (English)',
+      'Brand',
+      'brand_en'
+    );
+    const brandAr = getCell(row, 'Brand / Category (Arabic)', 'brand_ar', 'العلامة التجارية');
+    const customSlug = getCell(
+      row,
+      'SKU *',
+      'SKU',
+      'Product Slug (Optional)',
+      'slug',
+      'Product Slug'
+    );
+    const shortDescEn = getCell(
+      row,
+      'Short description (EN) * (max 160 characters)',
+      'Short description (EN)',
+      'Short Summary (English)',
+      'short_description_en',
+      'description_en',
+      'Summary'
+    );
+    const shortDescAr = getCell(
+      row,
+      'Short description (AR)',
+      'Short Summary (Arabic)',
+      'short_description_ar',
+      'الوصف'
+    );
+    const htmlEnRaw = getCell(
+      row,
+      'Full description (EN)',
+      'Detailed Description HTML (English)',
+      'product_description_html_en',
+      'productDescription_en'
+    );
+    const htmlArRaw = getCell(
+      row,
+      'Detailed Description HTML (Arabic)',
+      'product_description_html_ar',
+      'productDescription_ar'
+    );
     const primaryImg = getCell(row, 'Primary Image URL', 'primary_image_url', 'image');
-    const additionalImgsRaw = getCell(row, 'Additional Image URLs (Comma-separated)', 'additional_images_urls', 'images');
-    const additionalImgs = (additionalImgsRaw || '').split(/[,|\n]/).map((u) => u.trim()).filter(Boolean);
-    const allImages = [...(primaryImg ? [primaryImg] : []), ...additionalImgs.filter((u) => u !== primaryImg)];
+    const imageNamesRaw = getCell(
+      row,
+      'Image file names (comma separated) *',
+      'Image file names',
+      'Additional Image URLs (Comma-separated)',
+      'images'
+    );
+    const additionalImgs = (imageNamesRaw || '')
+      .split(/[,|\n]/)
+      .map((u) => u.trim())
+      .filter(Boolean);
+    const allImages = [
+      ...(primaryImg ? [primaryImg] : []),
+      ...additionalImgs.filter((u) => u !== primaryImg),
+    ];
 
-    const specsEnRaw = getCell(row, 'Key Specifications (English) [Label: Value | Label: Value]', 'specifications_en', 'specs_en');
-    const specsArRaw = getCell(row, 'Key Specifications (Arabic) [Label: Value | Label: Value]', 'specifications_ar', 'specs_ar');
+    const specsEnRaw = getCell(
+      row,
+      'Key specifications (EN) (one per line)',
+      'Key Specifications (English) [Label: Value | Label: Value]',
+      'specifications_en',
+      'specs_en'
+    );
+    const specsArRaw = getCell(
+      row,
+      'Key Specifications (Arabic) [Label: Value | Label: Value]',
+      'specifications_ar',
+      'specs_ar'
+    );
     const parseSpecs = (raw: string) =>
       (raw || '')
-        .split(/[|\n]/)
+        .split(/\r?\n|\|/)
         .map((t) => {
           const c = t.indexOf(':');
           return c === -1
@@ -511,8 +590,38 @@ export const parseShopExcelBuffer = (buffer: Buffer): Partial<IShopProduct>[] =>
       });
     }
 
-    const badgesEnRaw = getCell(row, 'Certification Badges (English) [Comma-separated]', 'badges_en', 'Badges');
-    const badgesArRaw = getCell(row, 'Certification Badges (Arabic) [Comma-separated]', 'badges_ar', 'الشهادات');
+    // Auxiliary specs
+    const origin = getCell(row, 'Country of origin');
+    if (origin && !specifications.some((s) => /country/i.test(s.label.en))) {
+      specifications.push({
+        id: `spec-${Date.now()}-origin`,
+        label: { en: 'Country of Origin', ar: 'بلد المنشأ' },
+        value: { en: origin, ar: origin },
+      });
+    }
+
+    const warranty = getCell(row, 'Warranty / after-sales (EN)');
+    if (warranty && !specifications.some((s) => /warranty/i.test(s.label.en))) {
+      specifications.push({
+        id: `spec-${Date.now()}-warranty`,
+        label: { en: 'Warranty', ar: 'الضمان' },
+        value: { en: warranty, ar: warranty },
+      });
+    }
+
+    const badgesEnRaw = getCell(
+      row,
+      'Certifications (CE / FDA / ISO / other)',
+      'Certification Badges (English) [Comma-separated]',
+      'badges_en',
+      'Badges'
+    );
+    const badgesArRaw = getCell(
+      row,
+      'Certification Badges (Arabic) [Comma-separated]',
+      'badges_ar',
+      'الشهادات'
+    );
     const enBadges = (badgesEnRaw || '').split(/[,|\n]/).map((b) => b.trim()).filter(Boolean);
     const arBadges = (badgesArRaw || '').split(/[,|\n]/).map((b) => b.trim()).filter(Boolean);
     const maxBadges = Math.max(enBadges.length, arBadges.length);
@@ -562,192 +671,284 @@ export const downloadShopProductsTemplate = async (
   try {
     const withSample = req.query.sample !== 'false';
 
-    const sampleRows = withSample
-      ? [
-          {
-            'Product Name (English) *': 'Philips IntelliVue MX550 Patient Monitor',
-            'Product Name (Arabic) *': 'شاشة مراقبة المريض فيليبس إنتيليفيو MX550',
-            'Brand / Category (English)': 'MedTech Solutions',
-            'Brand / Category (Arabic)': 'حلول ميدتك',
-            'Product Slug (Optional)': 'philips-intellivue-mx550',
-            'Short Summary (English)':
-              'Advanced bedside monitoring solution designed for high-acuity care units and emergency rooms.',
-            'Short Summary (Arabic)':
-              'حل متقدم لمراقبة المرضى بجانب السرير مصمم لوحدات العناية الفائقة وغرف الطوارئ.',
-            'Detailed Description HTML (English)':
-              '<p>The IntelliVue MX550 provides advanced monitoring capabilities with a user-friendly interface, helping healthcare professionals make faster, more informed decisions.</p><ul><li>15.6" high-resolution display</li><li>Multiple parameter monitoring (ECG, SpO2, NIBP, RESP, TEMP)</li><li>Advanced alarm management</li><li>Network connectivity (HL7, DICOM)</li><li>Ergonomic and compact design</li></ul>',
-            'Detailed Description HTML (Arabic)':
-              '<p>توفر شاشة إنتيليفيو MX550 إمكانيات مراقبة متقدمة مع واجهة سهلة الاستخدام تساعد الكوادر الطبية على اتخاذ قرارات دقيقة.</p><ul><li>شاشة عالية الدقة مقاس 15.6 بوصة</li><li>مراقبة متعددة المؤشرات (تخطيط القلب، الأكسجين، الضغط، التنفس)</li><li>نظام إنذارات ذكي ومتقدم</li><li>اتصال شبكي بنظام HL7 و DICOM</li></ul>',
-            'Primary Image URL':
-              'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
-            'Additional Image URLs (Comma-separated)':
-              'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80, https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80',
-            'Key Specifications (English) [Label: Value | Label: Value]':
-              'Display: 15.6" TFT LCD | Parameters: ECG, SpO2, NIBP, RESP, TEMP | Power Supply: AC 100~240V, 50/60Hz | Dimensions: 380 x 280 x 180 mm | Weight: 6.5 kg',
-            'Key Specifications (Arabic) [Label: Value | Label: Value]':
-              'الشاشة: 15.6 بوصة TFT LCD | المعايير: ECG, SpO2, NIBP, RESP, TEMP | مصدر الطاقة: AC 100~240V, 50/60Hz | الأبعاد: 380 × 280 × 180 مم | الوزن: 6.5 كجم',
-            'Certification Badges (English) [Comma-separated]':
-              'CE Certified, FDA Registered, ISO 13485',
-            'Certification Badges (Arabic) [Comma-separated]':
-              'معتمد من CE, مسجل لدى FDA, معتمد من ISO 13485',
-            'Button Text (English)': 'Request a Quote',
-            'Button Text (Arabic)': 'طلب عرض أسعار',
-            'Button Link URL': '/contact',
-          },
-          {
-            'Product Name (English) *': 'Digital Ultrasound System',
-            'Product Name (Arabic) *': 'نظام الموجات فوق الصوتية الرقمي',
-            'Brand / Category (English)': 'SonoCare',
-            'Brand / Category (Arabic)': 'سونوكير',
-            'Product Slug (Optional)': 'digital-ultrasound-system',
-            'Short Summary (English)':
-              'A versatile digital ultrasound imaging system for clinical diagnostics and bedside examinations.',
-            'Short Summary (Arabic)':
-              'نظام تصوير رقمي متعدد الاستخدامات بالموجات فوق الصوتية للتشخيص السريري وفحوصات المرضى.',
-            'Detailed Description HTML (English)':
-              '<p>Engineered for high-clarity diagnostic imaging across cardiology, radiology, and point-of-care environments.</p><ul><li>21.5" Full HD LED articulated monitor</li><li>4 active transducer probe ports</li><li>Color Doppler, PW, and CW imaging modes</li></ul>',
-            'Detailed Description HTML (Arabic)':
-              '<p>مصمم للتصوير التشخيصي فائق الوضوح في أقسام القلب والأشعة والعيادات التخصصية.</p><ul><li>شاشة متحركة مقاس 21.5 بوصة Full HD LED</li><li>4 منافذ نشطة لمجسات الفحص</li><li>أوضاع تصوير دوبلر ملون و PW و CW</li></ul>',
-            'Primary Image URL':
-              'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
-            'Additional Image URLs (Comma-separated)':
-              'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80',
-            'Key Specifications (English) [Label: Value | Label: Value]':
-              'Display: 21.5" Full HD LED | Imaging Modes: B, M, Color Doppler, PW, CW | Probe Ports: 4 Active Ports | Power Supply: AC 100~240V, 50/60Hz',
-            'Key Specifications (Arabic) [Label: Value | Label: Value]':
-              'الشاشة: 21.5 بوصة Full HD LED | أوضاع التصوير: B, M, دوبلر ملون, PW, CW | منافذ المجسات: 4 منافذ نشطة | مصدر الطاقة: AC 100~240V, 50/60Hz',
-            'Certification Badges (English) [Comma-separated]':
-              'CE Certified, ISO 9001',
-            'Certification Badges (Arabic) [Comma-separated]':
-              'معتمد من CE, معتمد من ISO 9001',
-            'Button Text (English)': 'Request a Quote',
-            'Button Text (Arabic)': 'طلب عرض أسعار',
-            'Button Link URL': '/contact',
-          },
-        ]
-      : [
-          {
-            'Product Name (English) *': '',
-            'Product Name (Arabic) *': '',
-            'Brand / Category (English)': '',
-            'Brand / Category (Arabic)': '',
-            'Product Slug (Optional)': '',
-            'Short Summary (English)': '',
-            'Short Summary (Arabic)': '',
-            'Detailed Description HTML (English)': '',
-            'Detailed Description HTML (Arabic)': '',
-            'Primary Image URL': '',
-            'Additional Image URLs (Comma-separated)': '',
-            'Key Specifications (English) [Label: Value | Label: Value]': '',
-            'Key Specifications (Arabic) [Label: Value | Label: Value]': '',
-            'Certification Badges (English) [Comma-separated]': '',
-            'Certification Badges (Arabic) [Comma-separated]': '',
-            'Button Text (English)': 'Request a Quote',
-            'Button Text (Arabic)': 'طلب عرض أسعار',
-            'Button Link URL': '/contact',
-          },
-        ];
+    const sampleRows = [
+      {
+        'SKU *': 'MED-MON-001',
+        'Shop section *': 'Medical Equipment',
+        'Category *': 'Patient Monitoring',
+        'Product name (EN) *': 'Philips IntelliVue MX550 Patient Monitor',
+        'Product name (AR)': 'شاشة مراقبة المريض فيليبس إنتيليفيو MX550',
+        'Brand / Manufacturer *': 'Philips Healthcare',
+        'Country of origin': 'Germany',
+        'Short description (EN) * (max 160 characters)':
+          'Advanced bedside vital signs monitoring solution for high-acuity care units and emergency rooms.',
+        'Short description (AR)':
+          'جهاز مراقبة متقدم للعلامات الحيوية بجانب السرير لوحدات العناية المركزة والطوارئ.',
+        'Full description (EN)':
+          'The IntelliVue MX550 provides advanced monitoring capabilities with a user-friendly interface, helping healthcare professionals make faster, more informed decisions. It is suitable for adult, pediatric, and neonatal patients.\n\n- 15.6" high-resolution display\n- Multiple parameter monitoring (ECG, SpO2, NIBP, RESP, TEMP)\n- Advanced alarm management\n- Network connectivity (HL7, DICOM)\n- Ergonomic and compact design',
+        'Key specifications (EN) (one per line)':
+          'Display: 15.6" TFT LCD\nParameters: ECG, SpO2, NIBP, RESP, TEMP\nPower Supply: AC 100~240V, 50/60Hz\nDimensions: 380 x 280 x 180 mm\nWeight: 6.5 kg',
+        'Certifications (CE / FDA / ISO / other)': 'CE Certified, FDA Registered, ISO 13485',
+        'Product type *': 'Quote Only',
+        'Price (USD) — Fixed Price only': '',
+        'Verification required? *': 'Yes',
+        'MOH registration no. (pharma only)': 'MOH-MED-2024-8842',
+        'Generic name (pharma only)': 'Multi-Parameter Patient Monitor',
+        'Dosage form / strength (pharma only)': 'N/A',
+        'Warranty / after-sales (EN)': '2 Years Manufacturer Warranty & 24/7 Technical Support',
+        'Image file names (comma separated) *':
+          'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80, https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
+        'Datasheet file name': 'philips-mx550-datasheet.pdf',
+        'Notes': 'Requires hospital installation and calibration.',
+      },
+      {
+        'SKU *': 'MED-ULT-002',
+        'Shop section *': 'Medical Equipment',
+        'Category *': 'Ultrasound & Diagnostics',
+        'Product name (EN) *': 'Digital Ultrasound Diagnostic System',
+        'Product name (AR)': 'نظام الموجات فوق الصوتية الرقمي التشخيصي',
+        'Brand / Manufacturer *': 'SonoCare Medical',
+        'Country of origin': 'Japan',
+        'Short description (EN) * (max 160 characters)':
+          'A versatile digital ultrasound imaging system for clinical diagnostics and bedside examinations.',
+        'Short description (AR)':
+          'نظام تصوير رقمي متعدد الاستخدامات بالموجات فوق الصوتية للتشخيص السريري وفحوصات المرضى.',
+        'Full description (EN)':
+          'Engineered for high-clarity diagnostic imaging across cardiology, radiology, and point-of-care environments.\n\n- 21.5" Full HD LED articulated monitor\n- 4 active transducer probe ports\n- Color Doppler, PW, and CW imaging modes',
+        'Key specifications (EN) (one per line)':
+          'Display: 21.5" Full HD LED\nImaging Modes: B, M, Color Doppler, PW, CW\nProbe Ports: 4 Active Ports\nPower Supply: AC 100~240V, 50/60Hz\nWeight: 75 kg',
+        'Certifications (CE / FDA / ISO / other)': 'CE Certified, ISO 9001, ISO 13485',
+        'Product type *': 'Quote Only',
+        'Price (USD) — Fixed Price only': '',
+        'Verification required? *': 'Yes',
+        'MOH registration no. (pharma only)': 'MOH-MED-2023-1120',
+        'Generic name (pharma only)': 'Color Doppler Ultrasound System',
+        'Dosage form / strength (pharma only)': 'N/A',
+        'Warranty / after-sales (EN)': '3 Years On-site Warranty & Calibration Included',
+        'Image file names (comma separated) *':
+          'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80',
+        'Datasheet file name': 'sonocare-specs.pdf',
+        'Notes': 'Standard probe package included.',
+      },
+    ];
+
+    const blankRow = {
+      'SKU *': '',
+      'Shop section *': '',
+      'Category *': '',
+      'Product name (EN) *': '',
+      'Product name (AR)': '',
+      'Brand / Manufacturer *': '',
+      'Country of origin': '',
+      'Short description (EN) * (max 160 characters)': '',
+      'Short description (AR)': '',
+      'Full description (EN)': '',
+      'Key specifications (EN) (one per line)': '',
+      'Certifications (CE / FDA / ISO / other)': '',
+      'Product type *': 'Quote Only',
+      'Price (USD) — Fixed Price only': '',
+      'Verification required? *': 'Yes',
+      'MOH registration no. (pharma only)': '',
+      'Generic name (pharma only)': '',
+      'Dosage form / strength (pharma only)': '',
+      'Warranty / after-sales (EN)': '',
+      'Image file names (comma separated) *': '',
+      'Datasheet file name': '',
+      'Notes': '',
+    };
+
+    const templateRows = withSample ? sampleRows : [blankRow];
 
     const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(sampleRows);
+    const ws = XLSX.utils.json_to_sheet(templateRows);
     ws['!cols'] = [
-      { wch: 32 },
-      { wch: 32 },
-      { wch: 22 },
-      { wch: 22 },
-      { wch: 24 },
-      { wch: 35 },
-      { wch: 35 },
-      { wch: 45 },
-      { wch: 45 },
-      { wch: 35 },
-      { wch: 45 },
-      { wch: 55 },
-      { wch: 55 },
-      { wch: 30 },
-      { wch: 30 },
-      { wch: 20 },
-      { wch: 20 },
-      { wch: 18 },
+      { wch: 18 }, // A: SKU *
+      { wch: 22 }, // B: Shop section *
+      { wch: 22 }, // C: Category *
+      { wch: 38 }, // D: Product name (EN) *
+      { wch: 32 }, // E: Product name (AR)
+      { wch: 26 }, // F: Brand / Manufacturer *
+      { wch: 20 }, // G: Country of origin
+      { wch: 45 }, // H: Short description (EN) * (max 160 characters)
+      { wch: 35 }, // I: Short description (AR)
+      { wch: 55 }, // J: Full description (EN)
+      { wch: 55 }, // K: Key specifications (EN) (one per line)
+      { wch: 38 }, // L: Certifications (CE / FDA / ISO / other)
+      { wch: 20 }, // M: Product type *
+      { wch: 32 }, // N: Price (USD) — Fixed Price only
+      { wch: 24 }, // O: Verification required? *
+      { wch: 35 }, // P: MOH registration no. (pharma only)
+      { wch: 30 }, // Q: Generic name (pharma only)
+      { wch: 35 }, // R: Dosage form / strength (pharma only)
+      { wch: 35 }, // S: Warranty / after-sales (EN)
+      { wch: 45 }, // T: Image file names (comma separated) *
+      { wch: 25 }, // U: Datasheet file name
+      { wch: 30 }, // V: Notes
     ];
 
     XLSX.utils.book_append_sheet(wb, ws, 'Products Template');
 
     const instructions = [
       {
-        Field: 'Product Name (English) *',
+        Column: 'A',
+        Field: 'SKU *',
         Required: 'YES',
-        Description: 'The English commercial name of the medical product or equipment.',
+        Description: 'Unique product SKU or code (used to generate URL slug).',
+        Example: 'MED-MON-001',
+      },
+      {
+        Column: 'B',
+        Field: 'Shop section *',
+        Required: 'YES',
+        Description: 'Shop section division (e.g. Medical Equipment, Lab Supplies).',
+        Example: 'Medical Equipment',
+      },
+      {
+        Column: 'C',
+        Field: 'Category *',
+        Required: 'YES',
+        Description: 'Product category taxonomy.',
+        Example: 'Patient Monitoring',
+      },
+      {
+        Column: 'D',
+        Field: 'Product name (EN) *',
+        Required: 'YES',
+        Description: 'Official English commercial name of the product.',
         Example: 'Philips IntelliVue MX550 Patient Monitor',
       },
       {
-        Field: 'Product Name (Arabic) *',
+        Column: 'E',
+        Field: 'Product name (AR)',
         Required: 'Recommended',
-        Description: 'The Arabic name of the product (defaults to English if left empty).',
+        Description: 'Arabic name of the product (defaults to English if empty).',
         Example: 'شاشة مراقبة المريض فيليبس إنتيليفيو MX550',
       },
       {
-        Field: 'Brand / Category (English & Arabic)',
-        Required: 'Optional',
-        Description: 'Manufacturer, brand or device category tag.',
-        Example: 'MedTech / SonoCare',
+        Column: 'F',
+        Field: 'Brand / Manufacturer *',
+        Required: 'YES',
+        Description: 'Manufacturer or brand name.',
+        Example: 'Philips Healthcare',
       },
       {
-        Field: 'Product Slug (Optional)',
+        Column: 'G',
+        Field: 'Country of origin',
         Required: 'Optional',
-        Description:
-          'URL-friendly slug. If left blank, it will be automatically generated from the English name.',
-        Example: 'philips-intellivue-mx550',
+        Description: 'Country where the equipment is manufactured.',
+        Example: 'Germany / Japan',
       },
       {
-        Field: 'Short Summary (English & Arabic)',
-        Required: 'Optional',
-        Description: 'Brief 1-2 sentence description displayed on the shop catalog card.',
-        Example: 'A medical monitoring device designed to track vital signs.',
+        Column: 'H',
+        Field: 'Short description (EN) * (max 160 characters)',
+        Required: 'YES',
+        Description: 'Short 1-2 sentence overview for catalog cards (max 160 chars).',
+        Example: 'Advanced vital signs monitoring for high-acuity care units.',
       },
       {
-        Field: 'Detailed Description HTML (English & Arabic)',
+        Column: 'I',
+        Field: 'Short description (AR)',
         Required: 'Optional',
-        Description: 'Full rich HTML or plain text with bullet points for the Product Details page.',
-        Example: '<p>Overview</p><ul><li>Feature 1</li><li>Feature 2</li></ul>',
+        Description: 'Short Arabic overview description.',
+        Example: 'جهاز مراقبة متقدم للعلامات الحيوية بجانب السرير.',
       },
       {
-        Field: 'Primary Image URL',
-        Required: 'Optional',
-        Description: 'Main product image URL (https://...).',
-        Example: 'https://images.unsplash.com/...',
+        Column: 'J',
+        Field: 'Full description (EN)',
+        Required: 'Recommended',
+        Description: 'Full detailed product description (paragraphs or bullet points).',
+        Example: 'Provides advanced clinical monitoring capabilities...\n- High-resolution display',
       },
       {
-        Field: 'Additional Image URLs',
-        Required: 'Optional',
-        Description: 'Multiple gallery images separated by commas or line breaks.',
-        Example: 'https://image1.jpg, https://image2.jpg',
+        Column: 'K',
+        Field: 'Key specifications (EN) (one per line)',
+        Required: 'Recommended',
+        Description: 'One specification per line in "Label: Value" format.',
+        Example: 'Display: 15.6" LCD\nPower: AC 100~240V\nWeight: 6.5 kg',
       },
       {
-        Field: 'Key Specifications',
+        Column: 'L',
+        Field: 'Certifications (CE / FDA / ISO / other)',
         Required: 'Optional',
-        Description:
-          'Label and Value pairs separated by pipe (|). Format: Label: Value | Label: Value',
-        Example: 'Display: 15.6" LCD | Power Supply: AC 100~240V | Weight: 6.5 kg',
-      },
-      {
-        Field: 'Certification Badges',
-        Required: 'Optional',
-        Description: 'Certification tags separated by commas.',
+        Description: 'Certifications and regulatory badges separated by commas.',
         Example: 'CE Certified, FDA Registered, ISO 13485',
       },
       {
-        Field: 'Button Text & Link URL',
+        Column: 'M',
+        Field: 'Product type *',
+        Required: 'YES',
+        Description: 'Catalog product type: "Quote Only" or "Fixed Price".',
+        Example: 'Quote Only',
+      },
+      {
+        Column: 'N',
+        Field: 'Price (USD) — Fixed Price only',
         Required: 'Optional',
+        Description: 'Price in USD (only if Product Type is Fixed Price).',
+        Example: '4500.00',
+      },
+      {
+        Column: 'O',
+        Field: 'Verification required? *',
+        Required: 'YES',
+        Description: 'Whether administrative verification is required (Yes / No).',
+        Example: 'Yes',
+      },
+      {
+        Column: 'P',
+        Field: 'MOH registration no. (pharma only)',
+        Required: 'Optional',
+        Description: 'Ministry of Health registration number (for pharma products).',
+        Example: 'MOH-MED-2024-8842',
+      },
+      {
+        Column: 'Q',
+        Field: 'Generic name (pharma only)',
+        Required: 'Optional',
+        Description: 'International generic scientific/device name.',
+        Example: 'Multi-Parameter Patient Monitor',
+      },
+      {
+        Column: 'R',
+        Field: 'Dosage form / strength (pharma only)',
+        Required: 'Optional',
+        Description: 'Dosage form or strength (pharma products only).',
+        Example: 'N/A',
+      },
+      {
+        Column: 'S',
+        Field: 'Warranty / after-sales (EN)',
+        Required: 'Optional',
+        Description: 'Warranty period and after-sales service terms.',
+        Example: '2 Years Manufacturer Warranty',
+      },
+      {
+        Column: 'T',
+        Field: 'Image file names (comma separated) *',
+        Required: 'YES',
         Description:
-          'Call-to-action button text and target link (defaults to "Request a Quote" / "/contact").',
-        Example: 'Request a Quote | /contact',
+          'Image URLs or comma-separated image file names. After import, you can upload actual image files directly using the Edit button on each product!',
+        Example: 'https://images.unsplash.com/... OR product-main.jpg, product-side.jpg',
+      },
+      {
+        Column: 'U',
+        Field: 'Datasheet file name',
+        Required: 'Optional',
+        Description: 'Technical PDF datasheet file name or URL.',
+        Example: 'product-datasheet.pdf',
+      },
+      {
+        Column: 'V',
+        Field: 'Notes',
+        Required: 'Optional',
+        Description: 'Internal notes or special hospital delivery instructions.',
+        Example: 'Requires technical installation.',
       },
     ];
 
     const wsInstructions = XLSX.utils.json_to_sheet(instructions);
-    wsInstructions['!cols'] = [{ wch: 30 }, { wch: 15 }, { wch: 55 }, { wch: 45 }];
-    XLSX.utils.book_append_sheet(wb, wsInstructions, 'Instructions & Guide');
+    wsInstructions['!cols'] = [{ wch: 8 }, { wch: 35 }, { wch: 14 }, { wch: 55 }, { wch: 45 }];
+    XLSX.utils.book_append_sheet(wb, wsInstructions, 'Instructions & Field Guide');
 
     const buffer = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
     const filename = withSample
