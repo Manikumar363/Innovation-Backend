@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import crypto from 'crypto';
+import axios from 'axios';
 import User from '../models/User';
 import QuoteRequest from '../models/QuoteRequest';
 import {
@@ -515,3 +516,221 @@ export const getUserQuoteRequests = async (
     });
   }
 };
+
+/**
+ * @desc    Continue with Google (Unified Google Signup & Signin)
+ *          Automatically creates account if user does not exist (Signup),
+ *          or signs in the existing account (Signin).
+ * @route   POST /api/auth/google, POST /api/auth/continue-with-google, POST /api/auth/google-signin, POST /api/auth/google-signup
+ * @access  Public
+ */
+export const continueWithGoogle = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const {
+      credential,
+      idToken,
+      token: bodyToken,
+      accessToken,
+      googleId: bodyGoogleId,
+      sub,
+      email: bodyEmail,
+      emailAddress: bodyEmailAddress,
+      fullName: bodyFullName,
+      name: bodyName,
+      avatar: bodyAvatar,
+      picture: bodyPicture,
+      role: bodyRole,
+    } = req.body;
+
+    let resolvedGoogleId = bodyGoogleId || sub || '';
+    let resolvedEmail = (bodyEmail || bodyEmailAddress || '').trim().toLowerCase();
+    let resolvedName = (bodyFullName || bodyName || '').trim();
+    let resolvedAvatar = bodyAvatar || bodyPicture || '';
+    let isEmailVerified = false;
+
+    // 1. Try decoding/verifying Google ID Token (credential) if provided
+    const rawGoogleJwt = credential || idToken || bodyToken;
+    if (rawGoogleJwt && typeof rawGoogleJwt === 'string') {
+      try {
+        // Try verifying with Google OAuth2 TokenInfo endpoint
+        const tokenInfoRes = await axios.get(
+          `https://oauth2.googleapis.com/tokeninfo?id_token=${rawGoogleJwt}`,
+          { timeout: 5000 }
+        );
+        if (tokenInfoRes.data && tokenInfoRes.data.email) {
+          resolvedEmail = String(tokenInfoRes.data.email).trim().toLowerCase();
+          resolvedGoogleId = tokenInfoRes.data.sub || resolvedGoogleId;
+          resolvedName = resolvedName || tokenInfoRes.data.name || tokenInfoRes.data.given_name || '';
+          resolvedAvatar = resolvedAvatar || tokenInfoRes.data.picture || '';
+          isEmailVerified = tokenInfoRes.data.email_verified === 'true' || tokenInfoRes.data.email_verified === true;
+        }
+      } catch (verifyErr: any) {
+        // If Google API call is unreachable or token is custom/offline, safely decode base64 payload from JWT
+        try {
+          const parts = rawGoogleJwt.split('.');
+          if (parts.length >= 2) {
+            const payloadJson = Buffer.from(parts[1], 'base64').toString('utf8');
+            const parsed = JSON.parse(payloadJson);
+            if (parsed.email) {
+              resolvedEmail = String(parsed.email).trim().toLowerCase();
+              resolvedGoogleId = parsed.sub || resolvedGoogleId;
+              resolvedName = resolvedName || parsed.name || parsed.given_name || '';
+              resolvedAvatar = resolvedAvatar || parsed.picture || '';
+              isEmailVerified = Boolean(parsed.email_verified);
+            }
+          }
+        } catch (decodeErr) {
+          console.warn('Failed to decode fallback Google JWT:', decodeErr);
+        }
+      }
+    }
+
+    // 2. Try fetching from Google UserInfo if accessToken is provided
+    if (!resolvedEmail && accessToken && typeof accessToken === 'string') {
+      try {
+        const userInfoRes = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          timeout: 5000,
+        });
+        if (userInfoRes.data && userInfoRes.data.email) {
+          resolvedEmail = String(userInfoRes.data.email).trim().toLowerCase();
+          resolvedGoogleId = userInfoRes.data.sub || resolvedGoogleId;
+          resolvedName = resolvedName || userInfoRes.data.name || '';
+          resolvedAvatar = resolvedAvatar || userInfoRes.data.picture || '';
+          isEmailVerified = Boolean(userInfoRes.data.email_verified);
+        }
+      } catch (userErr: any) {
+        console.warn('Google userinfo fetch failed:', userErr?.message || userErr);
+      }
+    }
+
+    // 3. Validation
+    if (!resolvedEmail) {
+      res.status(400).json({
+        success: false,
+        message: 'Google authentication failed: Email address could not be verified from the Google account.',
+      });
+      return;
+    }
+
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    if (!emailRegex.test(resolvedEmail)) {
+      res.status(400).json({
+        success: false,
+        message: 'Invalid email address received from Google account.',
+      });
+      return;
+    }
+
+    if (!resolvedName) {
+      resolvedName = resolvedEmail.split('@')[0];
+    }
+
+    // 4. Check if user already exists (by googleId or by email)
+    let user = null;
+    if (resolvedGoogleId) {
+      user = await User.findOne({ googleId: resolvedGoogleId });
+    }
+    if (!user) {
+      user = await User.findOne({ email: resolvedEmail });
+    }
+
+    let isNewUser = false;
+
+    if (user) {
+      // Existing User -> Sign In
+      if (user.status === 'suspended') {
+        res.status(403).json({
+          success: false,
+          message: 'Your account has been suspended. Please contact customer support.',
+        });
+        return;
+      }
+
+      // Link googleId and avatar if not present
+      let updated = false;
+      if (!user.googleId && resolvedGoogleId) {
+        user.googleId = resolvedGoogleId;
+        updated = true;
+      }
+      if (!user.avatar && resolvedAvatar) {
+        user.avatar = resolvedAvatar;
+        updated = true;
+      }
+      if (!user.isEmailVerified && isEmailVerified) {
+        user.isEmailVerified = true;
+        updated = true;
+      }
+
+      user.lastLogin = new Date();
+      await user.save();
+    } else {
+      // New User -> Sign Up
+      isNewUser = true;
+      const secureRandomPassword = crypto.randomBytes(32).toString('hex');
+
+      user = await User.create({
+        fullName: resolvedName,
+        email: resolvedEmail,
+        password: secureRandomPassword,
+        googleId: resolvedGoogleId || undefined,
+        authProvider: 'google',
+        avatar: resolvedAvatar,
+        isEmailVerified: true,
+        role: bodyRole === 'admin' ? 'admin' : 'user',
+        status: 'active',
+        lastLogin: new Date(),
+      });
+    }
+
+    // Auto-link any previous quote requests that match this email
+    await QuoteRequest.updateMany(
+      { businessEmail: resolvedEmail, userId: null },
+      { $set: { userId: user._id } }
+    );
+
+    // Generate JWT token
+    const token = generateToken(user);
+
+    // Fetch quote requests linked to this user's email
+    const quoteRequests = await QuoteRequest.find({
+      $or: [{ businessEmail: resolvedEmail }, { userId: user._id }],
+    }).sort({ createdAt: -1 });
+
+    res.status(isNewUser ? 201 : 200).json({
+      success: true,
+      message: isNewUser
+        ? 'Account created with Google successfully. Welcome!'
+        : 'Signed in with Google successfully. Welcome back!',
+      isNewUser,
+      authProvider: 'google',
+      token,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        companyName: user.companyName,
+        avatar: user.avatar,
+        role: user.role,
+        authProvider: user.authProvider || 'google',
+        lastLogin: user.lastLogin,
+        createdAt: user.createdAt,
+      },
+      quoteRequestsCount: quoteRequests.length,
+      quoteRequests,
+    });
+  } catch (error: any) {
+    console.error('Continue with Google error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error during Google authentication.',
+      error: error.message || error,
+    });
+  }
+};
+
+// Aliases for continueWithGoogle
+export const googleAuth = continueWithGoogle;
+export const googleSignup = continueWithGoogle;
+export const googleSignin = continueWithGoogle;

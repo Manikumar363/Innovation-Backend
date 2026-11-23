@@ -67,6 +67,7 @@ app.get('/', (_req: Request, res: Response) => {
     enquiriesEndpoint: '/api/enquiries',
     authSignupEndpoint: '/api/auth/signup',
     authSigninEndpoint: '/api/auth/signin',
+    authGoogleEndpoint: '/api/auth/google (Continue with Google Signup & Signin - /api/auth/continue-with-google)',
     authForgotPasswordEndpoint: '/api/auth/forgot-password',
     authResetPasswordEndpoint: '/api/auth/reset-password',
     authProfileEndpoint: '/api/auth/profile (Bearer token required)',

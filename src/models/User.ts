@@ -4,12 +4,15 @@ import bcrypt from 'bcryptjs';
 export interface IUser extends Document {
   fullName: string;
   email: string;
-  password: string;
+  password?: string;
   phoneNumber?: string;
   companyName?: string;
   avatar?: string;
   role: 'user' | 'admin';
   status: 'active' | 'suspended';
+  authProvider?: 'local' | 'google';
+  googleId?: string;
+  isEmailVerified?: boolean;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   lastLogin?: Date;
@@ -35,9 +38,25 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: function (this: any) {
+        return this.authProvider === 'local' && !this.googleId;
+      },
       minlength: [6, 'Password must be at least 6 characters long'],
       select: false, // Don't return password by default in queries
+    },
+    authProvider: {
+      type: String,
+      enum: ['local', 'google'],
+      default: 'local',
+    },
+    googleId: {
+      type: String,
+      sparse: true,
+      index: true,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
     },
     phoneNumber: {
       type: String,
@@ -94,7 +113,7 @@ const UserSchema = new Schema(
 
 // Pre-save hook to hash password if modified
 UserSchema.pre('save', async function () {
-  if (!this.isModified('password')) {
+  if (!this.isModified('password') || !this.password) {
     return;
   }
   const salt = await bcrypt.genSalt(10);
@@ -103,6 +122,9 @@ UserSchema.pre('save', async function () {
 
 // Instance method to compare password
 UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+  if (!this.password) {
+    return false;
+  }
   return bcrypt.compare(candidatePassword, this.password);
 };
 
