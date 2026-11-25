@@ -1,5 +1,13 @@
 import { Request, Response } from 'express';
-import Enquiry, { EnquiryStatus } from '../models/Enquiry';
+import Enquiry, { EnquiryStatus, EnquiryType } from '../models/Enquiry';
+
+const VALID_ENQUIRY_TYPES: EnquiryType[] = [
+  'General',
+  'Request Price',
+  'Investment',
+  'Partnership',
+  'Careers',
+];
 
 /**
  * @desc    Submit a new enquiry (Public endpoint for end-users)
@@ -8,9 +16,28 @@ import Enquiry, { EnquiryStatus } from '../models/Enquiry';
  */
 export const createEnquiry = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { fullName, email, emailAddress, subject, message, source } = req.body;
+    const {
+      fullName,
+      email,
+      emailAddress,
+      company,
+      companyOrInstitution,
+      companyName,
+      institution,
+      enquiryType,
+      type,
+      subject,
+      message,
+      source,
+    } = req.body;
 
     const userEmail = email || emailAddress;
+    const resolvedCompany = (company || companyOrInstitution || companyName || institution || '').trim();
+
+    // Normalize Enquiry Type
+    const rawType = (enquiryType || type || '').trim();
+    const resolvedEnquiryType: EnquiryType =
+      VALID_ENQUIRY_TYPES.find((t) => t.toLowerCase() === rawType.toLowerCase()) || 'General';
 
     // Validation
     if (!fullName || !fullName.trim()) {
@@ -42,6 +69,8 @@ export const createEnquiry = async (req: Request, res: Response): Promise<void> 
     const newEnquiry = await Enquiry.create({
       fullName: fullName.trim(),
       email: userEmail.trim().toLowerCase(),
+      company: resolvedCompany,
+      enquiryType: resolvedEnquiryType,
       subject: subject.trim(),
       message: message.trim(),
       status: 'pending',
@@ -70,7 +99,7 @@ export const createEnquiry = async (req: Request, res: Response): Promise<void> 
  */
 export const getAllEnquiries = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { status, search, limit, page } = req.query;
+    const { status, enquiryType, type, search, limit, page } = req.query;
 
     const filter: Record<string, any> = {};
 
@@ -78,11 +107,21 @@ export const getAllEnquiries = async (req: Request, res: Response): Promise<void
       filter.status = status;
     }
 
+    const targetType = (enquiryType || type) as string | undefined;
+    if (targetType && targetType !== 'all') {
+      const matched = VALID_ENQUIRY_TYPES.find((t) => t.toLowerCase() === targetType.trim().toLowerCase());
+      if (matched) {
+        filter.enquiryType = matched;
+      }
+    }
+
     if (search && typeof search === 'string' && search.trim()) {
       const searchRegex = new RegExp(search.trim(), 'i');
       filter.$or = [
         { fullName: searchRegex },
         { email: searchRegex },
+        { company: searchRegex },
+        { enquiryType: searchRegex },
         { subject: searchRegex },
         { message: searchRegex },
       ];
@@ -100,15 +139,31 @@ export const getAllEnquiries = async (req: Request, res: Response): Promise<void
     const totalCount = await Enquiry.countDocuments(filter);
 
     // Get aggregated stats
-    const [pendingCount, inReviewCount, contactedCount, resolvedCount, cancelledCount, allCount] =
-      await Promise.all([
-        Enquiry.countDocuments({ status: 'pending' }),
-        Enquiry.countDocuments({ status: 'in_review' }),
-        Enquiry.countDocuments({ status: 'contacted' }),
-        Enquiry.countDocuments({ status: 'resolved' }),
-        Enquiry.countDocuments({ status: 'cancelled' }),
-        Enquiry.countDocuments({}),
-      ]);
+    const [
+      pendingCount,
+      inReviewCount,
+      contactedCount,
+      resolvedCount,
+      cancelledCount,
+      allCount,
+      generalCount,
+      requestPriceCount,
+      investmentCount,
+      partnershipCount,
+      careersCount,
+    ] = await Promise.all([
+      Enquiry.countDocuments({ status: 'pending' }),
+      Enquiry.countDocuments({ status: 'in_review' }),
+      Enquiry.countDocuments({ status: 'contacted' }),
+      Enquiry.countDocuments({ status: 'resolved' }),
+      Enquiry.countDocuments({ status: 'cancelled' }),
+      Enquiry.countDocuments({}),
+      Enquiry.countDocuments({ enquiryType: 'General' }),
+      Enquiry.countDocuments({ enquiryType: 'Request Price' }),
+      Enquiry.countDocuments({ enquiryType: 'Investment' }),
+      Enquiry.countDocuments({ enquiryType: 'Partnership' }),
+      Enquiry.countDocuments({ enquiryType: 'Careers' }),
+    ]);
 
     res.json({
       success: true,
@@ -121,6 +176,13 @@ export const getAllEnquiries = async (req: Request, res: Response): Promise<void
         contacted: contactedCount,
         resolved: resolvedCount,
         cancelled: cancelledCount,
+        byType: {
+          general: generalCount,
+          requestPrice: requestPriceCount,
+          investment: investmentCount,
+          partnership: partnershipCount,
+          careers: careersCount,
+        },
       },
       data: enquiries,
     });
@@ -187,6 +249,19 @@ export const updateEnquiryStatus = async (req: Request, res: Response): Promise<
 
     if (adminNotes !== undefined) {
       updateData.adminNotes = adminNotes;
+    }
+
+    if (req.body.company !== undefined) {
+      updateData.company = String(req.body.company).trim();
+    }
+
+    if (req.body.enquiryType) {
+      const matched = VALID_ENQUIRY_TYPES.find(
+        (t) => t.toLowerCase() === String(req.body.enquiryType).trim().toLowerCase()
+      );
+      if (matched) {
+        updateData.enquiryType = matched;
+      }
     }
 
     const updated = await Enquiry.findByIdAndUpdate(id, updateData, {

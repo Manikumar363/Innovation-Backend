@@ -12,6 +12,20 @@ export interface IContactHeaderSection {
   enquiryDescription: IBilingualText;
 }
 
+export interface IOfficeLocation {
+  id?: string;
+  label: IBilingualText;
+  name: IBilingualText;
+  addressLine1?: IBilingualText;
+  addressLine2: IBilingualText;
+  cityCountry: IBilingualText;
+  email: string;
+  emailLabel: IBilingualText;
+  phone?: string;
+  phoneLabel?: IBilingualText;
+  isPrimary?: boolean;
+}
+
 export interface IContactCorporateOfficeSection {
   tagline: IBilingualText;
   title: IBilingualText;
@@ -24,6 +38,19 @@ export interface IContactCorporateOfficeSection {
   emailValue: string;
   phoneLabel: IBilingualText;
   phoneValue: string;
+  locations?: IOfficeLocation[];
+  workingHoursLabel: IBilingualText;
+  workingHoursValue: IBilingualText;
+  workingHoursNotes: IBilingualText;
+  socialMediaLabel: IBilingualText;
+  socialMediaNotes: IBilingualText;
+  socialMedia: {
+    linkedin: string;
+    facebook: string;
+    instagram: string;
+    twitter: string;
+    youtube: string;
+  };
   mapLocationUrl: string;
   mapEmbedUrl: string;
   mapButtonText: IBilingualText;
@@ -40,6 +67,23 @@ const BilingualSchema = new Schema(
   {
     en: { type: String, default: '' },
     ar: { type: String, default: '' },
+  },
+  { _id: false }
+);
+
+const OfficeLocationSchema = new Schema(
+  {
+    id: { type: String, default: () => `loc-${Date.now()}` },
+    label: { type: BilingualSchema, default: () => ({ en: 'Office Address', ar: 'عنوان المكتب' }) },
+    name: { type: BilingualSchema, default: () => ({ en: 'Mobtaker Group Headquarters', ar: 'المقر الرئيسي لمجموعة مبتكر' }) },
+    addressLine1: { type: BilingualSchema, default: () => ({ en: 'Mobtaker Group Headquarters', ar: 'المقر الرئيسي لمجموعة مبتكر' }) },
+    addressLine2: { type: BilingualSchema, default: () => ({ en: 'Al-Mansour District', ar: 'حي المنصور' }) },
+    cityCountry: { type: BilingualSchema, default: () => ({ en: 'Baghdad, Iraq', ar: 'بغداد، العراق' }) },
+    email: { type: String, default: 'info@mobtakergroup.com' },
+    emailLabel: { type: BilingualSchema, default: () => ({ en: 'Email Address', ar: 'البريد الإلكتروني' }) },
+    phone: { type: String, default: '+964 (0) 123 456 789' },
+    phoneLabel: { type: BilingualSchema, default: () => ({ en: 'Phone Number', ar: 'رقم الهاتف' }) },
+    isPrimary: { type: Boolean, default: false },
   },
   { _id: false }
 );
@@ -126,6 +170,46 @@ const CmsContactSchema = new Schema(
       phoneValue: {
         type: String,
         default: '+964 (0) 123 456 789',
+      },
+      locations: {
+        type: [OfficeLocationSchema],
+        default: [],
+      },
+      workingHoursLabel: {
+        type: BilingualSchema,
+        default: () => ({ en: 'Working Hours', ar: 'ساعات العمل' }),
+      },
+      workingHoursValue: {
+        type: BilingualSchema,
+        default: () => ({
+          en: 'Sunday to Thursday, 9:00 AM to 5:00 PM (Baghdad time)',
+          ar: 'من الأحد إلى الخميس، 9:00 صباحاً حتى 5:00 مساءً (توقيت بغداد)',
+        }),
+      },
+      workingHoursNotes: {
+        type: BilingualSchema,
+        default: () => ({
+          en: '[Owner to confirm. Suggested: Sunday to Thursday, 9:00 AM to 5:00 PM (Baghdad time).]',
+          ar: '[بانتظار تأكيد المالك. المقترح: من الأحد إلى الخميس، 9:00 صباحاً إلى 5:00 مساءً (توقيت بغداد).]',
+        }),
+      },
+      socialMediaLabel: {
+        type: BilingualSchema,
+        default: () => ({ en: 'Social Media', ar: 'وسائل التواصل الاجتماعي' }),
+      },
+      socialMediaNotes: {
+        type: BilingualSchema,
+        default: () => ({
+          en: '[Owner to provide links.]',
+          ar: '[بانتظار تزويد الروابط من المالك.]',
+        }),
+      },
+      socialMedia: {
+        linkedin: { type: String, default: '' },
+        facebook: { type: String, default: '' },
+        instagram: { type: String, default: '' },
+        twitter: { type: String, default: '' },
+        youtube: { type: String, default: '' },
       },
       mapLocationUrl: {
         type: String,

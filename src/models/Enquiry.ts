@@ -1,10 +1,13 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export type EnquiryStatus = 'pending' | 'in_review' | 'contacted' | 'resolved' | 'cancelled';
+export type EnquiryType = 'General' | 'Request Price' | 'Investment' | 'Partnership' | 'Careers';
 
 export interface IEnquiry extends Document {
   fullName: string;
   email: string;
+  company?: string;
+  enquiryType: EnquiryType;
   subject: string;
   message: string;
   status: EnquiryStatus;
@@ -27,6 +30,17 @@ const EnquirySchema = new Schema(
       trim: true,
       lowercase: true,
       match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
+    },
+    company: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    enquiryType: {
+      type: String,
+      enum: ['General', 'Request Price', 'Investment', 'Partnership', 'Careers'],
+      default: 'General',
+      index: true,
     },
     subject: {
       type: String,
@@ -62,6 +76,8 @@ const EnquirySchema = new Schema(
 EnquirySchema.index({ createdAt: -1 });
 EnquirySchema.index({ email: 1 });
 EnquirySchema.index({ subject: 1 });
+EnquirySchema.index({ company: 1 });
+EnquirySchema.index({ enquiryType: 1 });
 
 export const Enquiry = mongoose.model<IEnquiry>('Enquiry', EnquirySchema);
 export default Enquiry;

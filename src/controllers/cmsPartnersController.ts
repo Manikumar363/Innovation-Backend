@@ -1,5 +1,82 @@
 import { Request, Response } from 'express';
-import CmsPartners from '../models/CmsPartners';
+import CmsPartners, { IPartnerCard, IPartnerCategoryGroup } from '../models/CmsPartners';
+
+export { IPartnerCategoryGroup };
+
+/**
+ * Helper to group partner records by their category tags
+ */
+export const groupPartnersByCategory = (partners: IPartnerCard[] | any[]): IPartnerCategoryGroup[] => {
+  if (!partners || !Array.isArray(partners)) return [];
+
+  const groupsMap = new Map<string, IPartnerCategoryGroup>();
+
+  for (const partner of partners) {
+    const rawCategory = partner?.category;
+    let enCat = '';
+    let arCat = '';
+
+    if (typeof rawCategory === 'string') {
+      enCat = rawCategory.trim();
+      arCat = rawCategory.trim();
+    } else if (rawCategory && typeof rawCategory === 'object') {
+      enCat = (rawCategory.en || '').trim();
+      arCat = (rawCategory.ar || '').trim();
+    }
+
+    const tag = enCat || arCat || 'General';
+    const groupKey = tag.toLowerCase();
+
+    if (!groupsMap.has(groupKey)) {
+      groupsMap.set(groupKey, {
+        category: {
+          en: enCat || arCat || 'General',
+          ar: arCat || enCat || 'عام',
+        },
+        categoryTag: tag,
+        count: 0,
+        partners: [],
+      });
+    }
+
+    const group = groupsMap.get(groupKey)!;
+    group.count += 1;
+    group.partners.push(partner);
+  }
+
+  return Array.from(groupsMap.values());
+};
+
+/**
+ * Format the CMS Partners document into a response grouping partner records by category tags
+ */
+export const formatPartnersResponse = (partnersDoc: any, req?: Request) => {
+  const docObj = typeof partnersDoc.toObject === 'function' ? partnersDoc.toObject() : { ...partnersDoc };
+  const flatPartners: IPartnerCard[] = docObj.headerSection?.partners || [];
+  const groupedPartners = groupPartnersByCategory(flatPartners);
+
+  // Dictionary keyed by category tag
+  const byCategory: Record<string, IPartnerCard[]> = {};
+  for (const group of groupedPartners) {
+    byCategory[group.categoryTag] = group.partners;
+  }
+
+  const isFlatRequested = req?.query?.flat === 'true' || req?.query?.grouped === 'false';
+
+  return {
+    ...docObj,
+    headerSection: {
+      ...docObj.headerSection,
+      // Grouped by category tags instead of flat list
+      partners: isFlatRequested ? flatPartners : groupedPartners,
+      groupedPartners,
+      byCategory,
+      flatPartners,
+      totalPartners: flatPartners.length,
+      totalCategories: groupedPartners.length,
+    },
+  };
+};
 
 export const defaultCmsPartnersData = {
   headerSection: {
@@ -167,7 +244,7 @@ export const defaultCmsPartnersData = {
 };
 
 // GET /api/cms/partners
-export const getCmsPartners = async (_req: Request, res: Response): Promise<void> => {
+export const getCmsPartners = async (req: Request, res: Response): Promise<void> => {
   try {
     let partnersDoc = await CmsPartners.findOne();
 
@@ -218,7 +295,7 @@ export const getCmsPartners = async (_req: Request, res: Response): Promise<void
 
     res.status(200).json({
       success: true,
-      data: partnersDoc,
+      data: formatPartnersResponse(partnersDoc, req),
     });
   } catch (error: any) {
     console.error('Error fetching CMS Partners:', error);
@@ -244,9 +321,21 @@ export const updateCmsPartners = async (req: Request, res: Response): Promise<vo
       });
     } else {
       if (updateData.headerSection) {
+        let partnersToSave = updateData.headerSection.partners;
+
+        // If client sent grouped partners, flatten them for DB storage
+        if (Array.isArray(partnersToSave) && partnersToSave.length > 0) {
+          if ('partners' in partnersToSave[0] && Array.isArray((partnersToSave[0] as any).partners)) {
+            partnersToSave = partnersToSave.flatMap((group: any) => group.partners || []);
+          }
+        } else if (Array.isArray(updateData.headerSection.flatPartners)) {
+          partnersToSave = updateData.headerSection.flatPartners;
+        }
+
         partnersDoc.headerSection = {
           ...partnersDoc.headerSection,
           ...updateData.headerSection,
+          partners: partnersToSave !== undefined ? partnersToSave : partnersDoc.headerSection.partners,
         };
       }
       if (updateData.bannerSection) {
@@ -262,7 +351,7 @@ export const updateCmsPartners = async (req: Request, res: Response): Promise<vo
     res.status(200).json({
       success: true,
       message: 'CMS Partners updated successfully',
-      data: partnersDoc,
+      data: formatPartnersResponse(partnersDoc, req),
     });
   } catch (error: any) {
     console.error('Error updating CMS Partners:', error);

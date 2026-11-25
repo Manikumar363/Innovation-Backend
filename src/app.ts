@@ -38,6 +38,13 @@ import {
   deleteServicePage,
   resetDefaultServices,
 } from './controllers/servicePageController';
+import {
+  getCmsPartners,
+  updateCmsPartners,
+} from './controllers/cmsPartnersController';
+import {
+  updateContactLocations,
+} from './controllers/cmsContactController';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
 
 const app: Application = express();
@@ -113,6 +120,14 @@ app.post(['/services', '/api/services'], createServicePage);
 app.put(['/services/:id', '/api/services/:id'], updateServicePage);
 app.delete(['/services/:id', '/api/services/:id'], deleteServicePage);
 app.post(['/services/reset-defaults', '/api/services/reset-defaults'], resetDefaultServices);
+
+// Direct Partners routes (/api/partners and /partners)
+app.get(['/api/partners', '/partners'], getCmsPartners);
+app.put(['/api/partners', '/partners'], updateCmsPartners);
+app.post(['/api/partners', '/partners'], updateCmsPartners);
+
+// Direct Contact Locations routes (/api/contact/locations and /api/contact/addresses)
+app.post(['/api/contact/locations', '/api/contact/addresses'], updateContactLocations);
 
 app.use('/api/upload', uploadRouter);
 app.use('/api/quotes', quoteRouter);

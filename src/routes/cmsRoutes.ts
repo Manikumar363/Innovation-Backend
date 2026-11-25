@@ -21,7 +21,7 @@ import {
 } from '../controllers/cmsShopController';
 import { getCmsProjects, updateCmsProjects } from '../controllers/cmsProjectsController';
 import { getCmsPartners, updateCmsPartners } from '../controllers/cmsPartnersController';
-import { getCmsContact, updateCmsContact } from '../controllers/cmsContactController';
+import { getCmsContact, updateCmsContact, updateContactLocations } from '../controllers/cmsContactController';
 import { getCmsInvestment, updateCmsInvestment } from '../controllers/cmsInvestmentController';
 import {
   getCmsProjectsInnovator,
@@ -172,6 +172,8 @@ router.post('/partners', updateCmsPartners);
 router.get('/contact', getCmsContact);
 router.put('/contact', updateCmsContact);
 router.post('/contact', updateCmsContact);
+router.post('/contact/locations', updateContactLocations);
+router.post('/contact/addresses', updateContactLocations);
 
 // CMS Projects Innovator Routes
 router.get('/projects-innovator', getCmsProjectsInnovator);

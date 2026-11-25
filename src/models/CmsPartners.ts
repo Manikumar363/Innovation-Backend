@@ -15,6 +15,13 @@ export interface IPartnerCard {
   linkText: IBilingualText;
 }
 
+export interface IPartnerCategoryGroup {
+  category: IBilingualText;
+  categoryTag: string;
+  count: number;
+  partners: IPartnerCard[];
+}
+
 export interface IPartnersHeaderSection {
   title: IBilingualText;
   description: IBilingualText;
