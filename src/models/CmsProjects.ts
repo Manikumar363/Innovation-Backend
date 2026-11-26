@@ -15,6 +15,12 @@ export interface IProjectCard {
   linkUrl?: string;
 }
 
+export interface IProjectCategoryTag {
+  tag: string;
+  category: IBilingualText;
+  count: number;
+}
+
 export interface IProjectsHeaderSection {
   title: IBilingualText;
   description: IBilingualText;

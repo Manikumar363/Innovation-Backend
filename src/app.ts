@@ -43,6 +43,12 @@ import {
   updateCmsPartners,
 } from './controllers/cmsPartnersController';
 import {
+  getCmsProjects,
+  updateCmsProjects,
+  filterCmsProjects,
+  getCmsProjectCategories,
+} from './controllers/cmsProjectsController';
+import {
   updateContactLocations,
 } from './controllers/cmsContactController';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler';
@@ -125,6 +131,14 @@ app.post(['/services/reset-defaults', '/api/services/reset-defaults'], resetDefa
 app.get(['/api/partners', '/partners'], getCmsPartners);
 app.put(['/api/partners', '/partners'], updateCmsPartners);
 app.post(['/api/partners', '/partners'], updateCmsPartners);
+
+// Direct Projects & Filter routes (/api/projects, /projects, /api/projects/filter, /api/projects/categories)
+app.get(['/api/projects/filter', '/projects/filter'], filterCmsProjects);
+app.post(['/api/projects/filter', '/projects/filter'], filterCmsProjects);
+app.get(['/api/projects/categories', '/projects/categories', '/api/projects/tags', '/projects/tags'], getCmsProjectCategories);
+app.get(['/api/projects', '/projects'], getCmsProjects);
+app.put(['/api/projects', '/projects'], updateCmsProjects);
+app.post(['/api/projects', '/projects'], updateCmsProjects);
 
 // Direct Contact Locations routes (/api/contact/locations and /api/contact/addresses)
 app.post(['/api/contact/locations', '/api/contact/addresses'], updateContactLocations);
