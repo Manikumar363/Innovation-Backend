@@ -139,12 +139,32 @@ export const formatProjectsResponse = (projectsDoc: any, req?: Request) => {
   const availableCategories = extractProjectCategories(allProjects);
   const categoryTags = availableCategories.map((c) => c.tag);
 
-  // Extract filter parameters from query or body
+  // Check if caller requested categories-only via query ?categories=true / ?categories=only / ?categories=list
+  const isCategoriesOnly =
+    req?.query?.categories === 'true' ||
+    req?.query?.categories === 'only' ||
+    req?.query?.categories === 'list' ||
+    req?.query?.category === 'only' ||
+    req?.query?.category === 'list';
+
+  if (isCategoriesOnly) {
+    return {
+      categories: availableCategories,
+      availableCategories,
+      categoryTags,
+      totalCategories: availableCategories.length,
+      totalProjects: allProjects.length,
+    };
+  }
+
+  // Extract filter parameters from query (?category=... or ?categories=...) or body
   const categoryParam =
     (req?.query?.category as string) ||
+    (req?.query?.categories as string) ||
     (req?.query?.tag as string) ||
     (req?.query?.categoryTag as string) ||
     (req?.body?.category as string) ||
+    (req?.body?.categories as string) ||
     (req?.body?.tag as string) ||
     (req?.body?.categoryTag as string);
 
@@ -154,8 +174,16 @@ export const formatProjectsResponse = (projectsDoc: any, req?: Request) => {
     (req?.body?.status as string) ||
     (req?.body?.statusType as string);
 
-  const isFiltered = Boolean(categoryParam && categoryParam.trim() !== '' && categoryParam.toLowerCase() !== 'all' && categoryParam !== '*');
-  const filteredProjects = isFiltered || statusParam ? filterProjectsList(allProjects, categoryParam, statusParam) : allProjects;
+  const isFiltered = Boolean(
+    categoryParam &&
+      typeof categoryParam === 'string' &&
+      categoryParam.trim() !== '' &&
+      categoryParam.toLowerCase() !== 'all' &&
+      categoryParam !== '*'
+  );
+
+  const filteredProjects =
+    isFiltered || statusParam ? filterProjectsList(allProjects, categoryParam, statusParam) : allProjects;
 
   return {
     ...docObj,
@@ -163,16 +191,22 @@ export const formatProjectsResponse = (projectsDoc: any, req?: Request) => {
       ...docObj.headerSection,
       projects: filteredProjects,
       allProjects,
+      categories: availableCategories,
       availableCategories,
       categoryTags,
       totalProjects: allProjects.length,
       filteredCount: filteredProjects.length,
       activeFilter: {
-        category: categoryParam || 'all',
+        category: isFiltered ? categoryParam : 'all',
         status: statusParam || null,
         isFiltered,
       },
     },
+    categories: availableCategories,
+    categoryTags,
+    totalProjects: allProjects.length,
+    filteredCount: filteredProjects.length,
+    activeCategory: isFiltered ? categoryParam : 'all',
   };
 };
 
@@ -402,110 +436,6 @@ export const getCmsProjects = async (req: Request, res: Response): Promise<void>
     res.status(500).json({
       success: false,
       message: 'Failed to fetch CMS Projects data',
-      error: error.message,
-    });
-  }
-};
-
-/**
- * Filter projects by category tags and optional status
- * GET /api/cms/projects/filter?category=Technology
- * POST /api/cms/projects/filter with body { category: "Technology" }
- */
-export const filterCmsProjects = async (req: Request, res: Response): Promise<void> => {
-  try {
-    let projectsDoc = await CmsProjects.findOne();
-
-    if (!projectsDoc) {
-      projectsDoc = new CmsProjects(defaultCmsProjectsData);
-      await projectsDoc.save();
-    }
-
-    const docObj = typeof projectsDoc.toObject === 'function' ? projectsDoc.toObject() : { ...projectsDoc };
-    const allProjects: IProjectCard[] = docObj.headerSection?.projects || defaultCmsProjectsData.headerSection.projects;
-    const availableCategories = extractProjectCategories(allProjects);
-    const categoryTags = availableCategories.map((c) => c.tag);
-
-    // Extract filter arguments from query params or body
-    const categoryParam =
-      (req.query?.category as string) ||
-      (req.query?.tag as string) ||
-      (req.query?.categoryTag as string) ||
-      (req.body?.category as string) ||
-      (req.body?.tag as string) ||
-      (req.body?.categoryTag as string) ||
-      'all';
-
-    const statusParam =
-      (req.query?.status as string) ||
-      (req.query?.statusType as string) ||
-      (req.body?.status as string) ||
-      (req.body?.statusType as string);
-
-    const filteredProjects = filterProjectsList(allProjects, categoryParam, statusParam);
-
-    res.status(200).json({
-      success: true,
-      message: 'Projects filtered by category tag successfully',
-      filter: {
-        category: categoryParam,
-        status: statusParam || null,
-        totalMatches: filteredProjects.length,
-        totalProjects: allProjects.length,
-      },
-      data: {
-        projects: filteredProjects,
-        total: filteredProjects.length,
-        totalProjects: allProjects.length,
-        availableCategories,
-        categoryTags,
-        headerSection: {
-          title: docObj.headerSection?.title || defaultCmsProjectsData.headerSection.title,
-          description: docObj.headerSection?.description || defaultCmsProjectsData.headerSection.description,
-          projects: filteredProjects,
-          allProjects,
-          availableCategories,
-          categoryTags,
-          totalProjects: allProjects.length,
-          filteredCount: filteredProjects.length,
-        },
-        bannerSection: docObj.bannerSection || defaultCmsProjectsData.bannerSection,
-      },
-    });
-  } catch (error: any) {
-    console.error('Error filtering CMS Projects:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to filter CMS Projects by category tag',
-      error: error.message,
-    });
-  }
-};
-
-/**
- * Get all available project category tags with counts and bilingual labels
- * GET /api/cms/projects/categories
- */
-export const getCmsProjectCategories = async (_req: Request, res: Response): Promise<void> => {
-  try {
-    let projectsDoc = await CmsProjects.findOne();
-    const allProjects: IProjectCard[] = projectsDoc?.headerSection?.projects || defaultCmsProjectsData.headerSection.projects;
-    const categories = extractProjectCategories(allProjects);
-
-    res.status(200).json({
-      success: true,
-      data: {
-        categories,
-        categoryTags: categories.map((c) => c.tag),
-        totalCategories: categories.length,
-        totalProjects: allProjects.length,
-      },
-    });
-  } catch (error: any) {
-    console.error('Error fetching CMS Project categories:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch CMS Project categories',
       error: error.message,
     });
   }

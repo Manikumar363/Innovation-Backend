@@ -19,12 +19,7 @@ import {
   downloadShopProductsTemplate,
   bulkImportShopProducts,
 } from '../controllers/cmsShopController';
-import {
-  getCmsProjects,
-  updateCmsProjects,
-  filterCmsProjects,
-  getCmsProjectCategories,
-} from '../controllers/cmsProjectsController';
+import { getCmsProjects, updateCmsProjects } from '../controllers/cmsProjectsController';
 import { getCmsPartners, updateCmsPartners } from '../controllers/cmsPartnersController';
 import { getCmsContact, updateCmsContact, updateContactLocations } from '../controllers/cmsContactController';
 import { getCmsInvestment, updateCmsInvestment } from '../controllers/cmsInvestmentController';
@@ -164,10 +159,6 @@ router.put('/investment', updateCmsInvestment);
 router.post('/investment', updateCmsInvestment);
 
 // CMS Projects Routes
-router.get('/projects/filter', filterCmsProjects);
-router.post('/projects/filter', filterCmsProjects);
-router.get('/projects/categories', getCmsProjectCategories);
-router.get('/projects/tags', getCmsProjectCategories);
 router.get('/projects', getCmsProjects);
 router.put('/projects', updateCmsProjects);
 router.post('/projects', updateCmsProjects);
