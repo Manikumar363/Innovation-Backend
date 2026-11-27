@@ -8,10 +8,10 @@ export interface IBilingualText {
 export interface IProjectCard {
   id?: string;
   category: IBilingualText;
-  status: IBilingualText;
-  statusType: 'completed' | 'ongoing' | 'planned';
   title: IBilingualText;
   description: IBilingualText;
+  client?: IBilingualText;
+  image?: string;
   linkUrl?: string;
 }
 
@@ -56,14 +56,10 @@ const ProjectCardSchema = new Schema(
   {
     id: { type: String },
     category: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
-    status: { type: BilingualSchema, default: () => ({ en: 'Ongoing', ar: 'قيد التنفيذ' }) },
-    statusType: {
-      type: String,
-      enum: ['completed', 'ongoing', 'planned'],
-      default: 'ongoing',
-    },
     title: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
     description: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+    client: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+    image: { type: String, default: '' },
     linkUrl: { type: String, default: '' },
   },
   { _id: false }

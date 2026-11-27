@@ -40,7 +40,6 @@ const EnquirySchema = new Schema(
       type: String,
       enum: ['General', 'Request Price', 'Investment', 'Partnership', 'Careers'],
       default: 'General',
-      index: true,
     },
     subject: {
       type: String,

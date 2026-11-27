@@ -57,12 +57,36 @@ export const extractProjectCategories = (projects: IProjectCard[] | any[]): IPro
 };
 
 /**
- * Filter projects according to category tag and optional status
+ * Helper to sanitize project cards (strips legacy status/statusType, ensures client and image)
+ */
+export const sanitizeProjectCard = (p: any): IProjectCard => {
+  let clientVal = { en: '', ar: '' };
+  if (typeof p?.client === 'string') {
+    clientVal = { en: p.client, ar: p.client };
+  } else if (p?.client && typeof p.client === 'object') {
+    clientVal = {
+      en: p.client.en || '',
+      ar: p.client.ar || '',
+    };
+  }
+
+  return {
+    id: p?.id,
+    category: p?.category || { en: '', ar: '' },
+    title: p?.title || { en: '', ar: '' },
+    description: p?.description || { en: '', ar: '' },
+    client: clientVal,
+    image: p?.image || '',
+    linkUrl: p?.linkUrl || '',
+  };
+};
+
+/**
+ * Filter projects according to category tag
  */
 export const filterProjectsList = (
   projects: IProjectCard[] | any[],
-  categoryQuery?: string | string[],
-  statusQuery?: string
+  categoryQuery?: string | string[]
 ): IProjectCard[] => {
   if (!projects || !Array.isArray(projects)) return [];
 
@@ -77,56 +101,34 @@ export const filterProjectsList = (
   // Check if "all" or "*" is requested
   const isAllCategory = categoryTokens.length === 0 || categoryTokens.includes('all') || categoryTokens.includes('*');
 
-  const normalizedStatus = statusQuery ? normalizeText(statusQuery) : '';
-  const isAllStatus = !normalizedStatus || normalizedStatus === 'all' || normalizedStatus === '*';
-
   return projects.filter((project) => {
-    // 1. Category check
-    let matchesCategory = isAllCategory;
-    if (!isAllCategory) {
-      const rawCategory = project?.category;
-      let enCat = '';
-      let arCat = '';
+    if (isAllCategory) return true;
 
-      if (typeof rawCategory === 'string') {
-        enCat = rawCategory;
-        arCat = rawCategory;
-      } else if (rawCategory && typeof rawCategory === 'object') {
-        enCat = rawCategory.en || '';
-        arCat = rawCategory.ar || '';
-      }
+    const rawCategory = project?.category;
+    let enCat = '';
+    let arCat = '';
 
-      const normEn = normalizeText(enCat);
-      const normAr = normalizeText(arCat);
-
-      matchesCategory = categoryTokens.some((token) => {
-        return (
-          normEn === token ||
-          normAr === token ||
-          normEn.includes(token) ||
-          normAr.includes(token) ||
-          token.includes(normEn) ||
-          token.includes(normAr)
-        );
-      });
+    if (typeof rawCategory === 'string') {
+      enCat = rawCategory;
+      arCat = rawCategory;
+    } else if (rawCategory && typeof rawCategory === 'object') {
+      enCat = rawCategory.en || '';
+      arCat = rawCategory.ar || '';
     }
 
-    // 2. Status check (optional bonus filter)
-    let matchesStatus = isAllStatus;
-    if (!isAllStatus) {
-      const statusType = normalizeText(project?.statusType || '');
-      const statusEn = normalizeText(project?.status?.en || '');
-      const statusAr = normalizeText(project?.status?.ar || '');
+    const normEn = normalizeText(enCat);
+    const normAr = normalizeText(arCat);
 
-      matchesStatus =
-        statusType === normalizedStatus ||
-        statusEn === normalizedStatus ||
-        statusAr === normalizedStatus ||
-        statusEn.includes(normalizedStatus) ||
-        statusAr.includes(normalizedStatus);
-    }
-
-    return matchesCategory && matchesStatus;
+    return categoryTokens.some((token) => {
+      return (
+        normEn === token ||
+        normAr === token ||
+        normEn.includes(token) ||
+        normAr.includes(token) ||
+        token.includes(normEn) ||
+        token.includes(normAr)
+      );
+    });
   });
 };
 
@@ -135,7 +137,8 @@ export const filterProjectsList = (
  */
 export const formatProjectsResponse = (projectsDoc: any, req?: Request) => {
   const docObj = typeof projectsDoc.toObject === 'function' ? projectsDoc.toObject() : { ...projectsDoc };
-  const allProjects: IProjectCard[] = docObj.headerSection?.projects || [];
+  const rawProjects = docObj.headerSection?.projects || [];
+  const allProjects: IProjectCard[] = rawProjects.map(sanitizeProjectCard);
   const availableCategories = extractProjectCategories(allProjects);
   const categoryTags = availableCategories.map((c) => c.tag);
 
@@ -168,12 +171,6 @@ export const formatProjectsResponse = (projectsDoc: any, req?: Request) => {
     (req?.body?.tag as string) ||
     (req?.body?.categoryTag as string);
 
-  const statusParam =
-    (req?.query?.status as string) ||
-    (req?.query?.statusType as string) ||
-    (req?.body?.status as string) ||
-    (req?.body?.statusType as string);
-
   const isFiltered = Boolean(
     categoryParam &&
       typeof categoryParam === 'string' &&
@@ -182,8 +179,7 @@ export const formatProjectsResponse = (projectsDoc: any, req?: Request) => {
       categoryParam !== '*'
   );
 
-  const filteredProjects =
-    isFiltered || statusParam ? filterProjectsList(allProjects, categoryParam, statusParam) : allProjects;
+  const filteredProjects = isFiltered ? filterProjectsList(allProjects, categoryParam) : allProjects;
 
   return {
     ...docObj,
@@ -198,7 +194,6 @@ export const formatProjectsResponse = (projectsDoc: any, req?: Request) => {
       filteredCount: filteredProjects.length,
       activeFilter: {
         category: isFiltered ? categoryParam : 'all',
-        status: statusParam || null,
         isFiltered,
       },
     },
@@ -227,11 +222,11 @@ export const defaultCmsProjectsData = {
           en: 'Urban Innovation',
           ar: 'الابتكار الحضري',
         },
-        status: {
-          en: 'Completed',
-          ar: 'مكتمل',
+        client: {
+          en: 'Baghdad Municipality',
+          ar: 'أمانة بغداد',
         },
-        statusType: 'completed' as const,
+        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
         title: {
           en: 'Smart City Development',
           ar: 'تطوير المدن الذكية',
@@ -248,11 +243,11 @@ export const defaultCmsProjectsData = {
           en: 'Technology',
           ar: 'التكنولوجيا والتحول الرقمي',
         },
-        status: {
-          en: 'Ongoing',
-          ar: 'قيد التنفيذ',
+        client: {
+          en: 'Ministry of Communications',
+          ar: 'وزارة الاتصالات',
         },
-        statusType: 'ongoing' as const,
+        image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
         title: {
           en: 'Digital Transformation',
           ar: 'التحول الرقمي المؤسسي',
@@ -269,11 +264,11 @@ export const defaultCmsProjectsData = {
           en: 'Sustainability',
           ar: 'الاستدامة والبيئة',
         },
-        status: {
-          en: 'Ongoing',
-          ar: 'قيد التنفيذ',
+        client: {
+          en: 'National Energy Authority',
+          ar: 'الهيئة الوطنية للطاقة',
         },
-        statusType: 'ongoing' as const,
+        image: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=800&q=80',
         title: {
           en: 'Sustainable Energy Initiative',
           ar: 'مبادرة الطاقة المستدامة',
@@ -290,11 +285,11 @@ export const defaultCmsProjectsData = {
           en: 'Social Impact',
           ar: 'الأثر الاجتماعي',
         },
-        status: {
-          en: 'Completed',
-          ar: 'مكتمل',
+        client: {
+          en: 'Social Development Fund',
+          ar: 'صندوق التنمية الاجتماعية',
         },
-        statusType: 'completed' as const,
+        image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80',
         title: {
           en: 'Community Development',
           ar: 'تنمية المجتمع المحلي',
@@ -311,11 +306,11 @@ export const defaultCmsProjectsData = {
           en: 'Research & Development',
           ar: 'البحث والتطوير',
         },
-        status: {
-          en: 'Ongoing',
-          ar: 'قيد التنفيذ',
+        client: {
+          en: 'Ministry of Higher Education',
+          ar: 'وزارة التعليم العالي',
         },
-        statusType: 'ongoing' as const,
+        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
         title: {
           en: 'Innovation Research Hub',
           ar: 'مركز أبحاث الابتكار',
@@ -332,11 +327,11 @@ export const defaultCmsProjectsData = {
           en: 'Education',
           ar: 'التعليم والمعرفة',
         },
-        status: {
-          en: 'Planned',
-          ar: 'مخطط له',
+        client: {
+          en: 'Education Development Board',
+          ar: 'مجلس تطوير التعليم',
         },
-        statusType: 'planned' as const,
+        image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
         title: {
           en: 'Digital Learning Platform',
           ar: 'منصة التعلم الرقمي',
@@ -449,15 +444,20 @@ export const updateCmsProjects = async (req: Request, res: Response): Promise<vo
     let projectsDoc = await CmsProjects.findOne();
 
     if (!projectsDoc) {
-      projectsDoc = new CmsProjects({
-        ...defaultCmsProjectsData,
-        ...updateData,
-      });
+      const initialData = { ...defaultCmsProjectsData, ...updateData };
+      if (initialData.headerSection && Array.isArray(initialData.headerSection.projects)) {
+        initialData.headerSection.projects = initialData.headerSection.projects.map(sanitizeProjectCard);
+      }
+      projectsDoc = new CmsProjects(initialData);
     } else {
       if (updateData.headerSection) {
+        const headerSec = { ...updateData.headerSection };
+        if (Array.isArray(headerSec.projects)) {
+          headerSec.projects = headerSec.projects.map(sanitizeProjectCard);
+        }
         projectsDoc.headerSection = {
           ...projectsDoc.headerSection,
-          ...updateData.headerSection,
+          ...headerSec,
         };
       }
       if (updateData.bannerSection) {

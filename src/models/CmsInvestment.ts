@@ -53,9 +53,7 @@ export interface IInvestmentSectorsSection {
 // Section 5: The Investment Environment
 export interface IInvestmentFactorItem {
   id?: string;
-  icon: string;
   title: IBilingualText;
-  description: IBilingualText;
 }
 
 export interface IInvestmentFoundationBox {
@@ -125,9 +123,7 @@ const SectorItemSchema = new Schema(
 const FactorItemSchema = new Schema(
   {
     id: { type: String },
-    icon: { type: String, default: 'Shield' },
     title: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
-    description: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
   },
   { _id: false }
 );

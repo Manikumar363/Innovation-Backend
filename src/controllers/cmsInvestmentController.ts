@@ -201,74 +201,44 @@ export const defaultCmsInvestmentData = {
     factors: [
       {
         id: 'factor-1',
-        icon: 'Shield',
         title: {
           en: 'Improving Business Environment',
           ar: 'تحسين بيئة الأعمال',
         },
-        description: {
-          en: 'Ongoing development and institutional initiatives can help create a more supportive environment for business and investment.',
-          ar: 'تساهم المبادرات المؤسسية والتنموية المستمرة في خلق بيئة أكثر دعماً للأعمال والاستثمار.',
-        },
       },
       {
         id: 'factor-2',
-        icon: 'Shield',
         title: {
           en: 'Strategic Location',
           ar: 'موقع استراتيجي',
         },
-        description: {
-          en: "Iraq's location connects regional markets and offers potential opportunities for trade, logistics, and commercial development.",
-          ar: 'يربط موقع العراق بين الأسواق الإقليمية ويوفر فرصاً واعدة للتجارة والخدمات اللوجستية والتطوير التجاري.',
-        },
       },
       {
         id: 'factor-3',
-        icon: 'Shield',
         title: {
           en: 'Natural Resources',
           ar: 'الموارد الطبيعية',
         },
-        description: {
-          en: "The country's natural resource base supports opportunities in energy and industries connected to resource development.",
-          ar: 'تدعم قاعدة الموارد الطبيعية في البلاد الفرص المتاحة في مجال الطاقة والصناعات المرتبطة بتطوير الموارد.',
-        },
       },
       {
         id: 'factor-4',
-        icon: 'Shield',
         title: {
           en: 'Market Potential',
           ar: 'إمكانات السوق',
         },
-        description: {
-          en: 'Demand for housing, infrastructure, consumer goods, and essential services can create opportunities across multiple sectors.',
-          ar: 'يمكن للطلب المتزايد على الإسكان والبنية التحتية والسلع الاستهلاكية والخدمات الأساسية خلق فرص عبر قطاعات متعددة.',
-        },
       },
       {
         id: 'factor-5',
-        icon: 'Shield',
         title: {
           en: 'Development Initiatives',
           ar: 'مبادرات التنمية',
         },
-        description: {
-          en: 'Reconstruction and economic development programs may create demand for private-sector expertise, capital, and services.',
-          ar: 'قد تؤدي برامج إعادة الإعمار والتنمية الاقتصادية إلى خلق طلب متزايد على خبرات القطاع الخاص ورؤوس الأموال والخدمات.',
-        },
       },
       {
         id: 'factor-6',
-        icon: 'Shield',
         title: {
           en: 'Strategic Partnerships',
           ar: 'شراكات استراتيجية',
-        },
-        description: {
-          en: 'Collaboration between local businesses, international investors, and financial institutions can help develop investment opportunities.',
-          ar: 'التعاون بين الشركات المحلية والمستثمرين الدوليين والمؤسسات المالية يمكن أن يسهم في تطوير فرص استثمارية ناجحة.',
         },
       },
     ],
@@ -307,6 +277,18 @@ export const defaultCmsInvestmentData = {
     },
     secondaryButtonUrl: '/contact',
   },
+};
+
+const sanitizeInvestmentDoc = (doc: any) => {
+  if (!doc) return doc;
+  const obj = doc.toObject ? doc.toObject() : { ...doc };
+  if (obj.environmentSection?.factors && Array.isArray(obj.environmentSection.factors)) {
+    obj.environmentSection.factors = obj.environmentSection.factors.map((f: any) => ({
+      id: f.id,
+      title: f.title || { en: '', ar: '' },
+    }));
+  }
+  return obj;
 };
 
 // GET /api/cms/investment
@@ -358,7 +340,7 @@ export const getCmsInvestment = async (_req: Request, res: Response): Promise<vo
 
     res.status(200).json({
       success: true,
-      data: doc,
+      data: sanitizeInvestmentDoc(doc),
     });
   } catch (error: any) {
     console.error('Error fetching CMS Investment:', error);
@@ -374,6 +356,13 @@ export const getCmsInvestment = async (_req: Request, res: Response): Promise<vo
 export const updateCmsInvestment = async (req: Request, res: Response): Promise<void> => {
   try {
     const updateData = req.body;
+
+    if (updateData.environmentSection && Array.isArray(updateData.environmentSection.factors)) {
+      updateData.environmentSection.factors = updateData.environmentSection.factors.map((f: any) => ({
+        id: f.id,
+        title: f.title || { en: '', ar: '' },
+      }));
+    }
 
     let doc = await CmsInvestment.findOne();
 
@@ -426,7 +415,7 @@ export const updateCmsInvestment = async (req: Request, res: Response): Promise<
     res.status(200).json({
       success: true,
       message: 'CMS Investment updated successfully',
-      data: doc,
+      data: sanitizeInvestmentDoc(doc),
     });
   } catch (error: any) {
     console.error('Error updating CMS Investment:', error);
