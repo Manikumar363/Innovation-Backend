@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import ServicePage, { IServicePage } from '../models/ServicePage';
+import CmsServices from '../models/CmsServices';
+import { defaultCmsServicesData, sanitizeServicesDoc } from './cmsServicesController';
 
 export const defaultServicePages = [
   // 1. Medical & Laboratory Equipment (Exact match to reference UI image)
@@ -625,7 +627,7 @@ export const seedDefaultServicePages = async (): Promise<void> => {
 };
 
 // GET /services or /api/services
-// Fetch all service pages
+// Fetch all services, Main Section Title, and Main Section Description
 export const getAllServices = async (req: Request, res: Response): Promise<void> => {
   try {
     await seedDefaultServicePages();
@@ -635,9 +637,32 @@ export const getAllServices = async (req: Request, res: Response): Promise<void>
 
     const services = await ServicePage.find(filter).sort({ order: 1, createdAt: 1 });
 
+    let cmsServicesDoc = await CmsServices.findOne();
+    if (!cmsServicesDoc) {
+      cmsServicesDoc = await CmsServices.create(defaultCmsServicesData);
+    }
+    const sanitized = sanitizeServicesDoc(cmsServicesDoc);
+
+    const mainTitle =
+      sanitized.headerSection?.title ||
+      sanitized.businessAreasSection?.title || {
+        en: 'Our Services',
+        ar: 'خدماتنا',
+      };
+
+    const mainDescription =
+      sanitized.headerSection?.description ||
+      sanitized.businessAreasSection?.description || {
+        en: 'Discover our medical equipment, laboratory supplies, and healthcare solutions.',
+        ar: 'اكتشف معداتنا الطبية ومستلزمات المختبرات والحلول الصحية.',
+      };
+
     res.status(200).json({
       success: true,
       count: services.length,
+      title: mainTitle,
+      description: mainDescription,
+      services,
       data: services,
     });
   } catch (error: any) {
@@ -645,6 +670,84 @@ export const getAllServices = async (req: Request, res: Response): Promise<void>
     res.status(500).json({
       success: false,
       message: 'Failed to fetch services',
+      error: error.message,
+    });
+  }
+};
+
+// PUT /services or /api/services or POST /services
+// Update Services section: Main Section Title and Main Section Description
+export const updateServicesSection = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const updateData = req.body;
+
+    let servicesDoc = await CmsServices.findOne();
+    if (!servicesDoc) {
+      servicesDoc = new CmsServices(defaultCmsServicesData);
+    }
+
+    const incomingTitle =
+      updateData.title ||
+      updateData.headerSection?.title ||
+      updateData.businessAreasSection?.title;
+
+    const incomingDescription =
+      updateData.description ||
+      updateData.headerSection?.description ||
+      updateData.businessAreasSection?.description;
+
+    if (incomingTitle) {
+      if (!servicesDoc.headerSection) {
+        servicesDoc.headerSection = defaultCmsServicesData.headerSection;
+      }
+      servicesDoc.headerSection.title = incomingTitle;
+      if (servicesDoc.businessAreasSection) {
+        servicesDoc.businessAreasSection.title = incomingTitle;
+      }
+    }
+
+    if (incomingDescription) {
+      if (!servicesDoc.headerSection) {
+        servicesDoc.headerSection = defaultCmsServicesData.headerSection;
+      }
+      servicesDoc.headerSection.description = incomingDescription;
+      if (servicesDoc.businessAreasSection) {
+        servicesDoc.businessAreasSection.description = incomingDescription;
+      }
+    }
+
+    await servicesDoc.save();
+
+    const sanitized = sanitizeServicesDoc(servicesDoc);
+    const mainTitle =
+      sanitized.headerSection?.title ||
+      sanitized.businessAreasSection?.title || {
+        en: 'Our Services',
+        ar: 'خدماتنا',
+      };
+
+    const mainDescription =
+      sanitized.headerSection?.description ||
+      sanitized.businessAreasSection?.description || {
+        en: 'Discover our medical equipment, laboratory supplies, and healthcare solutions.',
+        ar: 'اكتشف معداتنا الطبية ومستلزمات المختبرات والحلول الصحية.',
+      };
+
+    const services = await ServicePage.find().sort({ order: 1, createdAt: 1 });
+
+    res.status(200).json({
+      success: true,
+      message: 'Services section updated successfully',
+      title: mainTitle,
+      description: mainDescription,
+      services,
+      data: services,
+    });
+  } catch (error: any) {
+    console.error('Error updating services section:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update services section',
       error: error.message,
     });
   }

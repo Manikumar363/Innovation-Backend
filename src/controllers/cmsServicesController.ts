@@ -233,7 +233,7 @@ export const defaultCmsServicesData = {
   },
 };
 
-const sanitizeServicesDoc = (doc: any) => {
+export const sanitizeServicesDoc = (doc: any) => {
   if (!doc) return doc;
   const obj = doc.toObject ? doc.toObject() : { ...doc };
   if (obj.businessAreasSection?.cards && Array.isArray(obj.businessAreasSection.cards)) {

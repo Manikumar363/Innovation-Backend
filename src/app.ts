@@ -32,6 +32,7 @@ import {
 } from './controllers/cmsFounderController';
 import {
   getAllServices,
+  updateServicesSection,
   getServiceBySlug,
   createServicePage,
   updateServicePage,
@@ -117,10 +118,21 @@ app.get(['/api/cta-banner', '/api/banner', '/api/cta'], getCmsCtaBanner);
 app.put(['/api/cta-banner', '/api/banner', '/api/cta'], updateCmsCtaBanner);
 app.post(['/api/cta-banner', '/api/banner', '/api/cta'], updateCmsCtaBanner);
 
-// Direct Service Pages routes (as requested by user: GET /services, GET /services/:slug)
+// Direct Service Pages & Section routes (GET, PUT, POST /services and /api/services)
 app.get(['/services', '/api/services'], getAllServices);
+app.put(['/services', '/api/services'], updateServicesSection);
+app.post(['/services', '/api/services'], (req: Request, res: Response) => {
+  if (
+    req.body &&
+    (req.body.overview ||
+      req.body.whyChoose ||
+      (req.body.slug && !req.body.cards && !req.body.businessAreasSection && !req.body.title))
+  ) {
+    return createServicePage(req, res);
+  }
+  return updateServicesSection(req, res);
+});
 app.get(['/services/:slug', '/api/services/:slug'], getServiceBySlug);
-app.post(['/services', '/api/services'], createServicePage);
 app.put(['/services/:id', '/api/services/:id'], updateServicePage);
 app.delete(['/services/:id', '/api/services/:id'], deleteServicePage);
 app.post(['/services/reset-defaults', '/api/services/reset-defaults'], resetDefaultServices);

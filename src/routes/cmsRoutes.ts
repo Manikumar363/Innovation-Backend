@@ -3,9 +3,9 @@ import multer from 'multer';
 import { getCmsHome, updateCmsHome } from '../controllers/cmsController';
 import { getCmsAbout, updateCmsAbout } from '../controllers/cmsAboutController';
 import { getCmsCompany, updateCmsCompany } from '../controllers/cmsCompanyController';
-import { getCmsServices, updateCmsServices } from '../controllers/cmsServicesController';
 import {
   getAllServices,
+  updateServicesSection,
   getServiceBySlug,
   createServicePage,
   updateServicePage,
@@ -128,9 +128,9 @@ router.put('/company', updateCmsCompany);
 router.post('/company', updateCmsCompany);
 
 // CMS Services Routes
-router.get('/services', getCmsServices);
-router.put('/services', updateCmsServices);
-router.post('/services', updateCmsServices);
+router.get('/services', getAllServices);
+router.put('/services', updateServicesSection);
+router.post('/services', updateServicesSection);
 
 // Service Pages (Reusable Common Layout for Medical Equipment, Lab Supplies, Healthcare Solutions, Standards)
 router.get('/services/pages', getAllServices);
