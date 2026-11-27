@@ -12,11 +12,17 @@ export interface IServiceFeatureCard {
   description: IBilingualText;
 }
 
+export interface IServiceBulletPoint {
+  id?: string;
+  text: IBilingualText;
+}
+
 export interface IBusinessAreaCard {
   id?: string;
-  icon: string;
   title: IBilingualText;
   description: IBilingualText;
+  shortDescription?: IBilingualText;
+  bulletPoints?: IServiceBulletPoint[];
   linkUrl: string;
 }
 
@@ -57,12 +63,21 @@ const ServiceFeatureCardSchema = new Schema(
   { _id: false }
 );
 
+const ServiceBulletPointSchema = new Schema(
+  {
+    id: { type: String },
+    text: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+  },
+  { _id: false }
+);
+
 const BusinessAreaCardSchema = new Schema(
   {
     id: { type: String },
-    icon: { type: String, default: 'Microscope' },
     title: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
     description: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+    shortDescription: { type: BilingualSchema, default: () => ({ en: '', ar: '' }) },
+    bulletPoints: { type: [ServiceBulletPointSchema], default: () => [] },
     linkUrl: { type: String, default: '' },
   },
   { _id: false }

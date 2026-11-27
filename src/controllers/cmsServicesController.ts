@@ -75,7 +75,6 @@ export const defaultCmsServicesData = {
     cards: [
       {
         id: 'card-area-1',
-        icon: 'Microscope',
         title: {
           en: 'Medical & Laboratory Equipment',
           ar: 'المعدات الطبية والمخبرية',
@@ -84,11 +83,37 @@ export const defaultCmsServicesData = {
           en: 'Comprehensive medical device solutions and laboratory testing equipment.',
           ar: 'حلول شاملة للأجهزة الطبية ومعدات الفحص المخبري.',
         },
+        shortDescription: {
+          en: 'Comprehensive medical device solutions and laboratory testing equipment.',
+          ar: 'حلول شاملة للأجهزة الطبية ومعدات الفحص المخبري.',
+        },
+        bulletPoints: [
+          {
+            id: 'bp-1-1',
+            text: {
+              en: 'Diagnostic & imaging devices',
+              ar: 'أجهزة التشخيص والتصوير الطبي',
+            },
+          },
+          {
+            id: 'bp-1-2',
+            text: {
+              en: 'Clinical laboratory analyzers',
+              ar: 'أجهزة التحليل المخبري السريري',
+            },
+          },
+          {
+            id: 'bp-1-3',
+            text: {
+              en: 'Maintenance & calibration services',
+              ar: 'خدمات الصيانة والمعايرة الدورية',
+            },
+          },
+        ],
         linkUrl: '/services/medical-equipment',
       },
       {
         id: 'card-area-2',
-        icon: 'FlaskConical',
         title: {
           en: 'Laboratory Supplies',
           ar: 'المستلزمات المخبرية',
@@ -97,11 +122,37 @@ export const defaultCmsServicesData = {
           en: 'Reliable laboratory supplies and essential equipment for research, testing, and diagnostic facilities.',
           ar: 'مستلزمات مخبرية موثوقة ومعدات أساسية لمرافق الأبحاث والاختبار والتشخيص.',
         },
+        shortDescription: {
+          en: 'Reliable laboratory supplies and essential equipment for research, testing, and diagnostic facilities.',
+          ar: 'مستلزمات مخبرية موثوقة ومعدات أساسية لمرافق الأبحاث والاختبار والتشخيص.',
+        },
+        bulletPoints: [
+          {
+            id: 'bp-2-1',
+            text: {
+              en: 'Reagents & chemical consumables',
+              ar: 'الكواشف والمستهلكات الكيميائية',
+            },
+          },
+          {
+            id: 'bp-2-2',
+            text: {
+              en: 'Specimen collection & storage',
+              ar: 'أدوات جمع العينات وحفظها',
+            },
+          },
+          {
+            id: 'bp-2-3',
+            text: {
+              en: 'Safety & protective laboratory wear',
+              ar: 'معدات السلامة والوقاية المخبرية',
+            },
+          },
+        ],
         linkUrl: '/services/laboratory-supplies',
       },
       {
         id: 'card-area-3',
-        icon: 'Stethoscope',
         title: {
           en: 'Healthcare Solutions',
           ar: 'حلول الرعاية الصحية',
@@ -110,11 +161,37 @@ export const defaultCmsServicesData = {
           en: 'Quality healthcare products and solutions designed to support medical professionals and healthcare facilities.',
           ar: 'منتجات وحلول رعاية صحية عالية الجودة مصممة لدعم المتخصصين في المجال الطبي والمرافق الصحية.',
         },
+        shortDescription: {
+          en: 'Quality healthcare products and solutions designed to support medical professionals and healthcare facilities.',
+          ar: 'منتجات وحلول رعاية صحية عالية الجودة مصممة لدعم المتخصصين في المجال الطبي والمرافق الصحية.',
+        },
+        bulletPoints: [
+          {
+            id: 'bp-3-1',
+            text: {
+              en: 'Hospital & clinic turnkey setup',
+              ar: 'تجهيز المستشفيات والعيادات بالكامل',
+            },
+          },
+          {
+            id: 'bp-3-2',
+            text: {
+              en: 'Infection control & sterilization',
+              ar: 'مكافحة العدوى وأنظمة التعقيم',
+            },
+          },
+          {
+            id: 'bp-3-3',
+            text: {
+              en: 'Healthcare IT & monitoring systems',
+              ar: 'أنظمة المراقبة وتكنولوجيا الرعاية الصحية',
+            },
+          },
+        ],
         linkUrl: '/services/healthcare-solutions',
       },
       {
         id: 'card-area-4',
-        icon: 'ShieldCheck',
         title: {
           en: 'Quality & Safety Standards',
           ar: 'معايير الجودة والسلامة',
@@ -123,10 +200,63 @@ export const defaultCmsServicesData = {
           en: 'Products selected with a focus on quality, reliability, and compliance with applicable safety standards.',
           ar: 'منتجات مختارة مع التركيز على الجودة والموثوقية والامتثال لمعايير السلامة المعمول بها.',
         },
+        shortDescription: {
+          en: 'Products selected with a focus on quality, reliability, and compliance with applicable safety standards.',
+          ar: 'منتجات مختارة مع التركيز على الجودة والموثوقية والامتثال لمعايير السلامة المعمول بها.',
+        },
+        bulletPoints: [
+          {
+            id: 'bp-4-1',
+            text: {
+              en: 'ISO & CE certified products',
+              ar: 'منتجات حاصلة على شهادات ISO و CE',
+            },
+          },
+          {
+            id: 'bp-4-2',
+            text: {
+              en: 'Regulatory compliance verification',
+              ar: 'التحقق من الامتثال للمعايير التنظيمية',
+            },
+          },
+          {
+            id: 'bp-4-3',
+            text: {
+              en: 'Comprehensive warranty & support',
+              ar: 'ضمان شامل ودعم فني متكامل',
+            },
+          },
+        ],
         linkUrl: '/services/standards',
       },
     ],
   },
+};
+
+const sanitizeServicesDoc = (doc: any) => {
+  if (!doc) return doc;
+  const obj = doc.toObject ? doc.toObject() : { ...doc };
+  if (obj.businessAreasSection?.cards && Array.isArray(obj.businessAreasSection.cards)) {
+    obj.businessAreasSection.cards = obj.businessAreasSection.cards.map((card: any, idx: number) => {
+      const defaultCard = defaultCmsServicesData.businessAreasSection.cards[idx] || {};
+      const desc = card.description || card.shortDescription || defaultCard.description || { en: '', ar: '' };
+      const shortDesc = card.shortDescription || card.description || defaultCard.shortDescription || desc;
+      const bulletPoints = Array.isArray(card.bulletPoints) && card.bulletPoints.length > 0
+        ? card.bulletPoints.map((bp: any, bIdx: number) => ({
+            id: bp.id || `bp-${bIdx + 1}`,
+            text: bp.text || { en: bp.en || '', ar: bp.ar || '' },
+          }))
+        : (defaultCard.bulletPoints || []);
+      const { icon, ...restCard } = card;
+      return {
+        ...restCard,
+        description: desc,
+        shortDescription: shortDesc,
+        bulletPoints,
+      };
+    });
+  }
+  return obj;
 };
 
 // GET /api/cms/services
@@ -156,7 +286,7 @@ export const getCmsServices = async (_req: Request, res: Response): Promise<void
 
     res.status(200).json({
       success: true,
-      data: servicesDoc,
+      data: sanitizeServicesDoc(servicesDoc),
     });
   } catch (error: any) {
     console.error('Error fetching CMS Services:', error);
@@ -172,6 +302,23 @@ export const getCmsServices = async (_req: Request, res: Response): Promise<void
 export const updateCmsServices = async (req: Request, res: Response): Promise<void> => {
   try {
     const updateData = req.body;
+
+    if (updateData.businessAreasSection && Array.isArray(updateData.businessAreasSection.cards)) {
+      updateData.businessAreasSection.cards = updateData.businessAreasSection.cards.map((card: any) => {
+        const { icon, ...restCard } = card;
+        return {
+          ...restCard,
+          description: card.description || card.shortDescription || { en: '', ar: '' },
+          shortDescription: card.shortDescription || card.description || { en: '', ar: '' },
+          bulletPoints: Array.isArray(card.bulletPoints)
+            ? card.bulletPoints.map((bp: any, bIdx: number) => ({
+                id: bp.id || `bp-${bIdx + 1}`,
+                text: bp.text || { en: bp.en || '', ar: bp.ar || '' },
+              }))
+            : [],
+        };
+      });
+    }
 
     let servicesDoc = await CmsServices.findOne();
 
@@ -200,7 +347,7 @@ export const updateCmsServices = async (req: Request, res: Response): Promise<vo
     res.status(200).json({
       success: true,
       message: 'CMS Services updated successfully',
-      data: servicesDoc,
+      data: sanitizeServicesDoc(servicesDoc),
     });
   } catch (error: any) {
     console.error('Error updating CMS Services:', error);
